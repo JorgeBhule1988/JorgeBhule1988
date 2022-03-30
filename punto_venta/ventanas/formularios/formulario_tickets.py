@@ -137,7 +137,41 @@ class FormularioTickets(BonotonesMenu):
         
         fcobro = Frame(window, height = 245, width = 240)
         fcobro.place(x = 450, y = 250)
+        
+        fmenu = Frame(window, height = 200, width = 240) #Frame de los botones de mesas
+        fmenu.place(x = 450, y = 40)
 
+        #botones de seleccion de mesas de seleccion
+        self.bmesa1 = Button(fmenu, text = '1', height = 2, width = 5, command = self.mesa1)
+        self.bmesa1.place(x = 0, y = 40)
+        self.bmesa3 = Button(fmenu, text = '3', height = 2, width = 5, command = self.mesa3)
+        self.bmesa3.place(x = 50, y = 40)
+        self.bmesa5 = Button(fmenu, text = '5', height = 2, width = 5)
+        self.bmesa5.place(x = 100, y = 40)
+        self.bmesa6 = Button(fmenu, text = '6', height = 2, width = 5)
+        self.bmesa6.place(x = 150, y = 40)
+        self.bmesa7 = Button(fmenu, text = '7', height = 2, width = 5)
+        self.bmesa7.place(x = 200, y = 40)
+        self.bmesa8 = Button(fmenu, text = '8', height = 2, width = 5)
+        self.bmesa8.place(x = 0, y = 85)
+        self.bmesa9 = Button(fmenu, text = '9', height = 2, width = 5)
+        self.bmesa9.place(x = 50, y = 85)
+        self.bmesa10 = Button(fmenu, text = '10', height = 2, width = 5)
+        self.bmesa10.place(x = 100, y = 85)
+        self.bmesa11 = Button(fmenu, text = '11', height = 2, width = 5)
+        self.bmesa11.place(x = 150, y = 85)
+        self.bmesa12 = Button(fmenu, text = '12', height = 2, width = 5)
+        self.bmesa12.place(x = 200, y = 85)
+        self.bmesa13 = Button(fmenu, text = '13', height = 2, width = 5)
+        self.bmesa13.place(x = 0, y = 130)
+        self.bmesacv1 = Button(fmenu, text = 'CV1', height = 2, width = 5)
+        self.bmesacv1.place(x = 50, y = 130)
+        self.bmesacv2 = Button(fmenu, text = 'CV2', height = 2, width = 5)
+        self.bmesacv2.place(x = 100, y = 130)
+        self.bmesacv3 = Button(fmenu, text = 'CV3', height = 2, width = 5)
+        self.bmesacv3.place(x = 150, y = 130)
+        self.bmesacv4 = Button(fmenu, text = 'CV4', height = 2, width = 5)
+        self.bmesacv4.place(x = 200, y = 130)
 
         # Creacion de etiquetas
         self.lmesero = Label(frametabla, text = 'Mesero', font = ('Arial', 12, 'bold'))
