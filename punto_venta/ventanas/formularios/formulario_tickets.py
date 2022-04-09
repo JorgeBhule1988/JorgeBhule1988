@@ -1,10 +1,13 @@
 from tkinter import *
 from tkinter import ttk, messagebox
+from formularios.formulario_estadistica import ventana2
 from formularios.botonesmenu import BonotonesMenu
 import datetime
 from tkinter.ttk import Notebook
 import formularios.controlador_flujo as controlador
-from formularios.tickets import Tickets 
+from formularios.tickets import Tickets, Tickets2
+from formularios.formulario_consulta import ventana
+
 
 
 class FormularioTickets(BonotonesMenu):
@@ -16,7 +19,13 @@ class FormularioTickets(BonotonesMenu):
         else:
             messagebox.showinfo(message=f"La tabla creada", title="Error")
 
-    
+        error = controlador.construir2()
+        if(error == 1):
+            messagebox.showerror(message=f"La tabla debe de existir", title="Error")  
+        else:
+            messagebox.showinfo(message=f"La tabla creada", title="Error")
+
+
     def cobrarticket(self):
         
         t = Tickets()
@@ -24,18 +33,60 @@ class FormularioTickets(BonotonesMenu):
         t.mesa = self.emesa.get()
         t.fecha = self.formato_fecha
         t.total = self.etotalpesos.get()
+        t.tipopago = self.etipo_pago.get()
         
         afectados =controlador.insertar_tickets(t)
         if(afectados == 0):
             messagebox.showerror(message=f"Error al guardar verifique la clave que no este repetida", title="Error")    
         else :
-            messagebox.showinfo(message=f"Guardado con exito {afectados} registro", title="Salvar")   
+            messagebox.showinfo(message=f"Guardado con exito {afectados} registro", title="Salvar") 
+        
 
         cobro = float(self.epago.get()) - float(self.etotalpesos.get())
+        self.ecambio.delete(0, END)
         self.ecambio.insert(END, cobro)
 
 
     def generart(self):
+
+        t2 = Tickets2()
+        for i in self.captura.get_children():
+            item = self.captura.item(i)
+            t2.mesero = self.emesero.get()
+            t2.mesa = self.emesa.get()
+            t2.fecha = self.formato_fecha
+            t2.cantidad = item['text']
+            t2.producto = item['values'][0]
+            t2.precio_unitario = item['values'][1] 
+            t2.total = item['values'][2] 
+
+            afectados1 =controlador.insertar_tickets2(t2)
+        
+        if(afectados1 == 0):
+            messagebox.showerror(message=f"Error al guardar verifique la clave que no este repetida", title="Error")    
+        else :
+            messagebox.showinfo(message=f"Guardado con exito {afectados1} registro", title="Salvar")
+
+        
+        t3 = Tickets2()
+        for i in self.captura.get_children():
+            item = self.captura.item(i)
+            t3.mesero = self.emesero.get()
+            t3.mesa = self.emesa.get()
+            t3.fecha = self.formato_fecha
+            t3.cantidad = item['text']
+            t3.producto = item['values'][0]
+            t3.precio_unitario = item['values'][1] 
+            t3.total = item['values'][2] 
+
+            afectados2 =controlador.insertar_tickets3(t3)
+        
+        if(afectados2 == 0):
+            messagebox.showerror(message=f"Error al guardar verifique la clave que no este repetida", title="Error")    
+        else :
+            messagebox.showinfo(message=f"Guardado con exito {afectados1} registro", title="Salvar")
+
+
         ticket = open('Ticket.txt', 'w')
         ticket.write('Ticket Numero: ### \n')
         ticket.write('Rodizio Grill \n')
@@ -58,17 +109,94 @@ class FormularioTickets(BonotonesMenu):
         ticket.write(f'Pago Con: {self.epago.get()} \n')
         ticket.write(f'Tipo de Pago: {self.etipo_pago.get()} \n')
         ticket.write(f'Cambio: {self.ecambio.get()} \n')
-
-        self.lpago.place(x = 0, y = 80)
-        self.ltipo_pago.place(x = 0, y = 120)
-        self.lcambio.place(x = 0, y = 160)
-        self.epago.place(x = 120, y = 83)
-        self.etipo_pago.place(x = 120, y = 123)
-        self.ecambio.place(x = 120, y = 163)
-        self.cobrart.place(x = 80, y = 200)
         
+        if self.emesa.get() == '1':
+            self.bmesa1.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == '3':
+            self.bmesa3.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == '5':
+            self.bmesa5.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == '6':
+            self.bmesa6.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == '7':
+            self.bmesa7.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == '8':
+            self.bmesa8.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == '9':
+            self.bmesa9.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == '10':
+            self.bmesa10.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == '11':
+            self.bmesa11.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == '12':
+            self.bmesa12.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == '13':
+            self.bmesa13.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == 'Cava1':
+            self.bmesacv1.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == 'Cava2':
+            self.bmesacv2.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == 'Cava3':
+            self.bmesacv3.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == 'Cava4':
+            self.bmesacv4.config(state = 'normal', bg = 'green')
+        
+        self.nuevo_ticket()
+  
+
+    def liberarmesa(self):
+    
+        afectados = controlador.eliminar_tickets(self.emesa.get())
+        if(afectados == 0):
+            messagebox.showerror(message=f"Error al eliminar verifique la clave que no este repetida", title="Error")    
+        else :
+            messagebox.showinfo(message=f"Elimino con exito {afectados} registro", title="Eliminar")
+
+        if self.emesa.get() == '1':
+            self.bmesa1.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == '3':
+            self.bmesa3.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == '5':
+            self.bmesa5.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == '6':
+            self.bmesa6.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == '7':
+            self.bmesa7.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == '8':
+            self.bmesa8.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == '9':
+            self.bmesa9.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == '10':
+            self.bmesa10.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == '11':
+            self.bmesa11.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == '12':
+            self.bmesa12.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == '13':
+            self.bmesa13.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == 'Cava1':
+            self.bmesacv1.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == 'Cava2':
+            self.bmesacv2.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == 'Cava3':
+            self.bmesacv3.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == 'Cava4':
+            self.bmesacv4.config(state = 'disable', bg = 'red')
+
+        self.nuevo_ticket()
+        
+        self.etotalpesos.config(state = 'disable')
+        self.etotaldolares.config(state = 'disable')
+        self.epago.config(state = 'disable')
+        self.etipo_pago.config(state = 'disable')
+        self.ecambio.config(state = 'disable')
+        self.bguardar.config(state = 'disable')
+        self.cobrart.config(state = 'disable')
+        self.cerrarmesa.config(state = 'disable')
+
 
     def nuevo_ticket(self):
+
         self.emesero.delete(0, END)
         self.emesa.delete(0, END)
         self.etotalpesos.delete(0, END)
@@ -79,6 +207,15 @@ class FormularioTickets(BonotonesMenu):
         regitro = self.captura.get_children()
         for i in regitro:
             self.captura.delete(i)
+        
+        self.etotalpesos.config(state = 'disable')
+        self.etotaldolares.config(state = 'disable')
+        self.epago.config(state = 'disable')
+        self.etipo_pago.config(state = 'disable')
+        self.ecambio.config(state = 'disable')
+        self.bguardar.config(state = 'disable')
+        self.cobrart.config(state = 'disable')
+        self.cerrarmesa.config(state = 'disable')
 
 
     def Limpiarticket(self):
@@ -99,15 +236,34 @@ class FormularioTickets(BonotonesMenu):
             self.etotalpesos.insert(END, suma)
             self.etotaldolares.delete(0, END)
             self.etotaldolares.insert(END, sumadolares)
+
         
-        self.cerrart.place(x = 345, y = 215)
+       
+    def preguntar(self):
+        questions = messagebox.askquestion('Cobrar Ticket', 'Quieres realizar un cobro?')
+        if questions == 'yes':
+            self.etotalpesos.config(state = 'normal')
+            self.etotaldolares.config(state = 'normal')
+            self.epago.config(state = 'normal')
+            self.etipo_pago.config(state = 'normal')
+            self.ecambio.config(state = 'normal')
+            self.bguardar.config(state = 'normal')
+            self.cobrart.config(state = 'normal')
+            self.cerrarmesa.config(state = 'normal')
+        else:
+            self.etotalpesos.config(state = 'disable')
+            self.etotaldolares.config(state = 'disable')
+            self.epago.config(state = 'disable')
+            self.etipo_pago.config(state = 'disable')
+            self.ecambio.config(state = 'disable')
+            self.bguardar.config(state = 'disable')
+            self.cobrart.config(state = 'disable')
+            self.cerrarmesa.config(state = 'disable')
 
 
     def __init__(self, window):
 
         cantidad = IntVar()
-        mesero = StringVar()
-        mesa = StringVar()
         
         frametabla = Frame(window)
         frametabla.pack(side = LEFT, fill = BOTH)
@@ -132,7 +288,7 @@ class FormularioTickets(BonotonesMenu):
         
         #formato de fecha actual
         fecha_actual = datetime.datetime.now()
-        self.formato_fecha = datetime.datetime.strftime(fecha_actual, '%d/%m/%Y')
+        self.formato_fecha = datetime.datetime.strftime(fecha_actual, '%b/%d/%Y')
         self.hora_formato = datetime.datetime.strftime(fecha_actual, '%H:%M:%S')
         
         fcobro = Frame(window, height = 245, width = 240)
@@ -144,34 +300,50 @@ class FormularioTickets(BonotonesMenu):
         #botones de seleccion de mesas de seleccion
         self.bmesa1 = Button(fmenu, text = '1', height = 2, width = 5, command = self.mesa1)
         self.bmesa1.place(x = 0, y = 40)
+        self.bmesa1.config(state='disable', bg = 'red')
         self.bmesa3 = Button(fmenu, text = '3', height = 2, width = 5, command = self.mesa3)
         self.bmesa3.place(x = 50, y = 40)
-        self.bmesa5 = Button(fmenu, text = '5', height = 2, width = 5)
+        self.bmesa3.config(state='disable', bg = 'red')
+        self.bmesa5 = Button(fmenu, text = '5', height = 2, width = 5, command = self.mesa5)
         self.bmesa5.place(x = 100, y = 40)
-        self.bmesa6 = Button(fmenu, text = '6', height = 2, width = 5)
+        self.bmesa5.config(state='disable', bg = 'red')
+        self.bmesa6 = Button(fmenu, text = '6', height = 2, width = 5, command = self.mesa6)
         self.bmesa6.place(x = 150, y = 40)
-        self.bmesa7 = Button(fmenu, text = '7', height = 2, width = 5)
+        self.bmesa6.config(state='disable', bg = 'red')
+        self.bmesa7 = Button(fmenu, text = '7', height = 2, width = 5, command = self.mesa7)
         self.bmesa7.place(x = 200, y = 40)
-        self.bmesa8 = Button(fmenu, text = '8', height = 2, width = 5)
+        self.bmesa7.config(state='disable', bg = 'red')
+        self.bmesa8 = Button(fmenu, text = '8', height = 2, width = 5, command = self.mesa8)
         self.bmesa8.place(x = 0, y = 85)
-        self.bmesa9 = Button(fmenu, text = '9', height = 2, width = 5)
+        self.bmesa8.config(state='disable', bg = 'red')
+        self.bmesa9 = Button(fmenu, text = '9', height = 2, width = 5, command = self.mesa9)
         self.bmesa9.place(x = 50, y = 85)
-        self.bmesa10 = Button(fmenu, text = '10', height = 2, width = 5)
+        self.bmesa9.config(state='disable', bg = 'red')
+        self.bmesa10 = Button(fmenu, text = '10', height = 2, width = 5, command = self.mesa10)
         self.bmesa10.place(x = 100, y = 85)
-        self.bmesa11 = Button(fmenu, text = '11', height = 2, width = 5)
+        self.bmesa10.config(state='disable', bg = 'red')
+        self.bmesa11 = Button(fmenu, text = '11', height = 2, width = 5, command = self.mesa11)
         self.bmesa11.place(x = 150, y = 85)
-        self.bmesa12 = Button(fmenu, text = '12', height = 2, width = 5)
+        self.bmesa11.config(state='disable', bg = 'red')
+        self.bmesa12 = Button(fmenu, text = '12', height = 2, width = 5, command = self.mesa12)
         self.bmesa12.place(x = 200, y = 85)
-        self.bmesa13 = Button(fmenu, text = '13', height = 2, width = 5)
+        self.bmesa12.config(state='disable', bg = 'red')
+        self.bmesa13 = Button(fmenu, text = '13', height = 2, width = 5, command = self.mesa13)
         self.bmesa13.place(x = 0, y = 130)
-        self.bmesacv1 = Button(fmenu, text = 'CV1', height = 2, width = 5)
+        self.bmesa13.config(state='disable', bg = 'red')
+        self.bmesacv1 = Button(fmenu, text = 'CV1', height = 2, width = 5, command = self.mesac1)
         self.bmesacv1.place(x = 50, y = 130)
-        self.bmesacv2 = Button(fmenu, text = 'CV2', height = 2, width = 5)
+        self.bmesacv1.config(state='disable', bg = 'red')
+        self.bmesacv2 = Button(fmenu, text = 'CV2', height = 2, width = 5, command = self.mesac2)
         self.bmesacv2.place(x = 100, y = 130)
-        self.bmesacv3 = Button(fmenu, text = 'CV3', height = 2, width = 5)
+        self.bmesacv2.config(state='disable', bg = 'red')
+        self.bmesacv3 = Button(fmenu, text = 'CV3', height = 2, width = 5, command = self.mesac3)
         self.bmesacv3.place(x = 150, y = 130)
-        self.bmesacv4 = Button(fmenu, text = 'CV4', height = 2, width = 5)
+        self.bmesacv3.config(state='disable', bg = 'red')
+        self.bmesacv4 = Button(fmenu, text = 'CV4', height = 2, width = 5, command = self.mesac4)
         self.bmesacv4.place(x = 200, y = 130)
+        self.bmesacv4.config(state='disable', bg = 'red')
+
 
         # Creacion de etiquetas
         self.lmesero = Label(frametabla, text = 'Mesero', font = ('Arial', 12, 'bold'))
@@ -195,11 +367,13 @@ class FormularioTickets(BonotonesMenu):
         self.ltotaldolares.place(x = 0, y = 40)
         
         tipo_p = ['EFECTIVO', 'DOLARES', 'TARJETA']
+        lista_meseros = ['ERICK MARTINEZ', 'RICARDO PEREZ', 'LINO', 'FRANK']
+        lista_mesas = ['1', '3', '5', '6', '7', '8', '9', '10', '11', '12', '13', 'Cava1', 'Cava2', 'Cava3', 'Cava4']
 
         #Creacion de cajas de texto
         self.ecantidad = Entry(frametabla, textvariable = cantidad, width = 5)
-        self.emesero = Entry(frametabla, textvariable = mesero, width = 35)
-        self.emesa = Entry(frametabla, textvariable = mesa, width = 15)
+        self.emesero = ttk.Combobox(frametabla, values = lista_meseros, width = 30)
+        self.emesa = ttk.Combobox(frametabla, value = lista_mesas, width = 10)
         self.etotalpesos = Entry(fcobro, width = 15)
         self.etotaldolares = Entry(fcobro, width = 15)
         self.epago = Entry(fcobro, width = 15)
@@ -211,7 +385,20 @@ class FormularioTickets(BonotonesMenu):
         self.emesero.place(x = 70, y = 10)
         self.emesa.place(x = 350, y = 13)
         self.etotalpesos.place(x = 120, y = 0)
+        self.etotalpesos.config(state = 'disable')
         self.etotaldolares.place(x = 120, y = 43)
+        self.etotaldolares.config(state = 'disable')
+        self.lpago.place(x = 0, y = 80)
+        self.ltipo_pago.place(x = 0, y = 120)
+        self.lcambio.place(x = 0, y = 160)
+        self.epago.place(x = 120, y = 83)
+        self.epago.config(state = 'disable')
+        self.etipo_pago.place(x = 120, y = 123)
+        self.etipo_pago.config(state = 'disable')
+        self.ecambio.place(x = 120, y = 163)
+        self.ecambio.config(state = 'disable')
+        
+        
 
         #Notebook
         pmenu = Notebook(frametabla, height = 138, width = 450)
@@ -326,15 +513,33 @@ class FormularioTickets(BonotonesMenu):
         self.bcasama.place(x = 0, y = 0)
         self.bcvino.place(x = 70, y = 0)
         self.bcrose.place(x = 0, y = 0)
+        
+        mprincipal = Menu(window)
+        minicio = Menu(mprincipal, tearoff = 0)
+        minicio.add_command(label = 'Salir', command = window.destroy)
+        mprincipal.add_cascade(label = 'Inicio', menu = minicio)
+
+        corte = Menu(mprincipal, tearoff = 0)
+        corte.add_command(label = 'Corte del dia', command = ventana)
+        corte.add_command(label = 'Estadisticas', command = ventana2)
+        mprincipal.add_cascade(label = 'Corte', menu = corte)
+        window.config(menu = mprincipal)
 
         #Creacion de boton acciones
-        self.bguardar = ttk.Button(frametabla, text = 'Total', command = self.sumartotales)
-        self.bguardar.place(x = 265, y = 215)
+        self.bguardar = ttk.Button(fmenu, text = 'Total', command = self.sumartotales)
+        self.bguardar.place(x = 0, y = 175)
+        self.bguardar.config(state = 'disable')
         self.blimpiar = ttk.Button(frametabla, text = 'Limpiar Ticket', command = self.Limpiarticket)
         self.blimpiar.place(x = 180, y = 215)
-        #self.bback = ttk.Button(window, text = 'Salir', command = window.destroy)
-        #self.bback.place(x = 375, y = 215)
         self.cerrart = ttk.Button(frametabla, text = 'Guardar Ticket', command = self.generart)
+        self.cerrart.place(x = 265, y = 215)
+        self.quest = ttk.Button(frametabla, text = 'Cobrar Ticket', command = self.preguntar)
+        self.quest.place(x = 355, y = 215)
         self.cobrart = ttk.Button(fcobro, text = 'Cobrar', command = self.cobrarticket)
+        self.cobrart.place(x = 0, y = 200)
+        self.cobrart.config(state = 'disable')
+        self.cerrarmesa = ttk.Button(fcobro, text = 'Liberar Mesa', command = self.liberarmesa)
+        self.cerrarmesa.place(x = 100, y = 200)
+        self.cerrarmesa.config(state = 'disable')
         self.nuevot = ttk.Button(frametabla, text = 'Nuevo Ticket', command = self.nuevo_ticket)
         self.nuevot.place(x = 100, y = 215)
