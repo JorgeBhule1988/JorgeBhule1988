@@ -1,8 +1,10 @@
 from tkinter import *
 from tkinter import ttk
+from formularios.repositorio_conexion import RepositorioConexionSQLite
+import mysql.connector
 
 
-class BonotonesMenu:
+class BonotonesMenu(RepositorioConexionSQLite):
 
     def botonrodizio(self):
         subtotal = float(self.ecantidad.get()) * 560
@@ -89,13 +91,13 @@ class BonotonesMenu:
 
     def botoncoca(self):
         subtotal = float(self.ecantidad.get()) * 40
-        self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Coca Cola', '50', subtotal))
+        self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Coca Cola', '40', subtotal))
         self.ecantidad.delete(0, END)
 
     
     def botoncocad(self):
         subtotal = float(self.ecantidad.get()) * 40
-        self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Coca Cola Dieta', '60', subtotal))
+        self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Coca Cola Dieta', '40', subtotal))
         self.ecantidad.delete(0, END)
 
         
@@ -173,7 +175,7 @@ class BonotonesMenu:
     
     def botonegramodelo(self):
         subtotal = float(self.ecantidad.get()) * 85
-        self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Negra Modelos', '80', subtotal))
+        self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Negra Modelos', '85', subtotal))
         self.ecantidad.delete(0, END)
 
     
@@ -217,10 +219,317 @@ class BonotonesMenu:
         subtotal = float(self.ecantidad.get()) * 950
         self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Cavall Rose', '950', subtotal))
         self.ecantidad.delete(0, END)
-        
+
+    
+    def limpiar(self):
+        for i in self.captura.get_children():
+            self.captura.delete(i)
+    
+    #Botones de mesas
+    def mesa1(self):
+        self.limpiar()
+        self.emesa.delete(0, END)
+        self.emesa.insert(END, '1')
+        try:
+            super().conetarse()
+            cursor = self.connection.cursor()
+
+            sql_select_query = "select cantidad, producto, precio_unitario, total from tabla_tickets_cobro WHERE mesa = '1'"
+            cursor = self.connection.cursor()
+            cursor.execute(sql_select_query)            
+            records = cursor.fetchall()
+            for row in records:
+               self.captura.insert('', END, text = row[0], values = (row[1], row[2], row[3]))
+        except mysql.connector.Error as error:
+            print(f"Fallo la insercion {error}")
+        finally:
+            self.cerrar_conexion()
+
+    
+    def mesa3(self):
+        self.limpiar()
+        self.emesa.delete(0, END)
+        self.emesa.insert(END, '3')
+        try:
+            super().conetarse()
+            cursor = self.connection.cursor()
+
+            sql_select_query = "select cantidad, producto, precio_unitario, total from tabla_tickets_cobro WHERE mesa = '3'"
+            cursor = self.connection.cursor()
+            cursor.execute(sql_select_query)            
+            records = cursor.fetchall()
+            for row in records:
+               self.captura.insert('', END, text = row[0], values = (row[1], row[2], row[3]))
+        except mysql.connector.Error as error:
+            print(f"Fallo la insercion {error}")
+        finally:
+            self.cerrar_conexion()
+    
+
+    def mesa5(self):
+        self.limpiar()
+        self.emesa.delete(0, END)
+        self.emesa.insert(END, '5')
+        try:
+            super().conetarse()
+            cursor = self.connection.cursor()
+
+            sql_select_query = "select cantidad, producto, precio_unitario, total from tabla_tickets_cobro WHERE mesa = '5'"
+            cursor = self.connection.cursor()
+            cursor.execute(sql_select_query)            
+            records = cursor.fetchall()
+            for row in records:
+               self.captura.insert('', END, text = row[0], values = (row[1], row[2], row[3]))
+        except mysql.connector.Error as error:
+            print(f"Fallo la insercion {error}")
+        finally:
+            self.cerrar_conexion()
+
+    
+    def mesa6(self):
+        self.limpiar()
+        self.emesa.delete(0, END)
+        self.emesa.insert(END, '6')
+        try:
+            super().conetarse()
+            cursor = self.connection.cursor()
+
+            sql_select_query = "select cantidad, producto, precio_unitario, total from tabla_tickets_cobro WHERE mesa = '6'"
+            cursor = self.connection.cursor()
+            cursor.execute(sql_select_query)            
+            records = cursor.fetchall()
+            for row in records:
+               self.captura.insert('', END, text = row[0], values = (row[1], row[2], row[3]))
+        except mysql.connector.Error as error:
+            print(f"Fallo la insercion {error}")
+        finally:
+            self.cerrar_conexion()
+
+    
+    def mesa7(self):
+        self.limpiar()
+        self.emesa.delete(0, END)
+        self.emesa.insert(END, '7')
+        try:
+            super().conetarse()
+            cursor = self.connection.cursor()
+
+            sql_select_query = "select cantidad, producto, precio_unitario, total from tabla_tickets_cobro WHERE mesa = '7'"
+            cursor = self.connection.cursor()
+            cursor.execute(sql_select_query)            
+            records = cursor.fetchall()
+            for row in records:
+               self.captura.insert('', END, text = row[0], values = (row[1], row[2], row[3]))
+        except mysql.connector.Error as error:
+            print(f"Fallo la insercion {error}")
+        finally:
+            self.cerrar_conexion()
+    
+    def mesa8(self):
+        self.limpiar()
+        self.emesa.delete(0, END)
+        self.emesa.insert(END, '8')
+        try:
+            super().conetarse()
+            cursor = self.connection.cursor()
+
+            sql_select_query = "select cantidad, producto, precio_unitario, total from tabla_tickets_cobro WHERE mesa = '8'"
+            cursor = self.connection.cursor()
+            cursor.execute(sql_select_query)            
+            records = cursor.fetchall()
+            for row in records:
+               self.captura.insert('', END, text = row[0], values = (row[1], row[2], row[3]))
+        except mysql.connector.Error as error:
+            print(f"Fallo la insercion {error}")
+        finally:
+            self.cerrar_conexion()
+    
+
+    def mesa9(self):
+        self.limpiar()
+        self.emesa.delete(0, END)
+        self.emesa.insert(END, '9')
+        try:
+            super().conetarse()
+            cursor = self.connection.cursor()
+
+            sql_select_query = "select cantidad, producto, precio_unitario, total from tabla_tickets_cobro WHERE mesa = '9'"
+            cursor = self.connection.cursor()
+            cursor.execute(sql_select_query)            
+            records = cursor.fetchall()
+            for row in records:
+               self.captura.insert('', END, text = row[0], values = (row[1], row[2], row[3]))
+        except mysql.connector.Error as error:
+            print(f"Fallo la insercion {error}")
+        finally:
+            self.cerrar_conexion()
+
+    
+    def mesa10(self):
+        self.limpiar()
+        self.emesa.delete(0, END)
+        self.emesa.insert(END, '10')
+        try:
+            super().conetarse()
+            cursor = self.connection.cursor()
+
+            sql_select_query = "select cantidad, producto, precio_unitario, total from tabla_tickets_cobro WHERE mesa = '10'"
+            cursor = self.connection.cursor()
+            cursor.execute(sql_select_query)            
+            records = cursor.fetchall()
+            for row in records:
+               self.captura.insert('', END, text = row[0], values = (row[1], row[2], row[3]))
+        except mysql.connector.Error as error:
+            print(f"Fallo la insercion {error}")
+        finally:
+            self.cerrar_conexion()
+    
+
+    def mesa11(self):
+        self.limpiar()
+        self.emesa.delete(0, END)
+        self.emesa.insert(END, '11')
+        try:
+            super().conetarse()
+            cursor = self.connection.cursor()
+
+            sql_select_query = "select cantidad, producto, precio_unitario, total from tabla_tickets_cobro WHERE mesa = '11'"
+            cursor = self.connection.cursor()
+            cursor.execute(sql_select_query)            
+            records = cursor.fetchall()
+            for row in records:
+               self.captura.insert('', END, text = row[0], values = (row[1], row[2], row[3]))
+        except mysql.connector.Error as error:
+            print(f"Fallo la insercion {error}")
+        finally:
+            self.cerrar_conexion()
+
+    
+    def mesa12(self):
+        self.limpiar()
+        self.emesa.delete(0, END)
+        self.emesa.insert(END, '12')
+        try:
+            super().conetarse()
+            cursor = self.connection.cursor()
+
+            sql_select_query = "select cantidad, producto, precio_unitario, total from tabla_tickets_cobro WHERE mesa = '12'"
+            cursor = self.connection.cursor()
+            cursor.execute(sql_select_query)            
+            records = cursor.fetchall()
+            for row in records:
+               self.captura.insert('', END, text = row[0], values = (row[1], row[2], row[3]))
+        except mysql.connector.Error as error:
+            print(f"Fallo la insercion {error}")
+        finally:
+            self.cerrar_conexion()
+
+    
+    def mesa13(self):
+        self.limpiar()
+        self.emesa.delete(0, END)
+        self.emesa.insert(END, '13')
+        try:
+            super().conetarse()
+            cursor = self.connection.cursor()
+
+            sql_select_query = "select cantidad, producto, precio_unitario, total from tabla_tickets_cobro WHERE mesa = '13'"
+            cursor = self.connection.cursor()
+            cursor.execute(sql_select_query)            
+            records = cursor.fetchall()
+            for row in records:
+               self.captura.insert('', END, text = row[0], values = (row[1], row[2], row[3]))
+        except mysql.connector.Error as error:
+            print(f"Fallo la insercion {error}")
+        finally:
+            self.cerrar_conexion()
+
+    
+    def mesac1(self):
+        self.limpiar()
+        self.emesa.delete(0, END)
+        self.emesa.insert(END, 'Cava1')
+        try:
+            super().conetarse()
+            cursor = self.connection.cursor()
+
+            sql_select_query = "select cantidad, producto, precio_unitario, total from tabla_tickets_cobro WHERE mesa = 'Cava1'"
+            cursor = self.connection.cursor()
+            cursor.execute(sql_select_query)            
+            records = cursor.fetchall()
+            for row in records:
+               self.captura.insert('', END, text = row[0], values = (row[1], row[2], row[3]))
+        except mysql.connector.Error as error:
+            print(f"Fallo la insercion {error}")
+        finally:
+            self.cerrar_conexion()
+
+    
+    def mesac2(self):
+        self.limpiar()
+        self.emesa.delete(0, END)
+        self.emesa.insert(END, 'Cava2')
+        try:
+            super().conetarse()
+            cursor = self.connection.cursor()
+
+            sql_select_query = "select cantidad, producto, precio_unitario, total from tabla_tickets_cobro WHERE mesa = 'Cava2'"
+            cursor = self.connection.cursor()
+            cursor.execute(sql_select_query)            
+            records = cursor.fetchall()
+            for row in records:
+               self.captura.insert('', END, text = row[0], values = (row[1], row[2], row[3]))
+        except mysql.connector.Error as error:
+            print(f"Fallo la insercion {error}")
+        finally:
+            self.cerrar_conexion()
+
+    
+    def mesac3(self):
+        self.limpiar()
+        self.emesa.delete(0, END)
+        self.emesa.insert(END, 'Cava3')
+        try:
+            super().conetarse()
+            cursor = self.connection.cursor()
+
+            sql_select_query = "select cantidad, producto, precio_unitario, total from tabla_tickets_cobro WHERE mesa = 'Cava3'"
+            cursor = self.connection.cursor()
+            cursor.execute(sql_select_query)            
+            records = cursor.fetchall()
+            for row in records:
+               self.captura.insert('', END, text = row[0], values = (row[1], row[2], row[3]))
+        except mysql.connector.Error as error:
+            print(f"Fallo la insercion {error}")
+        finally:
+            self.cerrar_conexion()
+
+    
+    def mesac4(self):
+        self.limpiar()
+        self.emesa.delete(0, END)
+        self.emesa.insert(END, 'Cava4')
+        try:
+            super().conetarse()
+            cursor = self.connection.cursor()
+
+            sql_select_query = "select cantidad, producto, precio_unitario, total from tabla_tickets_cobro WHERE mesa = 'Cava4'"
+            cursor = self.connection.cursor()
+            cursor.execute(sql_select_query)            
+            records = cursor.fetchall()
+            for row in records:
+               self.captura.insert('', END, text = row[0], values = (row[1], row[2], row[3]))
+        except mysql.connector.Error as error:
+            print(f"Fallo la insercion {error}")
+        finally:
+            self.cerrar_conexion()
+
+
     def __init__(self, v):
-        
-        cant = StringVar()
-        self.ecantidad = Entry(v, textvariable = cant)
-        self.ecantidad.place()
-        self.captura = ttk.Treeview(v, columns = ('#0', '#1', '#2', '#3'))
+
+        cantidad = IntVar()
+        lista_mesas = ['1', '3', '5', '6', '7', '8', '9', '10', '11', '12', '13', 'Cava1', 'Cava2', 'Cava3', 'Cava4']
+
+        self.captura = ttk.Treeview(v, columns=('#0', '#1', '#2'))
+        self.ecantidad = Entry(v, textvariable = cantidad)
+        self.emesa = ttk.Combobox(v, value = lista_mesas)
