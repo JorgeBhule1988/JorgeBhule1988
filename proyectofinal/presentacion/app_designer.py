@@ -54,13 +54,13 @@ class AppDesigner(tk.Tk):
 
     def boton_sin_alcohol(self):
 
-        self.boton_est_sin_alcohol = tk.Button(self.frame_general, font = ('Time', 14), bg = '#3a7ff6', bd = 0, fg = '#fff', text = 'Ver Estadisticas de Bebidas Sin Alcohol', command = self.estadistico_vino)
+        self.boton_est_sin_alcohol = tk.Button(self.frame_general, font = ('Time', 14), bg = '#3a7ff6', bd = 0, fg = '#fff', text = 'Ver Estadisticas de Bebidas Sin Alcohol', command = self.estadistico_sin_alcohol)
         self.boton_est_sin_alcohol.pack(side = tk.TOP, fill = tk.X, padx = 10, pady = 10)
     
 
     def boton_locales(self):
 
-        self.boton_est_locales = tk.Button(self.frame_general, font = ('Time', 14), bg = '#3a7ff6', bd = 0, fg = '#fff', text = 'Ver Estadisticas de Locales', command = self.estadistico_vino)
+        self.boton_est_locales = tk.Button(self.frame_general, font = ('Time', 14), bg = '#3a7ff6', bd = 0, fg = '#fff', text = 'Ver Estadisticas de Locales', command = self.estadistico_locales)
         self.boton_est_locales.pack(side = tk.TOP, fill = tk.X, padx = 10, pady = 10)
 
     
