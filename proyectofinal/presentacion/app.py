@@ -1,11 +1,16 @@
 import pandas as pd
 from presentacion.app_designer import AppDesigner
+from presentacion.form_vino.formvino import FormVino
 from util.constant import PATH_FILE
 
 
 class App(AppDesigner):
 
     df = None
+
+    def estadistico_vino(self):
+        FormVino(self.df).mainloop()
+    
 
     def __init__(self):
         super().__init__()
