@@ -1,6 +1,5 @@
 import sqlite3
 
-
 class RepositorioConexionSQLite:
     connection: any
 
@@ -9,10 +8,10 @@ class RepositorioConexionSQLite:
 
     def conetarse(self):
         try:
-            self.connection = sqlite3.connect("BaseDatosLocal.db")
+            self.connection = sqlite3.connect("BaseDatospuntodeventa.db")
             
         except Exception as e:
             print("Error al leer los datos de la tabla MySQL", e)
 
     def cerrar_conexion(self):
-        pass 
+        pass                  
