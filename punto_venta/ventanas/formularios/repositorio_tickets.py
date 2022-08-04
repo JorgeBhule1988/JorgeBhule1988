@@ -14,15 +14,13 @@ class RepositorioTickets(RepositorioConexionSQLite):
             super().conetarse()
             self.cur = self.connection.cursor()
             sql = """            
-                CREATE TABLE tabla_ticktes (
-                numero int(1111111) DEFAULT NULL,
-                mesero varchar(100) DEFAULT NULL,
-                mesa varchar(100) DEFAULT NULL,
-                fecha varchar(100) DEFAULT NULL,
-                cant int(100) DEFAULT NULL,
-                producto varchar(100) DEFAULT NULL,
-                precio_unitario int(100) DEFAULT NULL,
-                total int(100) DEFAULT NULL,
+                CREATE TABLE tabla_venta_diaria (
+                folio INTEGER AUTOINCREMENT,
+                mesero varchar(100) NOT NULL,
+                mesa varchar(100) NOT NULL,
+                fecha varchar(100) NOT NULL,
+                total int(100) NOT NULL,
+                tipopago varchar(100) NOT NULL,
                 PRIMARY KEY (folio)
                 ) 
             """
@@ -41,14 +39,13 @@ class RepositorioTickets(RepositorioConexionSQLite):
             super().conetarse()
             self.cur = self.connection.cursor()
             sql = """            
-                CREATE TABLE tabla_tickets_2 (
-                numero INTEGER AUTO INCREMENT,
+                CREATE TABLE tabla_tickets_principal (
+                numero INTEGER AUTOINCREMENT,
                 mesero varchar(100) NOT NULL,
                 mesa varchar(100) NOT NULL,
                 fecha varchar(100) NOT NULL,
                 cantidad int(100) NOT NULL,
                 producto varchar(100) NOT NULL,
-                tipo varchar(100) NOT NULL,
                 precio_unitario int(100) NOT NULL,
                 total int(100) NOT NULL,
                 PRIMARY KEY (numero)
@@ -69,8 +66,8 @@ class RepositorioTickets(RepositorioConexionSQLite):
             super().conetarse()
             self.cur = self.connection.cursor()
             sql = """            
-                CREATE TABLE tabla_tickets_cobro (
-                numero INTEGER AUTO INCREMENT,
+                CREATE TABLE tabla_cobro (
+                numero INTEGER AUTOINCREMENT,
                 mesero varchar(100) NOT NULL,
                 mesa varchar(100) NOT NULL,
                 fecha varchar(100) NOT NULL,
@@ -96,7 +93,7 @@ class RepositorioTickets(RepositorioConexionSQLite):
             super().conetarse()
             cursor = self.connection.cursor()
 
-            mySql_insert_query = """INSERT INTO tabla_tickets
+            mySql_insert_query = """INSERT INTO tabla_venta_diaria
             (folio, mesero, mesa, fecha, total, tipopago)
             VALUES(NULL, ?, ?, ?, ?, ?);
             """
@@ -121,7 +118,7 @@ class RepositorioTickets(RepositorioConexionSQLite):
             super().conetarse()
             cursor = self.connection.cursor()
 
-            mySql_insert_query = """INSERT INTO tabla_tickets_2
+            mySql_insert_query = """INSERT INTO tabla_tickets_principal
             (numero, mesero, mesa, fecha, cantidad, producto, precio_unitario, total)
             VALUES(NULL, ?, ?, ?, ?, ?, ?, ?);
             """
@@ -146,7 +143,7 @@ class RepositorioTickets(RepositorioConexionSQLite):
             super().conetarse()
             cursor = self.connection.cursor()
 
-            mySql_insert_query = """INSERT INTO tabla_tickets_cobro
+            mySql_insert_query = """INSERT INTO tabla_cobro
             (numero, mesero, mesa, fecha, cantidad, producto, precio_unitario, total)
             VALUES(NULL, ?, ?, ?, ?, ?, ?, ?);
             """
@@ -171,10 +168,54 @@ class RepositorioTickets(RepositorioConexionSQLite):
             super().conetarse()
             cursor = self.connection.cursor()
 
-            mySql_eliminar_query = """DELETE FROM tabla_tickets_cobro
+            mySql_eliminar_query = """DELETE FROM tabla_cobro
             WHERE mesa = ?;
             """            
             eliminar = (mesa,)
+            cursor.execute(mySql_eliminar_query, eliminar)
+            self.connection.commit()
+            afectado = cursor.rowcount
+            cursor.close()
+        except mysql.connector.Error as error:
+            print(f"Fallo la eliminacion {error}")
+        finally:
+            self.cerrar_conexion()
+
+        return afectado
+
+    
+    def eliminarproducto(self, producto):
+        afectado = 0
+        try:
+            super().conetarse()
+            cursor = self.connection.cursor()
+
+            mySql_eliminar_query = """DELETE FROM tabla_cobro
+            WHERE producto = ?;
+            """            
+            eliminar = (producto,)
+            cursor.execute(mySql_eliminar_query, eliminar)
+            self.connection.commit()
+            afectado = cursor.rowcount
+            cursor.close()
+        except mysql.connector.Error as error:
+            print(f"Fallo la eliminacion {error}")
+        finally:
+            self.cerrar_conexion()
+
+        return afectado
+
+    
+    def eliminarproducto2(self, producto):
+        afectado = 0
+        try:
+            super().conetarse()
+            cursor = self.connection.cursor()
+
+            mySql_eliminar_query = """DELETE FROM tabla_tickets_principal
+            WHERE producto = ?;
+            """            
+            eliminar = (producto,)
             cursor.execute(mySql_eliminar_query, eliminar)
             self.connection.commit()
             afectado = cursor.rowcount
