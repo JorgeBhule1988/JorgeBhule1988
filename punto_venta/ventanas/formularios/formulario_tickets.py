@@ -25,6 +25,12 @@ class FormularioTickets(BonotonesMenu):
         else:
             messagebox.showinfo(message=f"La tabla creada", title="Error")
 
+        error = controlador.construir3()
+        if(error == 1):
+            messagebox.showerror(message=f"La tabla debe de existir", title="Error")  
+        else:
+            messagebox.showinfo(message=f"La tabla creada", title="Error")
+
 
     def cobrarticket(self):
         
@@ -60,7 +66,7 @@ class FormularioTickets(BonotonesMenu):
             t2.precio_unitario = item['values'][1] 
             t2.total = item['values'][2] 
 
-            afectados1 =controlador.insertar_tickets2(t2)
+            afectados1 = controlador.insertar_tickets2(t2)
         
         if(afectados1 == 0):
             messagebox.showerror(message=f"Error al guardar verifique la clave que no este repetida", title="Error")    
@@ -193,6 +199,18 @@ class FormularioTickets(BonotonesMenu):
         self.bguardar.config(state = 'disable')
         self.cobrart.config(state = 'disable')
         self.cerrarmesa.config(state = 'disable')
+    
+
+    def eliminarfila(self):
+        
+        curItem = self.captura.focus()
+        fila = self.captura.item(curItem)
+        afectados = controlador.eliminar_fila_cobro(fila["values"][0])
+        afectados1 = controlador.eliminar_fila_cobro2(fila["values"][0])
+        if(afectados == 0 and afectados1 == 0):
+            messagebox.showinfo(message = f'Elimino con exito {afectados}{afectados1} registros', title = 'Eliminar')
+        else:
+            messagebox.showerror(message = 'Error al eliminar verifique la clave no este repetida', title = 'Error')
 
 
     def nuevo_ticket(self):
@@ -236,8 +254,7 @@ class FormularioTickets(BonotonesMenu):
             self.etotalpesos.insert(END, suma)
             self.etotaldolares.delete(0, END)
             self.etotaldolares.insert(END, sumadolares)
-
-        
+ 
        
     def preguntar(self):
         questions = messagebox.askquestion('Cobrar Ticket', 'Quieres realizar un cobro?')
@@ -263,15 +280,16 @@ class FormularioTickets(BonotonesMenu):
 
     def __init__(self, window):
 
-        cantidad = IntVar()
+        cantidad = ['1' , '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16',
+                    '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30']
         
         frametabla = Frame(window)
         frametabla.pack(side = LEFT, fill = BOTH)
-        frametabla.config(height = 250, width = 450)
+        frametabla.config(height = 550, width = 750)
 
         #creacion de la vista de los productos
         self.captura = ttk.Treeview(frametabla, height=11, columns=('#0', '#1', '#2'))
-        self.captura.place(x = 0, y = 250)
+        self.captura.place(x = 0, y = 450)
         self.captura.column('#0', width = 50)
         self.captura.heading('#0', text = 'Cant', anchor=CENTER)
         self.captura.heading('#1', text = 'Producto', anchor=CENTER)
@@ -282,7 +300,7 @@ class FormularioTickets(BonotonesMenu):
 
         #Scrollbar Treeview
         deslizarv = ttk.Scrollbar(frametabla, orient = 'vertical', command = self.captura.yview)
-        deslizarv.place(x = 433, y = 250, relheight = 0.5)
+        deslizarv.place(x = 433, y = 450, relheight = 0.5)
         deslizarv.config(command = self.captura.yview)
         self.captura.configure(yscrollcommand = deslizarv.set)
         
@@ -292,10 +310,10 @@ class FormularioTickets(BonotonesMenu):
         self.hora_formato = datetime.datetime.strftime(fecha_actual, '%H:%M:%S')
         
         fcobro = Frame(window, height = 245, width = 240)
-        fcobro.place(x = 450, y = 250)
+        fcobro.place(x = 460, y = 460)
         
         fmenu = Frame(window, height = 200, width = 240) #Frame de los botones de mesas
-        fmenu.place(x = 450, y = 40)
+        fmenu.place(x = 800, y = 40)
 
         #botones de seleccion de mesas de seleccion
         self.bmesa1 = Button(fmenu, text = '1', height = 2, width = 5, command = self.mesa1)
@@ -360,18 +378,18 @@ class FormularioTickets(BonotonesMenu):
         #Posiciones de Etiquetas
         self.lmesero.place(x = 0, y = 10)
         self.lmesa.place(x = 300, y = 10)
-        self.lcantidad.place(x = 0, y = 220)
+        self.lcantidad.place(x = 0, y = 400)
         self.lfecha_label.place(x = 500, y = 10)
         self.lfecha_actual.place(x = 570, y = 10)
         self.ltotalpesos.place(x = 0, y = 0)
         self.ltotaldolares.place(x = 0, y = 40)
         
         tipo_p = ['EFECTIVO', 'DOLARES', 'TARJETA']
-        lista_meseros = ['ERICK MARTINEZ', 'RICARDO PEREZ', 'LINO', 'FRANK']
+        lista_meseros = ['ERICK MARTINEZ', 'DIEGO HERNANDEZ', 'MIGUEL CORONA', 'MANUEL FLORES']
         lista_mesas = ['1', '3', '5', '6', '7', '8', '9', '10', '11', '12', '13', 'Cava1', 'Cava2', 'Cava3', 'Cava4']
 
         #Creacion de cajas de texto
-        self.ecantidad = Entry(frametabla, textvariable = cantidad, width = 5)
+        self.ecantidad = ttk.Combobox(frametabla, values = cantidad, width = 3)
         self.emesero = ttk.Combobox(frametabla, values = lista_meseros, width = 30)
         self.emesa = ttk.Combobox(frametabla, value = lista_mesas, width = 10)
         self.etotalpesos = Entry(fcobro, width = 15)
@@ -381,7 +399,7 @@ class FormularioTickets(BonotonesMenu):
         self.ecambio = Entry(fcobro, width = 15)
 
         #Posiciones de las cajas de texto
-        self.ecantidad.place(x = 55, y = 220)
+        self.ecantidad.place(x = 55, y = 400)
         self.emesero.place(x = 70, y = 10)
         self.emesa.place(x = 350, y = 13)
         self.etotalpesos.place(x = 120, y = 0)
@@ -401,20 +419,21 @@ class FormularioTickets(BonotonesMenu):
         
 
         #Notebook
-        pmenu = Notebook(frametabla, height = 138, width = 450)
+        pmenu = Notebook(frametabla, height = 300, width = 750)
         pmenu.place(x = 0, y = 35)
-        frame1 = Frame(pmenu, height = 138, width = 450)
-        frame2 = Frame(pmenu, height = 138, width = 450)
-        frame3 = Frame(pmenu, height = 138, width = 450)
-        frame4 = Frame(pmenu, height = 138, width = 450)
-        frame5 = Frame(pmenu, height = 138, width = 450)
-        frame6 = Frame(pmenu, height = 138, width = 450)
-        frame7 = Frame(pmenu, height = 138, width = 450)
-        #frame8 = Frame(pmenu, height = 138, width = 450)
-        #frame9 = Frame(pmenu, height = 138, width = 450)
-        #frame10 = Frame(pmenu, height = 138, width = 450)
-        #frame11 = Frame(pmenu, height = 138, width = 450)
-        #frame12 = Frame(pmenu, height = 138, width = 450)
+        frame1 = Frame(pmenu, height = 138, width = 750)
+        frame2 = Frame(pmenu, height = 138, width = 750)
+        frame3 = Frame(pmenu, height = 138, width = 750)
+        frame4 = Frame(pmenu, height = 138, width = 750)
+        frame5 = Frame(pmenu, height = 138, width = 750)
+        frame6 = Frame(pmenu, height = 138, width = 750)
+        frame7 = Frame(pmenu, height = 138, width = 750)
+        frame8 = Frame(pmenu, height = 138, width = 750)
+        frame9 = Frame(pmenu, height = 138, width = 750)
+        frame10 = Frame(pmenu, height = 138, width = 750)
+        frame11 = Frame(pmenu, height = 138, width = 750)
+        frame12 = Frame(pmenu, height = 138, width = 750)
+        frame13 = Frame(pmenu, height = 138, width = 750)
         frame1.place(x = 0, y = 35)
         frame2.place(x = 0, y = 35)
         frame3.place(x = 0, y = 35)
@@ -422,23 +441,25 @@ class FormularioTickets(BonotonesMenu):
         frame5.place(x = 0, y = 35)
         frame6.place(x = 0, y = 35)
         frame7.place(x = 0, y = 35)
-        #frame8.place(x = 0, y = 35)
-        #frame9.place(x = 0, y = 35)
-        #frame10.place(x = 0, y = 35)
-        #frame11.place(x = 0, y = 35)
-        #frame12.place(x = 0, y = 35)
+        frame8.place(x = 0, y = 35)
+        frame9.place(x = 0, y = 35)
+        frame10.place(x = 0, y = 35)
+        frame11.place(x = 0, y = 35)
+        frame12.place(x = 0, y = 35)
+        frame13.place(x = 0, y = 35)
         pmenu.add(frame1, text='Comida')
         pmenu.add(frame2, text='Bebida S/A')
         pmenu.add(frame3, text='Cervezas')
         pmenu.add(frame4, text='Cockteleria')
         pmenu.add(frame5, text='BVTINTO')
         pmenu.add(frame6, text='BVBLANCO')
-        pmenu.add(frame7, text='WHISKY')
-        #pmenu.add(frame8, text='TEQUILA')
-        #pmenu.add(frame9, text='MEZCAL')
-        #pmenu.add(frame10, text='DIJESTIVOS')
-        #pmenu.add(frame11, text='BOT VINO TINTO')
-        #pmenu.add(frame12, text='BOT VINO BLANCO')
+        pmenu.add(frame7, text='BVBROSADO')
+        pmenu.add(frame8, text='RON')
+        pmenu.add(frame9, text='VODKA')
+        pmenu.add(frame10, text='WHISKY')
+        pmenu.add(frame11, text='TEQUILA')
+        pmenu.add(frame12, text='MEZCAL')
+        pmenu.add(frame13, text='DIJESTIVOS')
 
         #creacion de botones
         self.brodizio = Button(frame1, text = 'Rodizio', height = 3, width = 8, command = self.botonrodizio)
@@ -526,15 +547,17 @@ class FormularioTickets(BonotonesMenu):
         window.config(menu = mprincipal)
 
         #Creacion de boton acciones
-        self.bguardar = ttk.Button(fmenu, text = 'Total', command = self.sumartotales)
-        self.bguardar.place(x = 0, y = 175)
+        self.bguardar = ttk.Button(frametabla, text = 'Total', command = self.sumartotales)
+        self.bguardar.place(x = 445, y = 400)
         self.bguardar.config(state = 'disable')
         self.blimpiar = ttk.Button(frametabla, text = 'Limpiar Ticket', command = self.Limpiarticket)
-        self.blimpiar.place(x = 180, y = 215)
+        self.blimpiar.place(x = 180, y = 400)
+        self.cproducto = ttk.Button(frametabla, text = 'Cancelar Producto', command = self.eliminarfila)
+        self.cproducto.place(x = 0, y = 425)
         self.cerrart = ttk.Button(frametabla, text = 'Guardar Ticket', command = self.generart)
-        self.cerrart.place(x = 265, y = 215)
+        self.cerrart.place(x = 265, y = 400)
         self.quest = ttk.Button(frametabla, text = 'Cobrar Ticket', command = self.preguntar)
-        self.quest.place(x = 355, y = 215)
+        self.quest.place(x = 355, y = 400)
         self.cobrart = ttk.Button(fcobro, text = 'Cobrar', command = self.cobrarticket)
         self.cobrart.place(x = 0, y = 200)
         self.cobrart.config(state = 'disable')
@@ -542,4 +565,4 @@ class FormularioTickets(BonotonesMenu):
         self.cerrarmesa.place(x = 100, y = 200)
         self.cerrarmesa.config(state = 'disable')
         self.nuevot = ttk.Button(frametabla, text = 'Nuevo Ticket', command = self.nuevo_ticket)
-        self.nuevot.place(x = 100, y = 215)
+        self.nuevot.place(x = 100, y = 400)
