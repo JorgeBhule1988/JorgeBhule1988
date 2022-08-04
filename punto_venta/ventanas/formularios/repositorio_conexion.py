@@ -16,5 +16,4 @@ class RepositorioConexionSQLite:
     def cerrar_conexion(self):
         pass                  
 
-conetar = RepositorioConexionSQLite()
-conetar.conetarse()
+
