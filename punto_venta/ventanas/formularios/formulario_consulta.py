@@ -12,7 +12,15 @@ class FormularioCosultar(RepositorioConexionSQLite):
             super().conetarse()
             cursor = self.connection.cursor()
 
-            sql_select_query = "select * from tabla_tickets WHERE {} like '{}'".format(self.tipobus.get(), (self.ebusfecha.get() + '%'))
+            #if self.tipobus.get() == 'TODOS':
+            #    sql_select_query = "select * from tabla_venta_diaria"
+            #    cursor = self.connection.cursor()
+            #    cursor.execute(sql_select_query)            
+            #    records = cursor.fetchall()
+            #    for row in records:
+            #        self.tree.insert('', END, text = row[0], values = (row[1], row[2], row[3], row[4], row[5]))
+
+            sql_select_query = "select * from tabla_venta_diaria WHERE {} like '{}'".format(self.tipobus.get(), (self.ebusfecha.get() + '%'))
             cursor = self.connection.cursor()
             cursor.execute(sql_select_query)            
             records = cursor.fetchall()
@@ -111,7 +119,7 @@ class FormularioCosultar(RepositorioConexionSQLite):
         self.treeG.configure(yscrollcommand = deslizarv.set)
         
         
-        lista_busqueda = ['fecha', 'mesero', 'TODOS']
+        lista_busqueda = ['fecha', 'mesero']
         lista_proveedores = ['CITY CLUB', 'WALMART', 'PALMAS', 'CAR SIN', 'KOWI', 'FRUT LIZ', 'LIZARRAGA', 'EUROPEA', 'COCA COLA', 'AVOCADO', 'OTROS']
         lista_tipo = ['EFECTIVO', 'TARJETA']
         Label(v, text = 'Elije un tipo de busqueda:', font = ('Arial', 12, 'bold')).place(x = 0, y = 10)
