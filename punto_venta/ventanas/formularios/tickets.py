@@ -42,9 +42,8 @@ class Tickets2:
     fecha: str = None
     cantidad: int = None
     producto: int = None
-    precio_unitario = None
+    precio_unitario: int = None
     total: str = None
-    tipopago: str = None
 
     
     def __init__(self) -> None:
@@ -70,7 +69,6 @@ class Tickets2:
         print("FECHA : ", self.fecha)
         print("CANTIDAD : ", self.cantidad)
         print("PRODUCTO: ", self.producto)
-        print("TIPO: ", self.tipo)
         print("PRECIO UNITARIO: ", self.precio_unitario)
         print("TOTAL : ", self.total)
         
