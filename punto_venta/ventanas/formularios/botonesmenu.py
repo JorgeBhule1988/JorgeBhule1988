@@ -13,7 +13,7 @@ class BonotonesMenu(RepositorioConexionSQLite):
             messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
         else:
             subtotal = float(self.ecantidad.get()) * 560
-            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Rodizio', '560', subtotal))
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Rodizio', '600', subtotal))
             self.ecantidad.delete(0, END)
 
         
@@ -32,7 +32,7 @@ class BonotonesMenu(RepositorioConexionSQLite):
             messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
         else:
             subtotal = float(self.ecantidad.get()) * 280
-            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Rodizio Menor', '280', subtotal))
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Rodizio Menor', '300', subtotal))
             self.ecantidad.delete(0, END)
 
 
@@ -92,6 +92,24 @@ class BonotonesMenu(RepositorioConexionSQLite):
         else:
             subtotal = float(self.ecantidad.get()) * 220
             self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Hamburguesa', '220', subtotal))
+            self.ecantidad.delete(0, END)
+    
+
+    def rodiziopassport(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 0
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Rodizio Passport', '0', subtotal))
+            self.ecantidad.delete(0, END)
+
+
+    def rodiziocortesia(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 0
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Rodizio Cortesia', '0', subtotal))
             self.ecantidad.delete(0, END)
 
 
@@ -301,7 +319,7 @@ class BonotonesMenu(RepositorioConexionSQLite):
             messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
         else:
             subtotal = float(self.ecantidad.get()) * 140
-            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Mojito', '140', subtotal))
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Mojito', '160', subtotal))
             self.ecantidad.delete(0, END)
 
 
@@ -326,9 +344,12 @@ class BonotonesMenu(RepositorioConexionSQLite):
 
 
     def botoncaipirina(self):
-        subtotal = float(self.ecantidad.get()) * 165
-        self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Caipiriña', '165', subtotal))
-        self.ecantidad.delete(0, END)
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 180
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Caipiriña', '180', subtotal))
+            self.ecantidad.delete(0, END)
 
 
     def botocasamadero(self):
@@ -346,8 +367,8 @@ class BonotonesMenu(RepositorioConexionSQLite):
         if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
             messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
         else:
-            subtotal = float(self.ecantidad.get()) * 185
-            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Copa de Vino', '185', subtotal))
+            subtotal = float(self.ecantidad.get()) * 165
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Copa de Vino Cal y Canto', '165', subtotal))
             self.ecantidad.delete(0, END)
 
 
@@ -359,8 +380,529 @@ class BonotonesMenu(RepositorioConexionSQLite):
             subtotal = float(self.ecantidad.get()) * 950
             self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Cavall Rose', '950', subtotal))
             self.ecantidad.delete(0, END)
+        
+    
+    def mojitotinto(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 185
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Mojito Vino Tinto', '185', subtotal))
+            self.ecantidad.delete(0, END)
+    
+
+    def mojitosabores(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 185
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Mojito Sabores', '185', subtotal))
+            self.ecantidad.delete(0, END)
+    
+
+    def guanabanagin(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 185
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Guanabana', '185', subtotal))
+            self.ecantidad.delete(0, END)
+
+
+    def martinicoffe(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 185
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Coffe Martini', '185', subtotal))
+            self.ecantidad.delete(0, END)
 
     
+    def margaritarodizio(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 180
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Margarita Rodizio', '180', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def margaritamango(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 185
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Margatita Mango', '185', subtotal))
+            self.ecantidad.delete(0, END)
+    
+    def margaritaguanabana(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 185
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Margatita Guanabana', '185', subtotal))
+            self.ecantidad.delete(0, END)
+
+        
+    def margaritamaracuya(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 185
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Margatita Maracuya', '185', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def margaritatradicional(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 185
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Margatita', '185', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def margaritacadillac(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 265
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Margatita Cadillac', '265', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def mezcalitatradicional(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 180
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Mezcalita', '180', subtotal))
+            self.ecantidad.delete(0, END)
+
+
+    def mezcalitamango(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 185
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Mezcalita Mango', '185', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def mezcalitamaracuya(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 185
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Mezcalita Maracuya', '185', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def mezcalitaguanabana(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 185
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Mezcalita Guanabana', '185', subtotal))
+            self.ecantidad.delete(0, END)
+
+
+    def pitumango(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 185
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Caipiriña Mango', '185', subtotal))
+            self.ecantidad.delete(0, END)
+    
+
+    def pitumaracuya(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 185
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Caipiriña Maracuya', '185', subtotal))
+            self.ecantidad.delete(0, END)
+
+
+    def pituguanabana(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 185
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Caipiriña Guanabana', '185', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def negroni(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 220
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Negroni', '220', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def gintonic(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 220
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Gin Tonic', '220', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def oldfashion(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 220
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Old Fashion', '220', subtotal))
+            self.ecantidad.delete(0, END)
+
+
+    def clericottinto(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 145
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Clericot', '145', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def clericotrosado(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 185
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Clericot Rosado', '185', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def clericotblueberry(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 185
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Clericot Blue Berry', '185', subtotal))
+            self.ecantidad.delete(0, END)
+
+
+    def casamadero_3v(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1250
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Casa Madero 3v BLEND', '1250', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def casamadero(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1250
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Casa Madero CAB/SAU', '1250', subtotal))
+            self.ecantidad.delete(0, END)
+    
+
+    def piccolo(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1080
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Piccolo BLEND', '1080', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def criosblend(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 980
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('CRIOS BLEND', '840', subtotal))
+            self.ecantidad.delete(0, END)
+        
+
+    def criosmalbec(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1100
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('CRIOS MALBEC', '1100', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def crioscab(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1020
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('CRIOS CAB/SAU', '1020', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def marcobonfante(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 960
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Marco Bonfante BARBERA', '960', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def neroavola(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1050
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Nero de Avola', '1050', subtotal))
+            self.ecantidad.delete(0, END)
+    
+
+    def mongrasssyr(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1000
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Mongrass CAB/SYR', '1000', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def mongrassblend(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1450
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Mongrass Premium BLEND', '1450', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def mongrasscab(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1060
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Mongrass CAB/SAU', '1060', subtotal))
+            self.ecantidad.delete(0, END)
+
+
+    def decoy(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1600
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('DECOY PINOT NOIR', '1600', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def lomita(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1020
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('La Lomita CAB/SAU', '1020', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def castacardon(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1100
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Casta Cardon BLEND', '1100', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def harasdepirque(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1040
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Haras de Pirque BLEND', '1040', subtotal))
+            self.ecantidad.delete(0, END)
+
+
+    def harasgran(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1140
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Haras de Pirque Gran Reserva CAB/SAU', '1140', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def minimalista(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 870
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Minimalista MALBEC', '870', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def domino(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 980
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('DOMINO BLEND', '980', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def abbout(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1030
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('ABBOUT PINOT NOIR', '1030', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def bellaretta(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 830
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Bellaretta CAB/SAU', '830', subtotal))
+            self.ecantidad.delete(0, END)
+
+
+    def carlidge(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1200
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Carlidge & Brown CAB', '1200', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def roccaventosa(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 870
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Roccaventosa TREVIANO', '870', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def gnarlyhead(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1200
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Gnarly Head CAB', '1200', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def santacristina(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1350
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Santa Cristina CHIANTI SUPERIORE', '1350', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def colezionemolte(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 700
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Colezione MOLTEPULCIANO', '700', subtotal))
+            self.ecantidad.delete(0, END)
+    
+
+    def caracter(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 700
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Caracter MALBEC', '700', subtotal))
+            self.ecantidad.delete(0, END)
+
+
+    def tierraadentro(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1100
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Tierra Adentro BLEND', '1100', subtotal))
+            self.ecantidad.delete(0, END)
+
+
+    def misassou(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 700
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Mirassou CAB/SAU', '700', subtotal))
+            self.ecantidad.delete(0, END)
+    
+
+    def kruguer(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1450
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Kruguer CAB/TEM', '1450', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def care(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1150
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('CARE', '1150', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def cetto(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 850
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Don Luis Cetto MERLOT', '850', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def calycanto(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 795
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Cal y Canto', '795', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def cigliano(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1200
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Cigliano CHIANTI CLASICO', '1200', subtotal))
+            self.ecantidad.delete(0, END)
+
+
+    def coparosado(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 165
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Copa de Vino Rosado', '165', subtotal))
+            self.ecantidad.delete(0, END)
+
+
+    def copablanco(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 165
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Copa de Vino Blanco', '165', subtotal))
+            self.ecantidad.delete(0, END)
+
+
     def limpiar(self):
         for i in self.captura.get_children():
             self.captura.delete(i)
@@ -370,7 +912,6 @@ class BonotonesMenu(RepositorioConexionSQLite):
         self.limpiar()
         self.emesa.delete(0, END)
         self.emesa.insert(END, '1')
-        self.emesero.delete(0, END)
         try:
             super().conetarse()
             cursor = self.connection.cursor()
@@ -381,6 +922,7 @@ class BonotonesMenu(RepositorioConexionSQLite):
             records = cursor.fetchall()
             for row in records:
                self.captura.insert('', END, text = row[0], values = (row[2], row[3], row[4]))
+            self.emesero.delete(0, END)
             self.emesero.insert(END, row[1])
         except mysql.connector.Error as error:
             print(f"Fallo la insercion {error}")
