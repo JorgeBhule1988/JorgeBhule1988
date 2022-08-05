@@ -5,7 +5,7 @@ from formularios.formulario_tickets import FormularioTickets
 try:
     vTickets = Tk()
     vTickets.title('Generacion de Tickets')
-    vTickets.geometry('1050x720')
+    vTickets.geometry('1280x720')
     vTickets.resizable(height = False, width = False)
     form = FormularioTickets(vTickets)
 
