@@ -21,8 +21,16 @@ def eliminar_tickets(mesa):
     return RepositorioTickets().eliminarcobro(mesa)
 
 
-def construir():    
-    return RepositorioTickets().contruir_tabla()
+def eliminar_fila_cobro(producto):    
+    return RepositorioTickets().eliminarproducto(producto)
+
+
+def eliminar_fila_cobro2(producto):    
+    return RepositorioTickets().eliminarproducto2(producto)
+
+
+def construir1():    
+    return RepositorioTickets().contruir_tabla1()
 
 
 def construir2():    
