@@ -253,13 +253,13 @@ class BonotonesMenu(RepositorioConexionSQLite):
             self.ecantidad.delete(0, END)
 
     
-    def botonpacificos(self):
+    def botonultra(self):
 
         if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
             messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
         else:
             subtotal = float(self.ecantidad.get()) * 60
-            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Pacifico Suave', '60', subtotal))
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Ultra', '60', subtotal))
             self.ecantidad.delete(0, END)
 
 
@@ -352,16 +352,6 @@ class BonotonesMenu(RepositorioConexionSQLite):
             self.ecantidad.delete(0, END)
 
 
-    def botocasamadero(self):
-
-        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
-            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
-        else:
-            subtotal = float(self.ecantidad.get()) * 1250
-            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Bot Vino Casa Madero', '1250', subtotal))
-            self.ecantidad.delete(0, END)
-
-
     def botoncopadevino(self):
 
         if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
@@ -372,13 +362,13 @@ class BonotonesMenu(RepositorioConexionSQLite):
             self.ecantidad.delete(0, END)
 
 
-    def botoncavalrose(self):
+    def bsanmartino(self):
 
         if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
             messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
         else:
-            subtotal = float(self.ecantidad.get()) * 950
-            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Cavall Rose', '950', subtotal))
+            subtotal = float(self.ecantidad.get()) * 800
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('San Martino', '800', subtotal))
             self.ecantidad.delete(0, END)
         
     
@@ -777,12 +767,12 @@ class BonotonesMenu(RepositorioConexionSQLite):
             self.ecantidad.delete(0, END)
 
     
-    def roccaventosa(self):
+    def botagua(self):
         if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
             messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
         else:
-            subtotal = float(self.ecantidad.get()) * 870
-            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Roccaventosa TREVIANO', '870', subtotal))
+            subtotal = float(self.ecantidad.get()) * 40
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Bot de Agua', '40', subtotal))
             self.ecantidad.delete(0, END)
 
     
@@ -901,6 +891,131 @@ class BonotonesMenu(RepositorioConexionSQLite):
             subtotal = float(self.ecantidad.get()) * 165
             self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Copa de Vino Blanco', '165', subtotal))
             self.ecantidad.delete(0, END)
+    
+
+    def cavacordova(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 920
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Cava Cordova Chardonnay', '920', subtotal))
+            self.ecantidad.delete(0, END)
+    
+
+    def anniespecial(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 870
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Anni Especial Sauvignon Blanc', '870', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def islanegra(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 800
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Isla Negra Sauvignon Blanc', '800', subtotal))
+            self.ecantidad.delete(0, END)
+    
+    def tantehue(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 750
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Tantehue Chardonnay', '750', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def micheltorino(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 850
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Michel Torino Torrentes', '850', subtotal))
+            self.ecantidad.delete(0, END)
+    
+
+    def bonina(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 800
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Bonina Portugal', '800', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def raza(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 800
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Raza Portugal', '800', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def porta(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 800
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Porta 6 Portugal', '800', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def rincones(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 580
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Rincones Rose', '580', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def espumosopaxx(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 800
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Espumoso Paax Dulce', '800', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def espumosopaxx_2(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 800
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Espumoso Paax Brut Rose', '800', subtotal))
+            self.ecantidad.delete(0, END)
+
+
+    def gavilan_reyes(self):
+            if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+                messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+            else:
+                subtotal = float(self.ecantidad.get()) * 185
+                self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Gavilan Reyes', '185', subtotal))
+                self.ecantidad.delete(0, END)
+
+    
+    def sangria(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 110
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Sangria', '110', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def pina_colada(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 140
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Piña Colada', '140', subtotal))
+            self.ecantidad.delete(0, END)
 
 
     def limpiar(self):
@@ -912,6 +1027,7 @@ class BonotonesMenu(RepositorioConexionSQLite):
         self.limpiar()
         self.emesa.delete(0, END)
         self.emesa.insert(END, '1')
+        self.emesero.delete(0, END)
         try:
             super().conetarse()
             cursor = self.connection.cursor()
@@ -921,8 +1037,7 @@ class BonotonesMenu(RepositorioConexionSQLite):
             cursor.execute(sql_select_query)
             records = cursor.fetchall()
             for row in records:
-               self.captura.insert('', END, text = row[0], values = (row[2], row[3], row[4]))
-            self.emesero.delete(0, END)
+               self.captura.insert('', END, text = row[0], values = (row[2], row[3], row[4]))         
             self.emesero.insert(END, row[1])
         except mysql.connector.Error as error:
             print(f"Fallo la insercion {error}")
@@ -934,6 +1049,7 @@ class BonotonesMenu(RepositorioConexionSQLite):
         self.limpiar()
         self.emesa.delete(0, END)
         self.emesa.insert(END, '3')
+        self.emesero.delete(0, END)
         try:
             super().conetarse()
             cursor = self.connection.cursor()
@@ -955,6 +1071,7 @@ class BonotonesMenu(RepositorioConexionSQLite):
         self.limpiar()
         self.emesa.delete(0, END)
         self.emesa.insert(END, '5')
+        self.emesero.delete(0, END)
         try:
             super().conetarse()
             cursor = self.connection.cursor()
@@ -976,6 +1093,7 @@ class BonotonesMenu(RepositorioConexionSQLite):
         self.limpiar()
         self.emesa.delete(0, END)
         self.emesa.insert(END, '6')
+        self.emesero.delete(0, END)
         try:
             super().conetarse()
             cursor = self.connection.cursor()
@@ -997,6 +1115,7 @@ class BonotonesMenu(RepositorioConexionSQLite):
         self.limpiar()
         self.emesa.delete(0, END)
         self.emesa.insert(END, '7')
+        self.emesero.delete(0, END)
         try:
             super().conetarse()
             cursor = self.connection.cursor()
@@ -1017,6 +1136,7 @@ class BonotonesMenu(RepositorioConexionSQLite):
         self.limpiar()
         self.emesa.delete(0, END)
         self.emesa.insert(END, '8')
+        self.emesero.delete(0, END)
         try:
             super().conetarse()
             cursor = self.connection.cursor()
@@ -1038,6 +1158,7 @@ class BonotonesMenu(RepositorioConexionSQLite):
         self.limpiar()
         self.emesa.delete(0, END)
         self.emesa.insert(END, '9')
+        self.emesero.delete(0, END)
         try:
             super().conetarse()
             cursor = self.connection.cursor()
@@ -1059,6 +1180,7 @@ class BonotonesMenu(RepositorioConexionSQLite):
         self.limpiar()
         self.emesa.delete(0, END)
         self.emesa.insert(END, '10')
+        self.emesero.delete(0, END)
         try:
             super().conetarse()
             cursor = self.connection.cursor()
@@ -1080,6 +1202,7 @@ class BonotonesMenu(RepositorioConexionSQLite):
         self.limpiar()
         self.emesa.delete(0, END)
         self.emesa.insert(END, '11')
+        self.emesero.delete(0, END)
         try:
             super().conetarse()
             cursor = self.connection.cursor()
@@ -1101,6 +1224,7 @@ class BonotonesMenu(RepositorioConexionSQLite):
         self.limpiar()
         self.emesa.delete(0, END)
         self.emesa.insert(END, '12')
+        self.emesero.delete(0, END)
         try:
             super().conetarse()
             cursor = self.connection.cursor()
@@ -1122,6 +1246,7 @@ class BonotonesMenu(RepositorioConexionSQLite):
         self.limpiar()
         self.emesa.delete(0, END)
         self.emesa.insert(END, '13')
+        self.emesero.delete(0, END)
         try:
             super().conetarse()
             cursor = self.connection.cursor()
@@ -1143,6 +1268,7 @@ class BonotonesMenu(RepositorioConexionSQLite):
         self.limpiar()
         self.emesa.delete(0, END)
         self.emesa.insert(END, 'Cava1')
+        self.emesero.delete(0, END)
         try:
             super().conetarse()
             cursor = self.connection.cursor()
@@ -1164,6 +1290,7 @@ class BonotonesMenu(RepositorioConexionSQLite):
         self.limpiar()
         self.emesa.delete(0, END)
         self.emesa.insert(END, 'Cava2')
+        self.emesero.delete(0, END)
         try:
             super().conetarse()
             cursor = self.connection.cursor()
@@ -1185,6 +1312,7 @@ class BonotonesMenu(RepositorioConexionSQLite):
         self.limpiar()
         self.emesa.delete(0, END)
         self.emesa.insert(END, 'Cava3')
+        self.emesero.delete(0, END)
         try:
             super().conetarse()
             cursor = self.connection.cursor()
@@ -1206,6 +1334,7 @@ class BonotonesMenu(RepositorioConexionSQLite):
         self.limpiar()
         self.emesa.delete(0, END)
         self.emesa.insert(END, 'Cava4')
+        self.emesero.delete(0, END)
         try:
             super().conetarse()
             cursor = self.connection.cursor()
