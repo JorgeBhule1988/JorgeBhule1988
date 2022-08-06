@@ -1,0 +1,783 @@
+class FormularioTickets(BonotonesMenu):
+
+    def construir(self):
+        error = controlador.construir1()
+        if(error == 1):
+            messagebox.showerror(message=f"La tabla debe de existir", title="Error")  
+        else:
+            messagebox.showinfo(message=f"La tabla creada", title="Error")
+
+        error = controlador.construir2()
+        if(error == 1):
+            messagebox.showerror(message=f"La tabla debe de existir", title="Error")  
+        else:
+            messagebox.showinfo(message=f"La tabla creada", title="Error")
+
+        error = controlador.construir3()
+        if(error == 1):
+            messagebox.showerror(message=f"La tabla debe de existir", title="Error")  
+        else:
+            messagebox.showinfo(message=f"La tabla creada", title="Error")
+
+
+    def cobrarticket(self):
+        
+        t = Tickets()
+        t.mesero = self.emesero.get()
+        t.mesa = self.emesa.get()
+        t.fecha = self.formato_fecha
+        t.total = self.etotal_desc.get()
+        t.tipopago = self.etipo_pago.get()
+        
+        afectados =controlador.insertar_tickets(t)
+        if(afectados == 0):
+            messagebox.showerror(message=f"Error al guardar verifique la clave que no este repetida", title="Error")    
+        else :
+            messagebox.showinfo(message=f"Guardado con exito {afectados} registro", title="Salvar") 
+        
+
+        cobro = float(self.epago.get()) - float(self.etotalgeneral.get())
+        self.ecambio.delete(0, END)
+        self.ecambio.insert(END, cobro)
+
+
+    def generart(self):
+
+        t2 = Tickets2()
+        for i in self.captura.get_children():
+            item = self.captura.item(i)
+            t2.mesero = self.emesero.get()
+            t2.mesa = self.emesa.get()
+            t2.fecha = self.formato_fecha
+            t2.cantidad = item['text']
+            t2.producto = item['values'][0]
+            t2.precio_unitario = item['values'][1] 
+            t2.total = item['values'][2] 
+
+            afectados1 = controlador.insertar_tickets2(t2)
+        
+        if(afectados1 == 0):
+            messagebox.showerror(message=f"Error al guardar verifique la clave que no este repetida", title="Error")    
+        else :
+            messagebox.showinfo(message=f"Guardado con exito {afectados1} registro", title="Salvar")
+
+        
+        t3 = Tickets2()
+        for i in self.captura.get_children():
+            item = self.captura.item(i)
+            t3.mesero = self.emesero.get()
+            t3.mesa = self.emesa.get()
+            t3.fecha = self.formato_fecha
+            t3.cantidad = item['text']
+            t3.producto = item['values'][0]
+            t3.precio_unitario = item['values'][1] 
+            t3.total = item['values'][2] 
+
+            afectados2 =controlador.insertar_tickets3(t3)
+        
+        if(afectados2 == 0):
+            messagebox.showerror(message=f"Error al guardar verifique la clave que no este repetida", title="Error")    
+        else :
+            messagebox.showinfo(message=f"Guardado con exito {afectados1} registro", title="Salvar")
+
+
+        ticket = open('Ticket.txt', 'w')
+        ticket.write('Ticket Numero: ### \n')
+        ticket.write('Rodizio Grill \n')
+        ticket.write('RFC: $$$$$ \n')
+        ticket.write('Domicilio: ##### \n')
+        ticket.write(f'Mesero: {self.emesero.get()} \n')
+        ticket.write(f'Mesa: {self.emesa.get()} \n')
+        ticket.write(f'Fecha: {self.formato_fecha} \n')
+        ticket.write(f'Hora: {self.hora_formato} \n')
+        ticket.write('Cant |\t Producto             |\t Precio |\t Total \n')
+        for i in self.captura.get_children():
+            item = self.captura.item(i)
+            cant = item['text']
+            prod = item['values'][0]
+            prec = item['values'][1]
+            subt = item['values'][2]
+            ticket.write(f'{cant}    |\t {prod} |\t {prec}   |\t {subt} \n')
+        ticket.write(f'Total Pesos: {self.etotal_desc.get()} \n')
+        ticket.write(f'Total Dolares: {self.etotaldolares.get()} \n')
+        ticket.write(f'Pago Con: {self.epago.get()} \n')
+        ticket.write(f'Tipo de Pago: {self.etipo_pago.get()} \n')
+        ticket.write(f'Cambio: {self.ecambio.get()} \n')
+        
+        if self.emesa.get() == '1':
+            self.bmesa1.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == '3':
+            self.bmesa3.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == '5':
+            self.bmesa5.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == '6':
+            self.bmesa6.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == '7':
+            self.bmesa7.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == '8':
+            self.bmesa8.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == '9':
+            self.bmesa9.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == '10':
+            self.bmesa10.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == '11':
+            self.bmesa11.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == '12':
+            self.bmesa12.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == '13':
+            self.bmesa13.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == 'Cava1':
+            self.bmesacv1.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == 'Cava2':
+            self.bmesacv2.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == 'Cava3':
+            self.bmesacv3.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == 'Cava4':
+            self.bmesacv4.config(state = 'normal', bg = 'green')
+        
+        self.nuevo_ticket()
+  
+
+    def liberarmesa(self):
+    
+        afectados = controlador.eliminar_tickets(self.emesa.get())
+        if(afectados == 0):
+            messagebox.showerror(message=f"Error al eliminar verifique la clave que no este repetida", title="Error")    
+        else :
+            messagebox.showinfo(message=f"Elimino con exito {afectados} registro", title="Eliminar")
+
+        if self.emesa.get() == '1':
+            self.bmesa1.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == '3':
+            self.bmesa3.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == '5':
+            self.bmesa5.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == '6':
+            self.bmesa6.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == '7':
+            self.bmesa7.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == '8':
+            self.bmesa8.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == '9':
+            self.bmesa9.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == '10':
+            self.bmesa10.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == '11':
+            self.bmesa11.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == '12':
+            self.bmesa12.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == '13':
+            self.bmesa13.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == 'Cava1':
+            self.bmesacv1.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == 'Cava2':
+            self.bmesacv2.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == 'Cava3':
+            self.bmesacv3.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == 'Cava4':
+            self.bmesacv4.config(state = 'disable', bg = 'red')
+
+        self.nuevo_ticket()
+        
+        self.etotalpesos.config(state = 'disable')
+        self.etotaldolares.config(state = 'disable')
+        self.epago.config(state = 'disable')
+        self.etipo_pago.config(state = 'disable')
+        self.ecambio.config(state = 'disable')
+        self.bguardar.config(state = 'disable')
+        self.cobrart.config(state = 'disable')
+        self.cerrarmesa.config(state = 'disable')
+        self.etotal_desc.config(state = 'disable')
+        self.edescuento.config(state = 'disable')
+        self.etotalgeneral.config(state = 'disable')
+        self.eiva.config(state = 'disable')
+    
+
+    def eliminarfila(self):
+        
+        curItem = self.captura.focus()
+        fila = self.captura.item(curItem)
+        afectados = controlador.eliminar_fila_cobro(fila["values"][0])
+        afectados1 = controlador.eliminar_fila_cobro2(fila["values"][0])
+        if(afectados == 0 and afectados1 == 0):
+            messagebox.showinfo(message = f'Elimino con exito {afectados}{afectados1} registros', title = 'Eliminar')
+        else:
+            messagebox.showerror(message = 'Error al eliminar verifique la clave no este repetida', title = 'Error')
+
+
+    def nuevo_ticket(self):
+
+        self.emesero.delete(0, END)
+        self.emesa.delete(0, END)
+        self.etotalpesos.delete(0, END)
+        self.etotaldolares.delete(0, END)
+        self.epago.delete(0, END)
+        self.etipo_pago.delete(0, END)
+        self.ecambio.delete(0, END)
+        self.epago.delete(0, END)
+        self.etipo_pago.delete(0, END)
+        self.eiva.delete(0, END)
+        self.etotal_desc.delete(0, END)
+        self.edescuento.delete(0, END)
+        self.etotalgeneral.delete(0, END)
+        regitro = self.captura.get_children()
+        for i in regitro:
+            self.captura.delete(i)
+        
+        self.etotalpesos.config(state = 'disable')
+        self.etotaldolares.config(state = 'disable')
+        self.epago.config(state = 'disable')
+        self.etipo_pago.config(state = 'disable')
+        self.ecambio.config(state = 'disable')
+        self.bguardar.config(state = 'disable')
+        self.cobrart.config(state = 'disable')
+        self.cerrarmesa.config(state = 'disable')
+        self.etotal_desc.config(state = 'disable')
+        self.edescuento.config(state = 'disable')
+        self.etotalgeneral.config(state = 'disable')
+        self.eiva.config(state = 'disable')
+        
+
+
+    def Limpiarticket(self):
+        regitro = self.captura.selection() #captura.get_children()
+        for i in regitro:
+            self.captura.delete(i)
+
+
+    def sumartotales(self):
+        suma = 0
+        sumadolares = 0
+        subtotal = 0
+        iva = 0
+        total_descuento = 0
+        total_general = 0
+
+        if(len(self.edescuento.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el descuento', title = 'Warning')
+        else:
+            for i in self.captura.get_children():
+                item = self.captura.item(i)
+                records = item['values'][2]
+                suma += float(records)
+                sumadolares = float(suma // 19)
+                self.etotalgeneral.delete(0, END)
+                self.etotalgeneral.insert(END, suma)
+                self.etotaldolares.delete(0, END)
+                self.etotaldolares.insert(END, sumadolares)
+            subtotal = float(suma / 1.16)
+            self.etotalpesos.delete(0, END)
+            self.etotalpesos.insert(END, subtotal)
+            iva = float(subtotal * .16)
+            self.eiva.delete(0, END)
+            self.eiva.insert(END, iva)
+            
+            if self.edescuento.get() == '0':
+                self.etotal_desc.delete(0, END)
+                self.etotal_desc.insert(END, suma)
+            elif self.edescuento.get() == '10%':
+                total_descuento = float(suma * .10)
+                total_general = float(suma - total_descuento)
+                self.etotal_desc.delete(0, END)
+                self.etotal_desc.insert(END, total_general)
+            elif self.edescuento.get() == '20%':
+                total_descuento = float(suma * .20)
+                total_general = float(suma - total_descuento)
+                self.etotal_desc.delete(0, END)
+                self.etotal_desc.insert(END, total_general)
+            elif self.edescuento.get() == '30%':
+                total_descuento = float(suma * .30)
+                total_general = float(suma - total_descuento)
+                self.etotal_desc.delete(0, END)
+                self.etotal_desc.insert(END, total_general)
+
+
+ 
+       
+    def preguntar(self):
+        questions = messagebox.askquestion('Cobrar Ticket', 'Quieres realizar un cobro?')
+        if questions == 'yes':
+            self.etotalpesos.config(state = 'normal')
+            self.etotaldolares.config(state = 'normal')
+            self.epago.config(state = 'normal')
+            self.etipo_pago.config(state = 'normal')
+            self.ecambio.config(state = 'normal')
+            self.bguardar.config(state = 'normal')
+            self.cobrart.config(state = 'normal')
+            self.cerrarmesa.config(state = 'normal')
+            self.etotal_desc.config(state = 'normal')
+            self.edescuento.config(state = 'normal')
+            self.etotalgeneral.config(state = 'normal')
+            self.eiva.config(state = 'normal')
+        else:
+            self.etotalpesos.config(state = 'disable')
+            self.etotaldolares.config(state = 'disable')
+            self.epago.config(state = 'disable')
+            self.etipo_pago.config(state = 'disable')
+            self.ecambio.config(state = 'disable')
+            self.bguardar.config(state = 'disable')
+            self.cobrart.config(state = 'disable')
+            self.cerrarmesa.config(state = 'disable')
+            self.etotal_desc.config(state = 'disable')
+            self.edescuento.config(state = 'disable')
+            self.etotalgeneral.config(state = 'disable')
+            self.eiva.config(state = 'disable')
+
+
+    def __init__(self, window):
+
+        cantidad = ['1' , '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16',
+                    '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30']
+        
+        frametabla = Frame(window)
+        frametabla.pack(side = LEFT, fill = BOTH)
+        frametabla.config(height = 550, width = 900)
+
+        #creacion de la vista de los productos
+        self.captura = ttk.Treeview(frametabla, height=11, columns=('#0', '#1', '#2'))
+        self.captura.place(x = 0, y = 450)
+        self.captura.column('#0', width = 50)
+        self.captura.heading('#0', text = 'Cant', anchor=CENTER)
+        self.captura.heading('#1', text = 'Producto', anchor=CENTER)
+        self.captura.column('#2', width = 100)
+        self.captura.heading('#2', text = 'Precio Unit', anchor=CENTER)
+        self.captura.column('#3', width = 100)
+        self.captura.heading('#3', text = 'Total', anchor=CENTER)
+
+        #Scrollbar Treeview
+        deslizarv = ttk.Scrollbar(frametabla, orient = 'vertical', command = self.captura.yview)
+        deslizarv.place(x = 433, y = 450, relheight = 0.5)
+        deslizarv.config(command = self.captura.yview)
+        self.captura.configure(yscrollcommand = deslizarv.set)
+        
+        #formato de fecha actual
+        fecha_actual = datetime.datetime.now()
+        self.formato_fecha = datetime.datetime.strftime(fecha_actual, '%b/%d/%Y')
+        self.hora_formato = datetime.datetime.strftime(fecha_actual, '%H:%M:%S')
+        
+        fcobro = Frame(window, height = 400, width = 240)
+        fcobro.place(x = 1020, y = 320)
+        
+        fmenu = Frame(window, height = 200, width = 240) #Frame de los botones de mesas
+        fmenu.place(x = 1020, y = 40)
+
+        #botones de seleccion de mesas de seleccion
+        self.bmesa1 = Button(fmenu, text = '1', height = 2, width = 5, command = self.mesa1)
+        self.bmesa1.place(x = 0, y = 40)
+        self.bmesa1.config(state='disable', bg = 'red')
+        self.bmesa3 = Button(fmenu, text = '3', height = 2, width = 5, command = self.mesa3)
+        self.bmesa3.place(x = 50, y = 40)
+        self.bmesa3.config(state='disable', bg = 'red')
+        self.bmesa5 = Button(fmenu, text = '5', height = 2, width = 5, command = self.mesa5)
+        self.bmesa5.place(x = 100, y = 40)
+        self.bmesa5.config(state='disable', bg = 'red')
+        self.bmesa6 = Button(fmenu, text = '6', height = 2, width = 5, command = self.mesa6)
+        self.bmesa6.place(x = 150, y = 40)
+        self.bmesa6.config(state='disable', bg = 'red')
+        self.bmesa7 = Button(fmenu, text = '7', height = 2, width = 5, command = self.mesa7)
+        self.bmesa7.place(x = 200, y = 40)
+        self.bmesa7.config(state='disable', bg = 'red')
+        self.bmesa8 = Button(fmenu, text = '8', height = 2, width = 5, command = self.mesa8)
+        self.bmesa8.place(x = 0, y = 85)
+        self.bmesa8.config(state='disable', bg = 'red')
+        self.bmesa9 = Button(fmenu, text = '9', height = 2, width = 5, command = self.mesa9)
+        self.bmesa9.place(x = 50, y = 85)
+        self.bmesa9.config(state='disable', bg = 'red')
+        self.bmesa10 = Button(fmenu, text = '10', height = 2, width = 5, command = self.mesa10)
+        self.bmesa10.place(x = 100, y = 85)
+        self.bmesa10.config(state='disable', bg = 'red')
+        self.bmesa11 = Button(fmenu, text = '11', height = 2, width = 5, command = self.mesa11)
+        self.bmesa11.place(x = 150, y = 85)
+        self.bmesa11.config(state='disable', bg = 'red')
+        self.bmesa12 = Button(fmenu, text = '12', height = 2, width = 5, command = self.mesa12)
+        self.bmesa12.place(x = 200, y = 85)
+        self.bmesa12.config(state='disable', bg = 'red')
+        self.bmesa13 = Button(fmenu, text = '13', height = 2, width = 5, command = self.mesa13)
+        self.bmesa13.place(x = 0, y = 130)
+        self.bmesa13.config(state='disable', bg = 'red')
+        self.bmesacv1 = Button(fmenu, text = 'CV1', height = 2, width = 5, command = self.mesac1)
+        self.bmesacv1.place(x = 50, y = 130)
+        self.bmesacv1.config(state='disable', bg = 'red')
+        self.bmesacv2 = Button(fmenu, text = 'CV2', height = 2, width = 5, command = self.mesac2)
+        self.bmesacv2.place(x = 100, y = 130)
+        self.bmesacv2.config(state='disable', bg = 'red')
+        self.bmesacv3 = Button(fmenu, text = 'CV3', height = 2, width = 5, command = self.mesac3)
+        self.bmesacv3.place(x = 150, y = 130)
+        self.bmesacv3.config(state='disable', bg = 'red')
+        self.bmesacv4 = Button(fmenu, text = 'CV4', height = 2, width = 5, command = self.mesac4)
+        self.bmesacv4.place(x = 200, y = 130)
+        self.bmesacv4.config(state='disable', bg = 'red')
+
+
+        # Creacion de etiquetas
+        self.lmesero = Label(frametabla, text = 'Mesero', font = ('Arial', 12, 'bold'))
+        self.lmesa = Label(frametabla, text = 'Mesa', font = ('Arial', 12, 'bold'))
+        self.lcantidad = Label(frametabla, text = 'Cant', font = ('Arial', 12, 'bold'))
+        self.ltotalpesos = Label(fcobro, text = 'Subtotal', font = ('Arial', 12, 'bold'))
+        self.liva = Label(fcobro, text = 'IVA', font = ('Arial', 12, 'bold'))
+        self.ltotal_desc = Label(fcobro, text = 'Total', font = ('Arial', 12, 'bold'))
+        self.ldescuento = Label(fcobro, text = 'Descuento', font = ('Arial', 12, 'bold'))
+        self.ltotalgeneral = Label(fcobro, text = 'Total', font = ('Arial', 12, 'bold'))
+        self.ltotaldolares = Label(fcobro, text = 'Total Dolares', font = ('Arial', 12, 'bold'))
+        self.lfecha_label = Label(window, text = 'Fecha:', font = ('Arial', 12, 'bold'))
+        self.lfecha_actual = Label(window, text = self.formato_fecha, font = ('Arial', 12, 'bold'))
+        self.lpago = Label(fcobro, text = 'Cobrar', font = ('Arial', 12, 'bold'))
+        self.ltipo_pago = Label(fcobro, text = 'Tipo de Pago', font = ('Arial', 12, 'bold'))
+        self.lcambio = Label(fcobro, text = 'Cambio', font = ('Arial', 12, 'bold'))
+        
+        #Posiciones de Etiquetas
+        self.lmesero.place(x = 0, y = 10)
+        self.lmesa.place(x = 300, y = 10)
+        self.lcantidad.place(x = 0, y = 400)
+        self.lfecha_label.place(x = 500, y = 10)
+        self.lfecha_actual.place(x = 570, y = 10)
+        self.ltotalpesos.place(x = 0, y = 0)
+        self.liva.place(x = 0, y = 40)
+        self.ltotal_desc.place(x = 0, y = 160)
+        self.ldescuento.place(x = 0, y = 120)
+        self.ltotalgeneral.place(x = 0, y = 80) 
+        self.ltotaldolares.place(x = 0, y = 200)
+        self.lpago.place(x = 0, y = 240)
+        self.ltipo_pago.place(x = 0, y = 280)
+        self.lcambio.place(x = 0, y = 320)
+
+        tipo_p = ['EFECTIVO', 'DOLARES', 'TARJETA']
+        lista_meseros = ['ERICK MARTINEZ', 'DIEGO HERNANDEZ', 'MIGUEL CORONA', 'MANUEL FLORES']
+        lista_mesas = ['1', '3', '5', '6', '7', '8', '9', '10', '11', '12', '13', 'Cava1', 'Cava2', 'Cava3', 'Cava4']
+        #lista_servicio = ['0', '10%', '15%', '20%']
+        lista_descuento = ['0', '10%', '20%', '30%']
+
+        #Creacion de cajas de texto
+        self.ecantidad = ttk.Combobox(frametabla, values = cantidad, width = 3)
+        self.emesero = ttk.Combobox(frametabla, values = lista_meseros, width = 30)
+        self.emesa = ttk.Combobox(frametabla, value = lista_mesas, width = 10)
+        self.etotalpesos = Entry(fcobro, width = 15)
+        self.eiva = Entry(fcobro, width = 15)
+        self.etotal_desc = Entry(fcobro, width = 15,)
+        self.edescuento = ttk.Combobox(fcobro, width = 12, values = lista_descuento)
+        self.etotalgeneral = Entry(fcobro, width = 15)
+        self.etotaldolares = Entry(fcobro, width = 15)
+        self.epago = Entry(fcobro, width = 15)
+        self.etipo_pago = ttk.Combobox(fcobro, width = 12, values = tipo_p)
+        self.ecambio = Entry(fcobro, width = 15)
+
+        #Posiciones de las cajas de texto
+        self.ecantidad.place(x = 55, y = 400)
+        self.emesero.place(x = 70, y = 10)
+        self.emesa.place(x = 350, y = 13)
+        self.etotalpesos.place(x = 120, y = 0)
+        self.etotalpesos.config(state = 'disable')
+        self.eiva.place(x = 120, y = 43)
+        self.eiva.config(state = 'disable')
+        self.etotal_desc.place(x = 120, y = 160)
+        self.etotal_desc.config(state = 'disable')
+        self.edescuento.place(x = 120, y = 120)
+        self.edescuento.config(state = 'disable')
+        self.etotalgeneral.place(x = 120, y = 80)
+        self.etotalgeneral.config(state = 'disable')
+        self.etotaldolares.place(x = 120, y = 200)
+        self.etotaldolares.config(state = 'disable')
+        self.epago.place(x = 120, y = 240)
+        self.epago.config(state = 'disable')
+        self.etipo_pago.place(x = 120, y = 280)
+        self.etipo_pago.config(state = 'disable')
+        self.ecambio.place(x = 120, y = 320)
+        self.ecambio.config(state = 'disable')
+        
+        #Notebook
+        pmenu = Notebook(frametabla, height = 300, width = 900)
+        pmenu.place(x = 0, y = 35)
+        frame1 = Frame(pmenu, height = 138, width = 900)
+        frame2 = Frame(pmenu, height = 138, width = 900)
+        frame3 = Frame(pmenu, height = 138, width = 900)
+        frame4 = Frame(pmenu, height = 138, width = 900)
+        frame5 = Frame(pmenu, height = 138, width = 900)
+        frame6 = Frame(pmenu, height = 138, width = 900)
+        frame7 = Frame(pmenu, height = 138, width = 900)
+        frame8 = Frame(pmenu, height = 138, width = 900)
+        frame9 = Frame(pmenu, height = 138, width = 900)
+        frame10 = Frame(pmenu, height = 138, width = 900)
+        frame11 = Frame(pmenu, height = 138, width = 900)
+        frame12 = Frame(pmenu, height = 138, width = 900)
+        frame13 = Frame(pmenu, height = 138, width = 900)
+        frame14 = Frame(pmenu, height = 138, width = 900)
+        frame15 = Frame(pmenu, height = 138, width = 900)
+        frame1.place(x = 0, y = 35)
+        frame2.place(x = 0, y = 35)
+        frame3.place(x = 0, y = 35)
+        frame4.place(x = 0, y = 35)
+        frame5.place(x = 0, y = 35)
+        frame6.place(x = 0, y = 35)
+        frame7.place(x = 0, y = 35)
+        frame8.place(x = 0, y = 35)
+        frame9.place(x = 0, y = 35)
+        frame10.place(x = 0, y = 35)
+        frame11.place(x = 0, y = 35)
+        frame12.place(x = 0, y = 35)
+        frame13.place(x = 0, y = 35)
+        frame14.place(x = 0, y = 35)
+        frame15.place(x = 0, y = 35)
+        pmenu.add(frame1, text='COMIDA')
+        pmenu.add(frame2, text='BEBIDA S/A')
+        pmenu.add(frame3, text='CERVEZAS')
+        pmenu.add(frame4, text='COCKTELERIA')
+        pmenu.add(frame5, text='BVTINTO')
+        pmenu.add(frame6, text='BVTINTO')
+        pmenu.add(frame7, text = 'BVBLANCO')
+        pmenu.add(frame8, text='BVBROSADO')
+        pmenu.add(frame9, text='RON')
+        pmenu.add(frame10, text='VODKA')
+        pmenu.add(frame11, text='WHISKY')
+        pmenu.add(frame12, text='TEQUILA')
+        pmenu.add(frame13, text='MEZCAL')
+        pmenu.add(frame14, text='DIJESTIVOS')
+        pmenu.add(frame15, text = 'OTROS')
+
+        #creacion de botones
+        self.brodizio = Button(frame1, text = 'Rodizio', height = 5, width = 12, command = self.botonrodizio)
+        self.brodiziol = Button(frame1, text = 'Rodizio Local', height = 5, width = 12, command = self.botonrodiziol)
+        self.brodiziom = Button(frame1, text = 'Rodizio Menor', height = 5, width = 12, command = self.botonrodiziom)
+        self.brodiziolm = Button(frame1, text = 'Rodizio \n Local Menor', height = 5, width = 12, command = self.botonrodizioml)
+        self.brodiziotg = Button(frame1, text = 'RodizioToGo', height = 5, width = 12, command = self.botonrodiziotg)
+        self.bpicana = Button(frame1, text = 'Picaña', height = 5, width = 12, command = self.botonpicana)
+        self.bpicanatg = Button(frame1, text = 'PicañaToGo', height = 5, width = 12, command = self.botonpicanatg)
+        self.btomahack = Button(frame1, text = 'TOMA HACK', height = 5, width = 12, command = self.botontomahack)
+        self.bburguer = Button(frame1, text = 'Burguer', height = 5, width = 12, command = self.botonburguer)
+        self.bburguertg = Button(frame1, text = 'BurguerToGo', height = 5, width = 12, command = self.botonburguertg)
+        self.brodiziopass = Button(frame1, text = 'Rodizio Passport', height = 5, width = 12, command = self.rodiziopassport)
+        self.brodiziocort = Button(frame1, text = 'Rodizio cortesia', height = 5, width = 12, command = self.rodiziocortesia)
+        self.bbotagua = Button(frame2, text = 'Agua Panna', height = 5, width = 12, command = self.botonaguap)
+        self.btopochico = Button(frame2, text = 'Topochico', height = 5, width = 12, command = self.botontopoc)
+        self.blimonada = Button(frame2, text = 'Limonada', height = 5, width = 12, command = self.botonlimonada)
+        self.bnaranjada = Button(frame2, text = 'Naranjada', height = 5, width = 12, command = self.botonnaranjada)
+        self.bcoca = Button(frame2, text = 'Coca Cola', height = 5, width = 12, command = self.botoncoca)
+        self.bcocad = Button(frame2, text = 'Coca Dieta', height = 5, width = 12, command = self.botoncocad)
+        self.bsprite = Button(frame2, text = 'Sprite', height = 5, width = 12, command = self.botonsprite)
+        self.bfresca = Button(frame2, text = 'Fresca', height = 5, width = 12, command = self.botonfresca)
+        self.bmundet = Button(frame2, text = 'Mundet', height = 5, width = 12, command = self.botonmundet)
+        self.bpinada = Button(frame2, text = 'Piñada', height = 5, width = 12, command = self.botonpinada)
+        self.bmojv = Button(frame2, text = 'Mojito S/A', height = 5, width = 12, command = self.botonmojitov)
+        self.bpituv = Button(frame2, text = 'Caipiriña S/A', height = 5, width = 12, command = self.botonpituv)
+        self.pacifico = Button(frame3, text = 'Pacifico', height = 5, width = 12, command = self.botonpacifico)
+        self.pacificos = Button(frame3, text = 'Ultra', height = 5, width = 12, command = self.botonultra)
+        self.pacificol = Button(frame3, text = 'Pacifico Ligth', height = 5, width = 12, command = self.botonpacificol)
+        self.corona = Button(frame3, text = 'Corona', height = 5, width = 12, command = self.botoncorona)
+        self.victoria = Button(frame3, text = 'Victoria', height = 5, width = 12, command = self.botonvictoria)
+        self.artesanal = Button(frame3, text = 'Artesanal', height = 5, width = 12, command = self.botonartesanal)
+        self.negram = Button(frame3, text = 'Negra Modelo', height = 5, width = 12, command = self.botonegramodelo)
+        self.bmezcalitaj = Button(frame4, text = 'Mezcalita \n Jamaica', height = 5, width = 12, command = self.botonmezcalitaj)
+        self.mojito = Button(frame4, text = 'Mojito', height = 5, width = 12, command = self.botonmojito)
+        self.bpitu = Button(frame4, text = 'Caipiriña', height = 5, width = 12, command = self.botoncaipirina)
+        self.bcvino = Button(frame5, text = 'Copa de Vino', height = 5, width = 12, command = self.botoncopadevino)
+        self.santam = Button(frame7, text = 'San Martino', height = 5, width = 12, command = self.bsanmartino)
+        self.mojitovt = Button(frame4, text = 'Mojito Tinto', height = 5, width = 12, command = self.mojitotinto)
+        self.mojitos = Button(frame4, text = 'Mojito Frutas', height = 5, width = 12, command = self.mojitosabores)
+        self.guanagin = Button(frame4, text = 'Guanabana \n Gin', height = 5, width = 12, command = self.guanabanagin)
+        self.coffe = Button(frame4, text = 'Coffe Martini', height = 5, width = 12, command = self.martinicoffe)
+        self.mezcamara = Button(frame4, text = 'Mezcalita \n Maracuya', height = 5, width = 12, command = self.mezcalitamaracuya)
+        self.mezcamango = Button(frame4, text = 'Mezcalita \n Mango', height = 5, width = 12, command = self.mezcalitamango)
+        self.mezcagua = Button(frame4, text = 'Mezcalita \n Guanabana', height = 5, width = 12, command = self.mezcalitaguanabana)
+        self.mezcatrad = Button(frame4, text = 'Mezcalita', height = 5, width = 12, command = self.mezcalitatradicional)
+        self.margatrad = Button(frame4, text = 'Margarita', height = 5, width = 12, command = self.margaritatradicional)
+        self.margamara = Button(frame4, text = 'Margarita \n Maracuya', height = 5, width = 12, command = self.margaritamaracuya)
+        self.margamango = Button(frame4, text = 'Margarita \n Mango', height = 5, width = 12, command = self.margaritamango)
+        self.margaguana = Button(frame4, text = 'Margarita \n Guanabana', height = 5, width = 12, command = self.margaritaguanabana)
+        self.margacadi = Button(frame4, text = 'Margarita \n Cadillac', height = 5, width = 12, command = self.margaritacadillac)
+        self.pitumara = Button(frame4, text = 'Caipiriña \n Maracuya', height = 5, width = 12, command = self.pitumaracuya)
+        self.pituman = Button(frame4, text = 'Caipiriña \n Mango', height = 5, width = 12, command = self.pitumango)
+        self.pituguaba = Button(frame4, text = 'Caipiriña \n Guanabana', height = 5, width = 12, command = self.pituguanabana)
+        self.negro = Button(frame4, text = 'Negroni', height = 5, width = 12, command = self.negroni)
+        self.ginto = Button(frame4, text = 'Gin Tonic', height = 5, width = 12, command = self.gintonic)
+        self.oldf = Button(frame4, text = 'Old Fashion', height = 5, width = 12, command = self.oldfashion)
+        self.cleritinto = Button(frame4, text = 'Clericot', height = 5, width = 12, command = self.clericottinto)
+        self.clerirosa = Button(frame4, text = 'Clericot Rosado', height = 5, width = 12, command = self.clericotrosado)
+        self.cleriblu = Button(frame4, text = 'Clericot \n Blue Berry', height = 5, width = 12, command = self.clericotblueberry)
+        self.gavilan = Button(frame4, text = 'Gavilan Reyes', height = 5, width = 12, command = self.gavilan_reyes)
+        self.sangriaa = Button(frame4, text = 'Sangria', height = 5, width = 12, command = self.sangria)
+        self.pinac = Button(frame4, text = 'Piña Colada', height = 5, width = 12, command = self.pina_colada)
+        self.cvrosado = Button(frame8, text = 'Copa de Vino \n Rosado', height = 5, width = 12, command = self.coparosado)
+        self.cvblanco = Button(frame7, text = 'Copa de Vino \n Blanco', height = 5, width = 12, command = self.copablanco)
+        self.cmaderocs = Button(frame5, text = 'Casa Madero \n CAB/SAU', height = 5, width = 12, command = self.casamadero)
+        self.cmadero_3v = Button(frame5, text = 'Casa Madero \n 3V', height = 5, width = 12, command = self.casamadero_3v)
+        self.picco = Button(frame5, text = 'Piccolo Blend', height = 5, width = 12, command = self.piccolo)
+        self.criosb = Button(frame5, text = 'CRIOS BLEND', height = 5, width = 12, command = self.criosblend)
+        self.criosm = Button(frame5, text = 'CRIOS MALBEC', height = 5, width = 12, command = self.criosmalbec)
+        self.crioscs = Button(frame5, text = 'CRIOS CAB/SAU', height = 5, width = 12, command = self.crioscab)
+        self.marcob = Button(frame5, text = 'Marco Bonfante', height = 5, width = 12, command = self.marcobonfante)
+        self.neroa = Button(frame5, text = 'Nero de Avola', height = 5, width = 12, command = self.neroavola)
+        self.monsyr = Button(frame5, text = 'Mongrass \n SYRAH', height = 5, width = 12, command = self.mongrasssyr)
+        self.monble = Button(frame5, text = 'Mongrass \n BLEND', height = 5, width = 12, command = self.mongrassblend)
+        self.moncab = Button(frame5, text = 'Mongrass \n CAB', height = 5, width = 12, command = self.mongrasscab)
+        self.decoypn = Button(frame5, text = 'Decoy \n Pinot Noir', height = 5, width = 12, command = self.decoy)
+        self.lomacab = Button(frame5, text = 'La Lomita \n CAB/SAU', height = 5, width = 12, command = self.lomita)
+        self.casta = Button(frame5, text = 'Casta Cardon', height = 5, width = 12, command = self.castacardon)
+        self.harasp = Button(frame5, text = 'Haras de Pirque \n Blend', height = 5, width = 12, command = self.harasdepirque)
+        self.harasg = Button(frame5, text = 'Haras de Pirque \n Gran Reserva', height = 5, width = 12, command = self.harasgran)
+        self.mini = Button(frame5, text = 'Minimalista \n Malbec', height = 5, width = 12, command = self.minimalista)
+        self.dominob = Button(frame5, text = 'Domino', height = 5, width = 12, command = self.domino)
+        self.abbo = Button(frame5, text = 'Abbout \n Pinot Noir', height = 5, width = 12, command = self.abbout)
+        self.bella = Button(frame5, text = 'Bellareta', height = 5, width = 12, command = self.bellaretta)
+        self.carl = Button(frame5, text = 'Carlidge', height = 5, width = 12, command = self.carlidge)
+        self.gnarly = Button(frame5, text = 'Gnarlyhead', height = 5, width = 12, command = self.gnarlyhead)
+        self.santa = Button(frame5, text = 'Santa Cristina', height = 5, width = 12, command = self.santacristina)
+        self.colezione = Button(frame5, text = 'Colezione', height = 5, width = 12, command = self.colezionemolte)
+        self.carat = Button(frame5, text = 'Caracter', height = 5, width = 12, command = self.caracter)
+        self.tierra = Button(frame5, text = 'Tierra Adentro', height = 5, width = 12, command = self.tierraadentro)
+        self.misa = Button(frame5, text = 'Misassou', height = 5, width = 12, command = self.misassou)
+        self.krug = Button(frame5, text = 'Kruguer', height = 5, width = 12, command = self.kruguer)
+        self.carre = Button(frame5, text = 'CARE', height = 5, width = 12, command = self.care)
+        self.dluis = Button(frame6, text = 'Don Luis Cetto \n Merlot', height = 5, width = 12, command = self.cetto)
+        self.calcanto = Button(frame6, text = 'Cal y Canto', height = 5, width = 12, command = self.calycanto)
+        self.cigli = Button(frame6, text = 'Cigliano \n Chianti Clasico', height = 5, width = 12, command = self.cigliano)
+        self.aguanat = Button(frame2, text = 'Bot de Agua \n Natural', height = 5, width = 12, command = self.botagua)
+        self.cavac = Button(frame7, text = 'Cava Cordova', height = 5, width = 12, command = self.cavacordova)
+        self.annie = Button(frame7, text = 'Anni Especial', height = 5, width = 12, command = self.anniespecial)
+        self.islan = Button(frame7, text = 'Isla Negra', height = 5, width = 12, command = self.islanegra)
+        self.tante = Button(frame7, text = 'Tantehue', height = 5, width = 12, command = self.tantehue)
+        self.michel = Button(frame7, text = 'Michel Torino', height = 5, width = 12, command = self.micheltorino)
+        self.rinco = Button(frame8, text = 'Rincones Rose', height = 5, width = 12, command = self.rincones)
+        self.boni = Button(frame8, text = 'Bonina Portugal', height = 5, width = 12, command = self.bonina)
+        self.razap = Button(frame8, text = 'Raza Portugal', height = 5, width = 12, command = self.raza)
+        self.porta6 = Button(frame8, text = 'Porta 6 Portugal', height = 5, width = 12, command = self.porta)
+        self.paaxd = Button(frame8, text = 'Espumoso Paax \n Dulce', height = 5, width = 12, command = self.espumosopaxx)
+        self.paaxbr = Button(frame8, text = 'Espumoso Paax \n Brut Rose', height = 5, width = 12, command = self.espumosopaxx_2)
+        
+        #Posiciones de botones del menu
+        self.brodizio.place(x = 0, y = 0)
+        self.brodiziol.place(x = 100, y = 0)
+        self.brodiziom.place(x = 200, y = 0)
+        self.brodiziolm.place(x = 300, y = 0)
+        self.brodiziotg.place(x = 400, y = 0)
+        self.bpicana.place(x = 500, y = 0)
+        self.bpicanatg.place(x = 600, y = 0)
+        self.btomahack.place(x = 700, y = 0)
+        self.bburguer.place(x = 800, y = 0)
+        self.bburguertg.place(x = 0, y = 90)
+        self.brodiziopass.place(x = 100, y = 90)
+        self.brodiziocort.place(x = 200, y = 90)
+        self.bbotagua.place(x = 0, y = 0)
+        self.aguanat.place(x = 100, y = 0)
+        self.btopochico.place(x = 200, y = 0)
+        self.blimonada.place(x = 300, y = 0)
+        self.bnaranjada.place(x = 400, y = 0)
+        self.bcoca.place(x = 500, y = 0)
+        self.bcocad.place(x = 600, y = 0)
+        self.bsprite.place(x = 700, y = 0)
+        self.bfresca.place(x = 800, y = 0)
+        self.bmundet.place(x = 0, y = 90)
+        self.bpinada.place(x = 100, y = 90)
+        self.bmojv.place(x = 200, y = 90)
+        self.bpituv.place(x = 300, y = 90)
+        self.pacifico.place(x = 0, y = 0)
+        self.pacificos.place(x = 100, y = 0)
+        self.pacificol.place(x = 200, y = 0)
+        self.corona.place(x = 300, y = 0)
+        self.victoria.place(x = 400, y = 0)
+        self.artesanal.place(x = 500, y = 0)
+        self.negram.place(x = 600, y = 0)
+        self.bmezcalitaj.place(x = 0, y = 0)
+        self.bpitu.place(x = 100, y = 0)
+        self.mojito.place(x = 200, y = 0)
+        self.mojitovt.place(x = 300, y = 0)
+        self.mojitos.place(x = 400, y = 0)
+        self.mezcamara.place(x = 500, y = 0)
+        self.mezcamango.place(x = 600, y = 0)
+        self.mezcagua.place(x = 700, y = 0)
+        self.mezcatrad.place(x = 800, y = 0)
+        self.margatrad.place(x = 0, y = 90)
+        self.margamara.place(x = 100, y = 90)
+        self.margamango.place(x = 200, y = 90)
+        self.margaguana.place(x = 300, y = 90)
+        self.margacadi.place(x = 400, y = 90)
+        self.pitumara.place(x = 500, y = 90)
+        self.pituman.place(x = 600, y = 90)
+        self.pituguaba.place(x = 700, y = 90)
+        self.negro.place(x = 800, y = 90)
+        self.ginto.place(x = 0, y = 180)
+        self.oldf.place(x = 100, y = 180)
+        self.cleritinto.place(x = 200, y = 180)
+        self.clerirosa.place(x = 300, y = 180)
+        self.cleriblu.place(x = 400, y = 180)
+        self.gavilan.place(x = 500, y = 180)
+        self.sangriaa.place(x = 600, y = 180)
+        self.pinac.place(x = 700, y = 180)
+        self.bcvino.place(x = 0, y = 0)
+        self.cmaderocs.place(x = 100, y = 0)
+        self.cmadero_3v.place(x = 200, y = 0)
+        self.picco.place(x = 300, y = 0)
+        self.criosb.place(x = 400, y = 0)
+        self.criosm.place(x = 500, y = 0)
+        self.crioscs.place(x = 600, y = 0)
+        self.marcob.place(x = 700, y = 0)
+        self.neroa.place(x = 800, y = 0)
+        self.monsyr.place(x = 900, y = 0)
+        self.monble.place(x = 0, y = 90)
+        self.moncab.place(x = 100, y = 90)
+        self.decoypn.place(x = 200, y = 90)
+        self.lomacab.place(x = 300, y = 90)
+        self.casta.place(x = 400, y = 90)
+        self.harasg.place(x = 500, y = 90)
+        self.harasp.place(x = 600, y = 90)
+        self.mini.place(x = 700, y = 90)
+        self.dominob.place(x = 800, y = 90)
+        self.abbo.place(x = 900, y = 90)
+        self.bella.place(x = 0, y = 180)
+        self.carl.place(x = 100, y = 180)
+        self.gnarly.place(x = 200, y = 180)
+        self.colezione.place(x = 300, y = 180)
+        self.carat.place(x = 400, y = 180)
+        self.tierra.place(x = 500, y = 180)
+        self.misa.place(x = 600, y = 180)
+        self.krug.place(x = 700, y = 180)
+        self.carre.place(x = 800, y = 180)
+        self.dluis.place(x = 0, y = 0)
+        self.calcanto.place(x = 100, y = 0)
+        self.cigli.place(x = 200, y = 0)
+        self.cvblanco.place(x = 0, y = 0)
+        self.santam.place(x = 100, y = 0)
+        self.cavac.place(x = 200, y = 0)
+        self.annie.place(x = 300, y = 0)
+        self.islan.place(x = 400, y = 0)
+        self.tante.place(x = 500, y = 0)
+        self.michel.place(x = 600, y = 0)
+        self.cvrosado.place(x = 0, y = 0)
+        self.rinco.place(x = 100, y = 0)
+        self.boni.place(x = 200, y = 0)
+        self.razap.place(x = 300, y = 0)
+        self.porta6.place(x = 400, y = 0)
+        self.paaxd.place(x = 500, y = 0)
+        self.paaxbr.place(x = 600, y = 0)
+        
+        
+        mprincipal = Menu(window)
+        minicio = Menu(mprincipal, tearoff = 0)
+        minicio.add_command(label = 'Salir', command = window.destroy)
+        minicio.add_command(label = 'Construir Tabla', command = self.construir)
+        mprincipal.add_cascade(label = 'Inicio', menu = minicio)
+
+        corte = Menu(mprincipal, tearoff = 0)
+        corte.add_command(label = 'Corte del dia', command = ventana)
+        corte.add_command(label = 'Estadisticas', command = ventana2)
+        mprincipal.add_cascade(label = 'Corte', menu = corte)
+        window.config(menu = mprincipal)
+
+        #Creacion de boton acciones
+        self.bguardar = ttk.Button(fcobro, text = 'Total', width = 35, command = self.sumartotales)
+        self.bguardar.place(x = 0, y = 345)
+        self.bguardar.config(state = 'disable')
+        self.blimpiar = ttk.Button(frametabla, text = 'Limpiar Ticket', command = self.Limpiarticket)
+        self.blimpiar.place(x = 180, y = 400)
+        self.cproducto = ttk.Button(frametabla, text = 'Cancelar Producto', command = self.eliminarfila)
+        self.cproducto.place(x = 0, y = 425)
+        self.cerrart = ttk.Button(frametabla, text = 'Guardar Ticket', command = self.generart)
+        self.cerrart.place(x = 265, y = 400)
+        self.quest = ttk.Button(frametabla, text = 'Cobrar Ticket', command = self.preguntar)
+        self.quest.place(x = 355, y = 400)
+        self.cobrart = ttk.Button(fcobro, text = 'Cobrar', width = 18, command = self.cobrarticket)
+        self.cobrart.place(x = 0, y = 370)
+        self.cobrart.config(state = 'disable')
+        self.cerrarmesa = ttk.Button(fcobro, text = 'Liberar Mesa', width = 16, command = self.liberarmesa)
+        self.cerrarmesa.place(x = 114, y = 370)
+        self.cerrarmesa.config(state = 'disable')
+        self.nuevot = ttk.Button(frametabla, text = 'Nuevo Ticket', command = self.nuevo_ticket)
+        self.nuevot.place(x = 100, y = 400)
