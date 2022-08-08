@@ -1,12 +1,13 @@
 from tkinter import *
 from tkinter import ttk, messagebox
-from formularios.formulario_estadistica import ventana2
-from formularios.botonesmenu import BonotonesMenu
+from formularios_punto_de_venta.formulario_estadistica import ventana2
+from formularios_punto_de_venta.botones.botonesmenu import BonotonesMenu
 import datetime
 from tkinter.ttk import Notebook
-import formularios.controlador_flujo as controlador
-from formularios.tickets import Tickets, Tickets2
-from formularios.formulario_consulta import ventana
+import formularios_punto_de_venta.controladoe_flujo as controlador
+from formularios_punto_de_venta.tickets import Tickets, Tickets2
+from formularios_punto_de_venta.formulario_corte import ventana
+
 
 class FormularioTickets(BonotonesMenu):
 
@@ -24,6 +25,12 @@ class FormularioTickets(BonotonesMenu):
             messagebox.showinfo(message=f"La tabla creada", title="Error")
 
         error = controlador.construir3()
+        if(error == 1):
+            messagebox.showerror(message=f"La tabla debe de existir", title="Error")  
+        else:
+            messagebox.showinfo(message=f"La tabla creada", title="Error")
+        
+        error = controlador.construir4()
         if(error == 1):
             messagebox.showerror(message=f"La tabla debe de existir", title="Error")  
         else:
@@ -197,6 +204,8 @@ class FormularioTickets(BonotonesMenu):
         self.bguardar.config(state = 'disable')
         self.cobrart.config(state = 'disable')
         self.cerrarmesa.config(state = 'disable')
+        self.esubtotal.config(state = 'disable')
+        self.eiva.config(state = 'disable')
     
 
     def eliminarfila(self):
@@ -220,6 +229,8 @@ class FormularioTickets(BonotonesMenu):
         self.epago.delete(0, END)
         self.etipo_pago.delete(0, END)
         self.ecambio.delete(0, END)
+        self.esubtotal.delete(0, END)
+        self.eiva.delete(0, END)
         regitro = self.captura.get_children()
         for i in regitro:
             self.captura.delete(i)
@@ -232,6 +243,8 @@ class FormularioTickets(BonotonesMenu):
         self.bguardar.config(state = 'disable')
         self.cobrart.config(state = 'disable')
         self.cerrarmesa.config(state = 'disable')
+        self.esubtotal.config(state = 'disable')
+        self.eiva.config(state = 'disable')
 
 
     def Limpiarticket(self):
@@ -252,6 +265,12 @@ class FormularioTickets(BonotonesMenu):
             self.etotalpesos.insert(END, suma)
             self.etotaldolares.delete(0, END)
             self.etotaldolares.insert(END, sumadolares)
+        subtotal = float(suma / 1.19)
+        iva = float(subtotal * .16)
+        self.esubtotal.delete(0, END)
+        self.esubtotal.insert(END, subtotal)
+        self.eiva.delete(0, END)
+        self.eiva.insert(END, iva)
  
        
     def preguntar(self):
@@ -265,6 +284,8 @@ class FormularioTickets(BonotonesMenu):
             self.bguardar.config(state = 'normal')
             self.cobrart.config(state = 'normal')
             self.cerrarmesa.config(state = 'normal')
+            self.esubtotal.config(state = 'normal')
+            self.eiva.config(state = 'normal')
         else:
             self.etotalpesos.config(state = 'disable')
             self.etotaldolares.config(state = 'disable')
@@ -274,6 +295,8 @@ class FormularioTickets(BonotonesMenu):
             self.bguardar.config(state = 'disable')
             self.cobrart.config(state = 'disable')
             self.cerrarmesa.config(state = 'disable')
+            self.esubtotal.config(state = 'disable')
+            self.eiva.config(state = 'disable')
 
 
     def __init__(self, window):
@@ -307,8 +330,8 @@ class FormularioTickets(BonotonesMenu):
         self.formato_fecha = datetime.datetime.strftime(fecha_actual, '%b/%d/%Y')
         self.hora_formato = datetime.datetime.strftime(fecha_actual, '%H:%M:%S')
         
-        fcobro = Frame(window, height = 245, width = 240)
-        fcobro.place(x = 460, y = 460)
+        fcobro = Frame(window, height = 355, width = 240)
+        fcobro.place(x = 1020, y = 360)
         
         fmenu = Frame(window, height = 200, width = 240) #Frame de los botones de mesas
         fmenu.place(x = 1020, y = 40)
@@ -372,6 +395,8 @@ class FormularioTickets(BonotonesMenu):
         self.lpago = Label(fcobro, text = 'Cobrar', font = ('Arial', 12, 'bold'))
         self.ltipo_pago = Label(fcobro, text = 'Tipo de Pago', font = ('Arial', 12, 'bold'))
         self.lcambio = Label(fcobro, text = 'Cambio', font = ('Arial', 12, 'bold'))
+        self.lsubtocal = Label(fcobro, text = 'Subtotal', font = ('Arial', 12, 'bold'))
+        self.liva = Label(fcobro, text = 'IVA', font = ('Arial', 12, 'bold'))
         
         #Posiciones de Etiquetas
         self.lmesero.place(x = 0, y = 10)
@@ -379,8 +404,10 @@ class FormularioTickets(BonotonesMenu):
         self.lcantidad.place(x = 0, y = 400)
         self.lfecha_label.place(x = 500, y = 10)
         self.lfecha_actual.place(x = 570, y = 10)
-        self.ltotalpesos.place(x = 0, y = 0)
-        self.ltotaldolares.place(x = 0, y = 40)
+        self.lsubtocal.place(x = 0, y = 0)
+        self.liva.place(x = 0, y = 40)
+        self.ltotalpesos.place(x = 0, y = 80)
+        self.ltotaldolares.place(x = 0, y = 120)
         
         tipo_p = ['EFECTIVO', 'DOLARES', 'TARJETA']
         lista_meseros = ['ERICK MARTINEZ', 'DIEGO HERNANDEZ', 'MIGUEL CORONA', 'MANUEL FLORES']
@@ -395,23 +422,29 @@ class FormularioTickets(BonotonesMenu):
         self.epago = Entry(fcobro, width = 15)
         self.etipo_pago = ttk.Combobox(fcobro, width = 12, values = tipo_p)
         self.ecambio = Entry(fcobro, width = 15)
+        self.esubtotal = Entry(fcobro, width = 15)
+        self.eiva = Entry(fcobro, width = 15)
 
         #Posiciones de las cajas de texto
         self.ecantidad.place(x = 55, y = 400)
         self.emesero.place(x = 70, y = 10)
         self.emesa.place(x = 350, y = 13)
-        self.etotalpesos.place(x = 120, y = 0)
+        self.esubtotal.place(x = 120, y = 0)
+        self.esubtotal.config(state = 'disable')
+        self.eiva.place(x = 120, y = 40)
+        self.eiva.config(state = 'disable')
+        self.etotalpesos.place(x = 120, y = 80)
         self.etotalpesos.config(state = 'disable')
-        self.etotaldolares.place(x = 120, y = 43)
+        self.etotaldolares.place(x = 120, y = 120)
         self.etotaldolares.config(state = 'disable')
-        self.lpago.place(x = 0, y = 80)
-        self.ltipo_pago.place(x = 0, y = 120)
-        self.lcambio.place(x = 0, y = 160)
-        self.epago.place(x = 120, y = 83)
+        self.lpago.place(x = 0, y = 160)
+        self.ltipo_pago.place(x = 0, y = 200)
+        self.lcambio.place(x = 0, y = 240)
+        self.epago.place(x = 120, y = 160)
         self.epago.config(state = 'disable')
-        self.etipo_pago.place(x = 120, y = 123)
+        self.etipo_pago.place(x = 120, y = 200)
         self.etipo_pago.config(state = 'disable')
-        self.ecambio.place(x = 120, y = 163)
+        self.ecambio.place(x = 120, y = 240)
         self.ecambio.config(state = 'disable')
         
         #Notebook
@@ -476,6 +509,7 @@ class FormularioTickets(BonotonesMenu):
         self.bburguertg = Button(frame1, text = 'BurguerToGo', height = 5, width = 12, command = self.botonburguertg)
         self.brodiziopass = Button(frame1, text = 'Rodizio Passport', height = 5, width = 12, command = self.rodiziopassport)
         self.brodiziocort = Button(frame1, text = 'Rodizio cortesia', height = 5, width = 12, command = self.rodiziocortesia)
+        self.rodiziodesc = Button(frame1, text = 'Rodizio 20% Desc', height = 5, width = 12, command = self.rodizio20descuento)
         self.bbotagua = Button(frame2, text = 'Agua Panna', height = 5, width = 12, command = self.botonaguap)
         self.btopochico = Button(frame2, text = 'Topochico', height = 5, width = 12, command = self.botontopoc)
         self.blimonada = Button(frame2, text = 'Limonada', height = 5, width = 12, command = self.botonlimonada)
@@ -571,7 +605,31 @@ class FormularioTickets(BonotonesMenu):
         self.porta6 = Button(frame8, text = 'Porta 6 Portugal', height = 5, width = 12, command = self.porta)
         self.paaxd = Button(frame8, text = 'Espumoso Paax \n Dulce', height = 5, width = 12, command = self.espumosopaxx)
         self.paaxbr = Button(frame8, text = 'Espumoso Paax \n Brut Rose', height = 5, width = 12, command = self.espumosopaxx_2)
-        
+        self.rbarcardi = Button(frame9, text = 'Bacardi Blanco', height = 5, width = 12, command = self.ronbaca)
+        self.rbarcardiane = Button(frame9, text = 'Bacardi Añejo', height = 5, width = 12, command = self.ronbacaane)
+        self.rhabana = Button(frame9, text = 'Habana \n Club 7 Años', height = 5, width = 12, command = self.habanaclub)
+        self.rflor = Button(frame9, text = 'Flor de Caña \n 12 Años', height = 5, width = 12, command = self.flor_cana)
+        self.rmalibu = Button(frame9, text = 'Malibu', height = 5, width = 12, command = self.malibu)
+        self.rcapitan = Button(frame9, text = 'Captain Morgan', height = 5, width = 12, command = self.captain)
+        self.rzacapa = Button(frame9, text = 'Zacapa \n 23 Años', height = 5, width = 12, command = self.zacapa)
+        self.vtitos = Button(frame10, text = 'Titos', height = 5, width = 12, command = self.titos)
+        self.vadsolut = Button(frame10, text = 'Adsolut', height = 5, width = 12, command = self.adsolut)
+        self.vcitron = Button(frame10, text = 'Adsolut Citron', height = 5, width = 12, command = self.citron)
+        self.vpear = Button(frame10, text = 'Adsolut Pear', height = 5, width = 12, command = self.pear)
+        self.vmandarin = Button(frame10, text = 'Adsolut Mandarin', height = 5, width = 12, command = self.mandarin)
+        self.vketel = Button(frame10, text = 'Ketel One', height = 5, width = 12, command = self.ketelone)
+        self.vgrey = Button(frame10, text = 'Grey Goose', height = 5, width = 12, command = self.greygoose)
+        self.vsmirnoff = Button(frame10, text = 'Smirnoff', height = 5, width = 12, command = self.smirnoff)
+        self.wroyal = Button(frame11, text = 'Crown Royal', height = 5, width = 12, command = self.crown)
+        self.wred = Button(frame11, text = 'Red Label', height = 5, width = 12, command = self.red_label)
+        self.wblack = Button(frame11, text = 'Black Label', height = 5, width = 12, command = self.black_label)
+        self.wmaker = Button(frame11, text = 'Makers Mark', height = 5, width = 12, command = self.makers_mark)
+        self.wjack = Button(frame11, text = 'Jack Daniels', height = 5, width = 12, command = self.jack_daniel)
+        self.wjim = Button(frame11, text = 'Jim Beam', height = 5, width = 12, command = self.jim_beam)
+        self.wwood = Button(frame11, text = 'Woodford', height = 5, width = 12, command = self.woodford)
+        self.wmaca = Button(frame11, text = 'Macallan \n 12 Años', height = 5, width = 12, command = self.macallan)
+        self.wsanto = Button(frame11, text = 'Santori', height = 5, width = 12, command = self.santori)
+
         #Posiciones de botones del menu
         self.brodizio.place(x = 0, y = 0)
         self.brodiziol.place(x = 100, y = 0)
@@ -585,6 +643,7 @@ class FormularioTickets(BonotonesMenu):
         self.bburguertg.place(x = 0, y = 90)
         self.brodiziopass.place(x = 100, y = 90)
         self.brodiziocort.place(x = 200, y = 90)
+        self.rodiziodesc.place(x = 300, y = 90)
         self.bbotagua.place(x = 0, y = 0)
         self.aguanat.place(x = 100, y = 0)
         self.btopochico.place(x = 200, y = 0)
@@ -628,9 +687,9 @@ class FormularioTickets(BonotonesMenu):
         self.cleritinto.place(x = 200, y = 180)
         self.clerirosa.place(x = 300, y = 180)
         self.cleriblu.place(x = 400, y = 180)
-        self.gavilan(x = 500, y = 180)
-        self.sangriaa(x = 600, y = 180)
-        self.pinac(x = 700, y = 180)
+        self.gavilan.place(x = 500, y = 180)
+        self.sangriaa.place(x = 600, y = 180)
+        self.pinac.place(x = 700, y = 180)
         self.bcvino.place(x = 0, y = 0)
         self.cmaderocs.place(x = 100, y = 0)
         self.cmadero_3v.place(x = 200, y = 0)
@@ -677,8 +736,31 @@ class FormularioTickets(BonotonesMenu):
         self.porta6.place(x = 400, y = 0)
         self.paaxd.place(x = 500, y = 0)
         self.paaxbr.place(x = 600, y = 0)
-        
-        
+        self.rbarcardi.place(x = 0, y = 0)
+        self.rbarcardiane.place(x = 100, y = 0)
+        self.rhabana.place(x = 200, y = 0)
+        self.rflor.place(x = 300, y = 0)
+        self.rmalibu.place(x = 400, y = 0)
+        self.rcapitan.place(x = 500, y = 0)
+        self.rzacapa.place(x = 600, y = 0)
+        self.vtitos.place(x = 0, y = 0)
+        self.vadsolut.place(x = 100, y = 0)
+        self.vcitron.place(x = 200, y = 0)
+        self.vpear.place(x = 300, y = 0)
+        self.vmandarin.place(x = 400, y = 0)
+        self.vketel.place(x = 500, y = 0)
+        self.vgrey.place(x = 600, y = 0)
+        self.vsmirnoff.place(x = 700, y = 0)
+        self.wroyal.place(x = 0, y = 0)
+        self.wred.place(x = 100, y = 0)
+        self.wblack.place(x = 200, y = 0)
+        self.wmaker.place(x = 300, y = 0)
+        self.wjack.place(x = 400, y = 0)
+        self.wjim.place(x = 500, y = 0)
+        self.wwood.place(x = 600, y = 0)
+        self.wmaca.place(x = 700, y = 0)
+        self.wsanto.place(x = 800, y = 0)
+
         mprincipal = Menu(window)
         minicio = Menu(mprincipal, tearoff = 0)
         minicio.add_command(label = 'Salir', command = window.destroy)
@@ -692,8 +774,8 @@ class FormularioTickets(BonotonesMenu):
         window.config(menu = mprincipal)
 
         #Creacion de boton acciones
-        self.bguardar = ttk.Button(frametabla, text = 'Total', command = self.sumartotales)
-        self.bguardar.place(x = 445, y = 400)
+        self.bguardar = ttk.Button(fcobro, text = 'Total', width = 35, command = self.sumartotales)
+        self.bguardar.place(x = 0, y = 265)
         self.bguardar.config(state = 'disable')
         self.blimpiar = ttk.Button(frametabla, text = 'Limpiar Ticket', command = self.Limpiarticket)
         self.blimpiar.place(x = 180, y = 400)
@@ -703,11 +785,11 @@ class FormularioTickets(BonotonesMenu):
         self.cerrart.place(x = 265, y = 400)
         self.quest = ttk.Button(frametabla, text = 'Cobrar Ticket', command = self.preguntar)
         self.quest.place(x = 355, y = 400)
-        self.cobrart = ttk.Button(fcobro, text = 'Cobrar', command = self.cobrarticket)
-        self.cobrart.place(x = 0, y = 200)
+        self.cobrart = ttk.Button(fcobro, text = 'Cobrar', width = 18, command = self.cobrarticket)
+        self.cobrart.place(x = 0, y = 290)
         self.cobrart.config(state = 'disable')
-        self.cerrarmesa = ttk.Button(fcobro, text = 'Liberar Mesa', command = self.liberarmesa)
-        self.cerrarmesa.place(x = 100, y = 200)
+        self.cerrarmesa = ttk.Button(fcobro, text = 'Liberar Mesa', width = 16, command = self.liberarmesa)
+        self.cerrarmesa.place(x = 115, y = 290)
         self.cerrarmesa.config(state = 'disable')
         self.nuevot = ttk.Button(frametabla, text = 'Nuevo Ticket', command = self.nuevo_ticket)
         self.nuevot.place(x = 100, y = 400)
