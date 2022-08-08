@@ -1,4 +1,4 @@
-from formularios.repositorio_tickets import RepositorioTickets
+from formularios_punto_de_venta.repositorio_tickets import RepositorioTickets
 
 
 def insertar_tickets(tickets):
@@ -7,6 +7,10 @@ def insertar_tickets(tickets):
 
 def insertar_tickets2(tickets):
     return RepositorioTickets().insertar2(tickets)
+
+
+def insertar_producto(producto):
+    return RepositorioTickets().insertar4(producto)
 
 
 def insertar_tickets3(tickets):
@@ -39,3 +43,7 @@ def construir2():
 
 def construir3():    
     return RepositorioTickets().contruir_tabla3()
+
+
+def construir4():
+    return RepositorioTickets().construir_tabla4()
