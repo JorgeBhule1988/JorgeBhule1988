@@ -271,3 +271,22 @@ class RepositorioTickets(RepositorioConexionSQLite):
             self.cerrar_conexion()
 
         return afectado
+    
+    def consultarproducto(self):
+        nombre = []
+        try:
+            super().conetarse()
+            cursor = self.connection.cursor()
+
+            colsulta_producto = """SELECT nombre FROM tabla_producto"""
+            cursor = self.connection.cursor()
+            cursor.execute(colsulta_producto)            
+            records = cursor.fetchall()
+            for row in records:
+               nombre.append(row[0])
+            return nombre 
+        except mysql.connector.Error as error:
+            print(f"Fallo la insercion {error}")
+        finally:
+            self.cerrar_conexion()
+        
