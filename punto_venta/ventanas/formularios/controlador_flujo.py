@@ -47,3 +47,7 @@ def construir3():
 
 def construir4():
     return RepositorioTickets().construir_tabla4()
+
+
+def consultar1():
+    return RepositorioTickets().consultarproducto()
