@@ -153,7 +153,7 @@ class FormularioTickets(BonotonesMenu):
             self.bmesacv4.config(state = 'normal', bg = 'green')
         
         self.nuevo_ticket()
-  
+
 
     def liberarmesa(self):
     
@@ -629,6 +629,21 @@ class FormularioTickets(BonotonesMenu):
         self.wwood = Button(frame11, text = 'Woodford', height = 5, width = 12, command = self.woodford)
         self.wmaca = Button(frame11, text = 'Macallan \n 12 Años', height = 5, width = 12, command = self.macallan)
         self.wsanto = Button(frame11, text = 'Santori', height = 5, width = 12, command = self.santori)
+        self.mconejos = Button(frame13, text = '400 Conejos', height = 5, width = 12, command = self.cuatroconejos)
+        self.msuceso = Button(frame13, text = 'Buen Suceso', height = 5, width = 12, command = self.buensuceso)
+        self.maleron = Button(frame13, text = 'Aleron', height = 5, width = 12, command = self.aleron)
+        self.mmitre = Button(frame13, text = 'Mitre', height = 5, width = 12, command = self.mitre)
+        self.mcasa = Button(frame13, text = 'Mezcal \n de la Casa', height = 5, width = 12, command = self.casamezcal)
+        self.dkalhua = Button(frame14, text = 'Kalhua', height = 5, width = 12, command = self.kalua)
+        self.dlicor = Button(frame14, text = 'Licor 43', height = 5, width = 12, command = self.licor_43)
+        self.dbaileys = Button(frame14, text = 'Baileys', height = 5, width = 12, command = self.baileys)
+        self.ddisarono = Button(frame14, text = 'Disarono', height = 5, width = 12, command = self.disarono)
+        self.dzambuca = Button(frame14, text = 'Zambuca', height = 5, width = 12, command = self.zambuca)
+        self.dnegro = Button(frame14, text = 'Zambuca Negro', height = 5, width = 12, command = self.zambuca_negro)
+        self.dgrand = Button(frame14, text = 'Grand Marnier', height = 5, width = 12, command = self.grandmarnier)
+        self.dfrangelico = Button(frame14, text = 'Frangelico', height = 5, width = 12, command = self.frangelico)
+        self.dcour = Button(frame14, text = 'Courvusier VS', height = 5, width = 12, command = self.courvusier)
+        self.dazteca = Button(frame14, text = 'Azteca', height = 5, width = 12, command = self.azteca)
 
         #Posiciones de botones del menu
         self.brodizio.place(x = 0, y = 0)
@@ -760,6 +775,50 @@ class FormularioTickets(BonotonesMenu):
         self.wwood.place(x = 600, y = 0)
         self.wmaca.place(x = 700, y = 0)
         self.wsanto.place(x = 800, y = 0)
+        self.mconejos.place(x = 0, y = 0)
+        self.msuceso.place(x = 100, y = 0)
+        self.maleron.place(x = 200, y = 0)
+        self.mmitre.place(x = 300, y = 0)
+        self.mcasa.place(x = 400, y = 0)
+        self.dkalhua.place(x = 0, y = 0)
+        self.dlicor.place(x = 100, y = 0)
+        self.dbaileys.place(x = 200, y = 0)
+        self.ddisarono.place(x = 300, y = 0)
+        self.dzambuca.place(x = 400, y = 0)
+        self.dnegro.place(x = 500, y = 0)
+        self.dgrand.place(x = 600, y = 0)
+        self.dfrangelico.place(x = 700, y = 0)
+        self.dcour.place(x = 800, y = 0)
+        self.dazteca.place(x = 0, y = 90)
+        
+        productname = controlador.consultar1()
+        category = ['COMIDA', 'BEBIDA NO ALCOHOL', 'CERVEZA', 'COCKTELERIA', 'VINO TINTO',
+                    'VINO BLANCO', 'VINO ROSADO', 'VINO ESPUMOSO', 'RON', 'VODKA', 'WHISKY',
+                    'TEQUILA', 'MEZCAL', 'LICORES', 'OTROS']
+        existens = ['SI', 'NO']
+
+        self.lname_product = Label(frame15, text = 'Nombre del Producto', font = ('Arial', 12, 'bold'))
+        self.lcategory = Label(frame15, text = 'Categoria', font = ('Arial', 12, 'bold'))
+        self.lprice_unit = Label(frame15, text = 'Precio Unitario', font = ('Arial', 12, 'bold'))
+        self.lstock = Label(frame15, text = 'Stock', font = ('Arial', 12, 'bold'))
+        self.lexitencias = Label(frame15, text = 'Existencia', font = ('Arial', 12, 'bold'))
+
+        self.enombre_producto = ttk.Combobox(frame15, values = productname, width = 12)
+        self.ecategoria = ttk.Combobox(frame15, values = category, width = 12)
+        self.eprecio_unit = Entry(frame15, width = 15)
+        self.estock = Entry(frame15, width = 15)
+        self.eexistencias = ttk.Combobox(frame15, values = existens, width = 12)
+
+        self.lname_product.place(x = 0, y = 0)
+        self.lcategory.place(x = 0, y = 40)
+        self.lprice_unit.place(x = 0, y = 80)
+        self.lstock.place(x = 0, y = 120)
+        self.lexitencias.place(x = 0, y = 160)
+        self.enombre_producto.place(x = 200, y = 0)
+        self.ecategoria.place(x = 200, y = 40)
+        self.eprecio_unit.place(x = 200, y = 80)
+        self.estock.place(x = 200, y = 120)
+        self.eexistencias.place(x = 200, y = 160)
 
         mprincipal = Menu(window)
         minicio = Menu(mprincipal, tearoff = 0)
@@ -793,3 +852,5 @@ class FormularioTickets(BonotonesMenu):
         self.cerrarmesa.config(state = 'disable')
         self.nuevot = ttk.Button(frametabla, text = 'Nuevo Ticket', command = self.nuevo_ticket)
         self.nuevot.place(x = 100, y = 400)
+        self.agregarproducto = ttk.Button(frame15, text = 'Agregar', width = 15)
+        self.agregarproducto.place(x = 0, y = 200)
