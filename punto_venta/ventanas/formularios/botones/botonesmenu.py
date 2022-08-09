@@ -11,9 +11,10 @@ from formularios_punto_de_venta.botones.botones_menus.botones_vino_blanco import
 from formularios_punto_de_venta.botones.botones_menus.botones_vino_rosado import BotonesVinoRosado
 from formularios_punto_de_venta.botones.botones_menus.botones_vodka import BotonesVodka
 from formularios_punto_de_venta.botones.botones_menus.botones_whisky import BotonesWhisky
+from formularios_punto_de_venta.botones.botones_menus.botones_mezcal import BotonesMezcal
+from formularios_punto_de_venta.botones.botones_menus.botones_dijestivos import BotonesDojestivos
 #from formularios_punto_de_venta.botones.botones_menus.botones_mesas import BotonesMesas
 import mysql.connector
-
 
 class BonotonesMenu(RepositorioConexionSQLite):
 
@@ -654,6 +655,66 @@ class BonotonesMenu(RepositorioConexionSQLite):
     
     def santori(self):
         BotonesWhisky.santori1(self)
+    
+
+    def cuatroconejos(self):
+        BotonesMezcal.cuatroconejo1(self)
+
+
+    def buensuceso(self):
+        BotonesMezcal.buensuceso1(self)
+
+    
+    def aleron(self):
+        BotonesMezcal.aleron1(self)
+
+    
+    def mitre(self):
+        BotonesMezcal.mitre1(self)
+    
+
+    def casamezcal(self):
+        BotonesMezcal.mezcalcasa1(self)
+
+
+    def kalua(self):
+        BotonesDojestivos.kahlua1(self)
+
+
+    def licor_43(self):
+        BotonesDojestivos.licor1(self)
+
+
+    def baileys(self):
+        BotonesDojestivos.baileys1(self)
+
+
+    def disarono(self):
+        BotonesDojestivos.disarono1(self)
+
+
+    def zambuca(self):
+        BotonesDojestivos.zambuca1(self)
+
+
+    def zambuca_negro(self):
+        BotonesDojestivos.zambucanegro1(self)
+
+
+    def grandmarnier(self):
+        BotonesDojestivos.marnier1(self)
+
+
+    def frangelico(self):
+        BotonesDojestivos.frangelico1(self)
+
+
+    def courvusier(self):
+        BotonesDojestivos.courvusier1(self)
+
+
+    def azteca(self):
+        BotonesDojestivos.azteca1(self)    
 
 
     def limpiar(self):
