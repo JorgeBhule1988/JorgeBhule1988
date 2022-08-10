@@ -1,12 +1,14 @@
 from tkinter import *
 from tkinter import ttk, messagebox
-from formularios_punto_de_venta.formulario_estadistica import ventana2
-from formularios_punto_de_venta.botones.botonesmenu import BonotonesMenu
+from formularios.formulario_estadistica import ventana2
+from formularios.botones.botonesmenu import BonotonesMenu
 import datetime
 from tkinter.ttk import Notebook
-import formularios_punto_de_venta.controladoe_flujo as controlador
-from formularios_punto_de_venta.tickets import Tickets, Tickets2
-from formularios_punto_de_venta.formulario_corte import ventana
+import dominio.controlador.controlador_flujo as controlador
+from dominio.tickets import Tickets, Tickets2
+from formularios.formulario_consulta import ventana
+from formularios.formulario_agregar_producto import FormularioAgregarProducto
+from formularios.formulario_inventario import FormularioInventario
 
 
 class FormularioTickets(BonotonesMenu):
@@ -46,17 +48,22 @@ class FormularioTickets(BonotonesMenu):
         t.total = self.etotalpesos.get()
         t.tipopago = self.etipo_pago.get()
         
-        afectados =controlador.insertar_tickets(t)
-        if(afectados == 0):
-            messagebox.showerror(message=f"Error al guardar verifique la clave que no este repetida", title="Error")    
-        else :
-            messagebox.showinfo(message=f"Guardado con exito {afectados} registro", title="Salvar") 
+        if (float(self.epago.get()) < float(self.etotalpesos.get())):
+            messagebox.showwarning(message = f'La cantidad {self.epago.get()} es menor a la cantidad a cobrar ingrese una cantidad valida')
+            self.epago.delete(0, END)
+        elif len(self.etipo_pago.get()) < 1:
+            messagebox.showwarning(message = 'Falta capturar el metodo de pago')
+        else:
+            cobro = float(self.epago.get()) - float(self.etotalpesos.get())
+            self.ecambio.delete(0, END)
+            self.ecambio.insert(END, cobro)
+
+            afectados =controlador.insertar_tickets(t)
+            if(afectados == 0):
+                messagebox.showerror(message=f"Error al guardar verifique la clave que no este repetida", title="Error")    
+            else :
+                messagebox.showinfo(message=f"Guardado con exito {afectados} registro", title="Salvar") 
         
-
-        cobro = float(self.epago.get()) - float(self.etotalpesos.get())
-        self.ecambio.delete(0, END)
-        self.ecambio.insert(END, cobro)
-
 
     def generart(self):
 
@@ -231,6 +238,8 @@ class FormularioTickets(BonotonesMenu):
         self.ecambio.delete(0, END)
         self.esubtotal.delete(0, END)
         self.eiva.delete(0, END)
+        self.enombre_product.delete(0, END)
+        self.eprecio_unit.delete(0, END)
         regitro = self.captura.get_children()
         for i in regitro:
             self.captura.delete(i)
@@ -299,6 +308,27 @@ class FormularioTickets(BonotonesMenu):
             self.eiva.config(state = 'disable')
 
 
+    def agregar_producto(self):
+        
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * float(self.eprecio_unit.get())
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = (str(self.enombre_product.get()), str(self.eprecio_unit.get()), subtotal))
+            self.ecantidad.delete(0, END)
+            self.enombre_product.delete(0, END)
+            self.eprecio_unit.delete(0, END)
+
+
+    def altaproducto(self):
+        
+        FormularioAgregarProducto(self.fproducto)
+    
+    def inventarioproducto(self):
+        
+        FormularioInventario(self.fproducto2)
+
+
     def __init__(self, window):
 
         cantidad = ['1' , '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16',
@@ -335,6 +365,12 @@ class FormularioTickets(BonotonesMenu):
         
         fmenu = Frame(window, height = 200, width = 240) #Frame de los botones de mesas
         fmenu.place(x = 1020, y = 40)
+
+        self.fproducto = Frame(window, height = 310, width = 550, bg = 'blue')
+        self.fproducto.place(x = 460, y = 390)
+
+        self.fproducto2 = Frame(window, height = 310, width = 550, bg = 'red')
+        self.fproducto2.place(x = 460, y = 390)
 
         #botones de seleccion de mesas de seleccion
         self.bmesa1 = Button(fmenu, text = '1', height = 2, width = 5, command = self.mesa1)
@@ -504,7 +540,7 @@ class FormularioTickets(BonotonesMenu):
         self.brodiziotg = Button(frame1, text = 'RodizioToGo', height = 5, width = 12, command = self.botonrodiziotg)
         self.bpicana = Button(frame1, text = 'Picaña', height = 5, width = 12, command = self.botonpicana)
         self.bpicanatg = Button(frame1, text = 'PicañaToGo', height = 5, width = 12, command = self.botonpicanatg)
-        self.btomahack = Button(frame1, text = 'TOMA HACK', height = 5, width = 12, command = self.botontomahack)
+        self.btomahack = Button(frame1, text = 'TOMA HAWK', height = 5, width = 12, command = self.botontomahack)
         self.bburguer = Button(frame1, text = 'Burguer', height = 5, width = 12, command = self.botonburguer)
         self.bburguertg = Button(frame1, text = 'BurguerToGo', height = 5, width = 12, command = self.botonburguertg)
         self.brodiziopass = Button(frame1, text = 'Rodizio Passport', height = 5, width = 12, command = self.rodiziopassport)
@@ -791,34 +827,17 @@ class FormularioTickets(BonotonesMenu):
         self.dcour.place(x = 800, y = 0)
         self.dazteca.place(x = 0, y = 90)
         
-        productname = controlador.consultar1()
-        category = ['COMIDA', 'BEBIDA NO ALCOHOL', 'CERVEZA', 'COCKTELERIA', 'VINO TINTO',
-                    'VINO BLANCO', 'VINO ROSADO', 'VINO ESPUMOSO', 'RON', 'VODKA', 'WHISKY',
-                    'TEQUILA', 'MEZCAL', 'LICORES', 'OTROS']
-        existens = ['SI', 'NO']
+        # productname = controlador.consultar1() Avilitar mas adelante
 
         self.lname_product = Label(frame15, text = 'Nombre del Producto', font = ('Arial', 12, 'bold'))
-        self.lcategory = Label(frame15, text = 'Categoria', font = ('Arial', 12, 'bold'))
         self.lprice_unit = Label(frame15, text = 'Precio Unitario', font = ('Arial', 12, 'bold'))
-        self.lstock = Label(frame15, text = 'Stock', font = ('Arial', 12, 'bold'))
-        self.lexitencias = Label(frame15, text = 'Existencia', font = ('Arial', 12, 'bold'))
-
-        self.enombre_producto = ttk.Combobox(frame15, values = productname, width = 12)
-        self.ecategoria = ttk.Combobox(frame15, values = category, width = 12)
+        self.enombre_product = Entry(frame15, width = 15)
         self.eprecio_unit = Entry(frame15, width = 15)
-        self.estock = Entry(frame15, width = 15)
-        self.eexistencias = ttk.Combobox(frame15, values = existens, width = 12)
 
         self.lname_product.place(x = 0, y = 0)
-        self.lcategory.place(x = 0, y = 40)
         self.lprice_unit.place(x = 0, y = 80)
-        self.lstock.place(x = 0, y = 120)
-        self.lexitencias.place(x = 0, y = 160)
-        self.enombre_producto.place(x = 200, y = 0)
-        self.ecategoria.place(x = 200, y = 40)
+        self.enombre_product.place(x = 200, y = 0)
         self.eprecio_unit.place(x = 200, y = 80)
-        self.estock.place(x = 200, y = 120)
-        self.eexistencias.place(x = 200, y = 160)
 
         mprincipal = Menu(window)
         minicio = Menu(mprincipal, tearoff = 0)
@@ -852,5 +871,9 @@ class FormularioTickets(BonotonesMenu):
         self.cerrarmesa.config(state = 'disable')
         self.nuevot = ttk.Button(frametabla, text = 'Nuevo Ticket', command = self.nuevo_ticket)
         self.nuevot.place(x = 100, y = 400)
-        self.agregarproducto = ttk.Button(frame15, text = 'Agregar', width = 15)
+        self.agregarproducto = ttk.Button(frame15, text = 'Agregar', width = 15, command = self.agregar_producto)
         self.agregarproducto.place(x = 0, y = 200)
+        self.alta_producto = ttk.Button(window, text = 'Alta Producto', width = 45, command = self.altaproducto)
+        self.alta_producto.place(x = 460, y = 360)
+        self.inventario = ttk.Button(window, text = 'Inventario Producto', width = 43, command = self.inventarioproducto)
+        self.inventario.place(x = 725, y = 360)
