@@ -280,6 +280,44 @@ class FormularioTickets(BonotonesMenu):
         self.esubtotal.insert(END, subtotal)
         self.eiva.delete(0, END)
         self.eiva.insert(END, iva)
+        
+        c = Conector()
+        c.textoConAcentos("Rodizio Grill\n")
+        c.establecerEnfatizado(1)
+        c.textoConAcentos("Domicilio: Calle Niños Heroes S/N Col. Centro\n")
+        c.establecerEnfatizado(1)
+        c.textoConAcentos(f"Mesero: {self.emesero.get()} \n")
+        c.establecerEnfatizado(1)
+        c.textoConAcentos(f'Mesa: {self.emesa.get()} \n')
+        c.establecerEnfatizado(1)
+        c.textoConAcentos(f'Fecha: {self.formato_fecha} \n')
+        c.establecerEnfatizado(1)
+        c.textoConAcentos(f'Mesa: {self.hora_formato} \n')
+        c.establecerEnfatizado(1)
+        c.textoConAcentos(f'Cant  Producto  Precio  Total\n')
+        c.establecerEnfatizado(1)
+        for i in self.captura.get_children():
+            item = self.captura.item(i)
+            cant = item['text']
+            prod = item['values'][0]
+            prec = item['values'][1]
+            subt = item['values'][2]
+            c.textoConAcentos(f'{cant} {prod} {prec} {subt} \n')
+            c.establecerEnfatizado(1)
+        c.textoConAcentos(f'Total Pesos: {self.etotalpesos.get()} \n')
+        c.establecerEnfatizado(1)
+        c.textoConAcentos(f'Total DLL: {self.etotaldolares.get()} \n')
+        c.establecerEnfatizado(1)
+        c.feed(5)
+        c.cortar()
+        c.abrirCajon()
+        print("Imprimiendo...")
+        # Recuerda cambiar por el nombre de tu impresora
+        respuesta = c.imprimirEn("TM-T88IV")
+        if respuesta == True:
+            print("Impresión correcta")
+        else:
+            print(f"Error. El mensaje es: {respuesta}")
  
        
     def preguntar(self):
