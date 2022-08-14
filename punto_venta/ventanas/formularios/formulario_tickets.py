@@ -308,18 +308,6 @@ class FormularioTickets(BonotonesMenu):
             self.eiva.config(state = 'disable')
 
 
-    def agregar_producto(self):
-        
-        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
-            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
-        else:
-            subtotal = float(self.ecantidad.get()) * float(self.eprecio_unit.get())
-            self.captura.insert('', END, text = str(self.ecantidad.get()), values = (str(self.enombre_product.get()), str(self.eprecio_unit.get()), subtotal))
-            self.ecantidad.delete(0, END)
-            self.enombre_product.delete(0, END)
-            self.eprecio_unit.delete(0, END)
-
-
     def altaproducto(self):
         
         FormularioAgregarProducto(self.fproducto2)
@@ -860,8 +848,6 @@ class FormularioTickets(BonotonesMenu):
         self.cerrarmesa.config(state = 'disable')
         self.nuevot = ttk.Button(frametabla, text = 'Nuevo Ticket', command = self.nuevo_ticket)
         self.nuevot.place(x = 100, y = 400)
-        self.agregarproducto = ttk.Button(self.frame15, text = 'Agregar', width = 15, command = self.agregar_producto)
-        self.agregarproducto.place(x = 0, y = 200)
         self.alta_producto = ttk.Button(window, text = 'Alta Producto', width = 45, command = self.altaproducto)
         self.alta_producto.place(x = 460, y = 360)
         self.binventario = ttk.Button(window, text = 'Inventario Producto', width = 43, command = self.inventarioproducto)
