@@ -322,11 +322,12 @@ class FormularioTickets(BonotonesMenu):
 
     def altaproducto(self):
         
-        FormularioAgregarProducto(self.fproducto)
+        FormularioAgregarProducto(self.fproducto2)
+ 
     
     def inventarioproducto(self):
         
-        FormularioInventario(self.fproducto2)
+        FormularioInventario(self.frame15)
 
 
     def __init__(self, window):
@@ -486,7 +487,7 @@ class FormularioTickets(BonotonesMenu):
         #Notebook
         pmenu = Notebook(frametabla, height = 300, width = 900)
         pmenu.place(x = 0, y = 35)
-        frame1 = Frame(pmenu, height = 138, width = 900)
+        frame1 = Frame(pmenu, height = 138, width = 900, bg = 'yellow')
         frame2 = Frame(pmenu, height = 138, width = 900)
         frame3 = Frame(pmenu, height = 138, width = 900)
         frame4 = Frame(pmenu, height = 138, width = 900)
@@ -500,7 +501,7 @@ class FormularioTickets(BonotonesMenu):
         frame12 = Frame(pmenu, height = 138, width = 900)
         frame13 = Frame(pmenu, height = 138, width = 900)
         frame14 = Frame(pmenu, height = 138, width = 900)
-        frame15 = Frame(pmenu, height = 138, width = 900)
+        self.frame15 = Frame(pmenu, height = 138, width = 900, bg = 'orange')
         frame1.place(x = 0, y = 35)
         frame2.place(x = 0, y = 35)
         frame3.place(x = 0, y = 35)
@@ -515,7 +516,7 @@ class FormularioTickets(BonotonesMenu):
         frame12.place(x = 0, y = 35)
         frame13.place(x = 0, y = 35)
         frame14.place(x = 0, y = 35)
-        frame15.place(x = 0, y = 35)
+        self.frame15.place(x = 0, y = 35)
         pmenu.add(frame1, text='COMIDA')
         pmenu.add(frame2, text='BEBIDA S/A')
         pmenu.add(frame3, text='CERVEZAS')
@@ -530,7 +531,7 @@ class FormularioTickets(BonotonesMenu):
         pmenu.add(frame12, text='TEQUILA')
         pmenu.add(frame13, text='MEZCAL')
         pmenu.add(frame14, text='DIJESTIVOS')
-        pmenu.add(frame15, text = 'OTROS')
+        pmenu.add(self.frame15, text = 'OTROS')
 
         #creacion de botones
         self.brodizio = Button(frame1, text = 'Rodizio', height = 5, width = 12, command = self.botonrodizio)
@@ -826,18 +827,6 @@ class FormularioTickets(BonotonesMenu):
         self.dfrangelico.place(x = 700, y = 0)
         self.dcour.place(x = 800, y = 0)
         self.dazteca.place(x = 0, y = 90)
-        
-        # productname = controlador.consultar1() Avilitar mas adelante
-
-        self.lname_product = Label(frame15, text = 'Nombre del Producto', font = ('Arial', 12, 'bold'))
-        self.lprice_unit = Label(frame15, text = 'Precio Unitario', font = ('Arial', 12, 'bold'))
-        self.enombre_product = Entry(frame15, width = 15)
-        self.eprecio_unit = Entry(frame15, width = 15)
-
-        self.lname_product.place(x = 0, y = 0)
-        self.lprice_unit.place(x = 0, y = 80)
-        self.enombre_product.place(x = 200, y = 0)
-        self.eprecio_unit.place(x = 200, y = 80)
 
         mprincipal = Menu(window)
         minicio = Menu(mprincipal, tearoff = 0)
@@ -871,9 +860,9 @@ class FormularioTickets(BonotonesMenu):
         self.cerrarmesa.config(state = 'disable')
         self.nuevot = ttk.Button(frametabla, text = 'Nuevo Ticket', command = self.nuevo_ticket)
         self.nuevot.place(x = 100, y = 400)
-        self.agregarproducto = ttk.Button(frame15, text = 'Agregar', width = 15, command = self.agregar_producto)
+        self.agregarproducto = ttk.Button(self.frame15, text = 'Agregar', width = 15, command = self.agregar_producto)
         self.agregarproducto.place(x = 0, y = 200)
         self.alta_producto = ttk.Button(window, text = 'Alta Producto', width = 45, command = self.altaproducto)
         self.alta_producto.place(x = 460, y = 360)
-        self.inventario = ttk.Button(window, text = 'Inventario Producto', width = 43, command = self.inventarioproducto)
-        self.inventario.place(x = 725, y = 360)
+        self.binventario = ttk.Button(window, text = 'Inventario Producto', width = 43, command = self.inventarioproducto)
+        self.binventario.place(x = 725, y = 360)
