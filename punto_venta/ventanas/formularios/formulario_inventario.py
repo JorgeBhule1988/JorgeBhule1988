@@ -3,9 +3,7 @@ from tkinter import ttk
 import mysql.connector
 from persistencia.repositorio_conexion import RepositorioConexionSQLite
 
-class FormularioInventario(RepositorioConexionSQLite):
-
-    def consultar(self):
+def consultar(self):
         self.limpiar()
         try:
             super().conetarse()
@@ -22,6 +20,18 @@ class FormularioInventario(RepositorioConexionSQLite):
             print(f"Fallo la insercion {error}")
         finally:
             self.cerrar_conexion()
+    
+    def agregar_producto(self):
+        
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * float(self.eprecio_unit.get())
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = (str(self.enombre_product.get()), str(self.eprecio_unit.get()), subtotal))
+            self.ecantidad.delete(0, END)
+            self.enombre_product.delete(0, END)
+            self.eprecio_unit.delete(0, END)
+
 
     def limpiar(self):
         for i in self.inventario.get_children():
@@ -35,6 +45,15 @@ class FormularioInventario(RepositorioConexionSQLite):
 
     def __init__(self, v):
         
+        cantidad = IntVar()
+        lista_mesas = ['1', '3', '5', '6', '7', '8', '9', '10', '11', '12', '13', 'Cava1', 'Cava2', 'Cava3', 'Cava4']
+        lista_meseros = ['ERICK MARTINEZ', 'DIEGO HERNANDEZ', 'MANUEL FLORES', 'MIGUEL CORONA']
+
+        self.captura = ttk.Treeview(v, columns=('#0', '#1', '#2'))
+        self.ecantidad = Entry(v, textvariable = cantidad)
+        self.emesa = ttk.Combobox(v, value = lista_mesas)
+        self.emesero = ttk.Combobox(v, value = lista_meseros)
+
         self.inventario = ttk.Treeview(v, height=11, columns=('#0', '#1', '#2'))
         self.inventario.column('#0', width = 200)
         self.inventario.heading('#0', text = 'Producto', anchor=CENTER)
@@ -65,5 +84,7 @@ class FormularioInventario(RepositorioConexionSQLite):
         self.enombre_product.place(x = 200, y = 40)
         self.eprecio_unit.place(x = 200, y = 80)
 
+        self.agregarproducto = ttk.Button(v, text = 'Agregar', width = 15, command = self.agregar_producto)
+        self.agregarproducto.place(x = 0, y = 200)
         self.actualizar = ttk.Button(v, text = 'Actualizar', width = 90, command = self.consultar)
         self.actualizar.place(x = 300, y = 0)
