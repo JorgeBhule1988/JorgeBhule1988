@@ -715,7 +715,78 @@ class BonotonesMenu(RepositorioConexionSQLite):
 
     def azteca(self):
         BotonesDojestivos.azteca1(self)    
+    
+    
+    def chichon(self):
+        BotonesDojestivos.chichon1(self)
 
+
+    def south(self):
+        BotonesDojestivos.south1(self)
+    
+
+    def tradicional_reposado(self):
+        BotonesTequila.tradicionalrep1(self)
+
+    
+    def tradicional_blanco(self):
+        BotonesTequila.tradicionalblanco1(self)
+
+    
+    def jimador_blanco(self):
+        BotonesTequila.jimadorblan1(self)
+
+    
+    def jimador_reposado(self):
+        BotonesTequila.jimadorrep1(self)
+
+
+    def hornitos_reposado(self):
+        BotonesTequila.hornitosrep1(self)
+
+    
+    def blackbarrel(self):
+        BotonesTequila.hornitosblack1(self)
+    
+
+    def centenario_anejo(self):
+        BotonesTequila.centenario1(self)
+
+    
+    def anejo_1800(self):
+        BotonesTequila.anejo_1800_1(self)
+
+
+    def herradura_reposado(self):
+        BotonesTequila.herradurarep1(self)
+
+    
+    def herradura_anejo(self):
+        BotonesTequila.herraduraane1(self)
+
+    
+    def cazadores(self):
+        BotonesTequila.cazadores1(self)
+
+
+    def cazadores_anejo(self):
+        BotonesTequila.cazadoresane1(self)
+
+    
+    def don_julio_blanco(self):
+        BotonesTequila.donjulioblanco1(self)
+
+
+    def don_julio_reposado(self):
+        BotonesTequila.donjuliorep1(self)
+
+
+    def don_julio_70(self):
+        BotonesTequila.donjulio_70_1(self)
+
+
+    def don_julio_1942(self):
+        BotonesTequila.donjulio_1942_1(self)
 
     def limpiar(self):
         for i in self.captura.get_children():
