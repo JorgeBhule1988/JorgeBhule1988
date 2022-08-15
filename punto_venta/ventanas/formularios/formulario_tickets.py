@@ -103,30 +103,6 @@ class FormularioTickets(BonotonesMenu):
             messagebox.showerror(message=f"Error al guardar verifique la clave que no este repetida", title="Error")    
         else :
             messagebox.showinfo(message=f"Guardado con exito {afectados1} registro", title="Salvar")
-
-
-        ticket = open('Ticket.txt', 'w')
-        ticket.write('Ticket Numero: ### \n')
-        ticket.write('Rodizio Grill \n')
-        ticket.write('RFC: $$$$$ \n')
-        ticket.write('Domicilio: ##### \n')
-        ticket.write(f'Mesero: {self.emesero.get()} \n')
-        ticket.write(f'Mesa: {self.emesa.get()} \n')
-        ticket.write(f'Fecha: {self.formato_fecha} \n')
-        ticket.write(f'Hora: {self.hora_formato} \n')
-        ticket.write('Cant |\t Producto             |\t Precio |\t Total \n')
-        for i in self.captura.get_children():
-            item = self.captura.item(i)
-            cant = item['text']
-            prod = item['values'][0]
-            prec = item['values'][1]
-            subt = item['values'][2]
-            ticket.write(f'{cant}    |\t {prod} |\t {prec}   |\t {subt} \n')
-        ticket.write(f'Total Pesos: {self.etotalpesos.get()} \n')
-        ticket.write(f'Total Dolares: {self.etotaldolares.get()} \n')
-        ticket.write(f'Pago Con: {self.epago.get()} \n')
-        ticket.write(f'Tipo de Pago: {self.etipo_pago.get()} \n')
-        ticket.write(f'Cambio: {self.ecambio.get()} \n')
         
         if self.emesa.get() == '1':
             self.bmesa1.config(state = 'normal', bg = 'green')
@@ -225,6 +201,7 @@ class FormularioTickets(BonotonesMenu):
             messagebox.showinfo(message = f'Elimino con exito {afectados}{afectados1} registros', title = 'Eliminar')
         else:
             messagebox.showerror(message = 'Error al eliminar verifique la clave no este repetida', title = 'Error')
+        self.celiminar.config(state = 'disable')
 
 
     def nuevo_ticket(self):
@@ -269,7 +246,7 @@ class FormularioTickets(BonotonesMenu):
             item = self.captura.item(i)
             records = item['values'][2]
             suma += float(records)
-            sumadolares = float(suma // 19)
+            sumadolares = float(suma // 18)
             self.etotalpesos.delete(0, END)
             self.etotalpesos.insert(END, suma)
             self.etotaldolares.delete(0, END)
@@ -282,6 +259,7 @@ class FormularioTickets(BonotonesMenu):
         self.eiva.insert(END, iva)
         
         c = Conector()
+        c.imagenLocal("C:\\Users\\cicat\\OneDrive\\Escritorio\\jorge2\\puntoventa\\RodizioLogo.png")
         c.textoConAcentos("Rodizio Grill\n")
         c.establecerEnfatizado(1)
         c.textoConAcentos("Domicilio: Calle Niños Heroes S/N Col. Centro\n")
@@ -304,10 +282,15 @@ class FormularioTickets(BonotonesMenu):
             subt = item['values'][2]
             c.textoConAcentos(f'{cant} {prod} {prec} {subt} \n')
             c.establecerEnfatizado(1)
+        c.textoConAcentos(f"SubTotal: {self.esubtotal.get()} \n")
+        c.establecerEnfatizado(1)
+        c.textoConAcentos(f"IVA: {self.eiva.get()} \n")
+        c.establecerEnfatizado(1)
+        c.establecerTamanioFuente(2, 2)
         c.textoConAcentos(f'Total Pesos: {self.etotalpesos.get()} \n')
-        c.establecerEnfatizado(1)
+        c.establecerTamanioFuente(1, 1)
         c.textoConAcentos(f'Total DLL: {self.etotaldolares.get()} \n')
-        c.establecerEnfatizado(1)
+        #c.imagenLocal("C:\\Users\\cicat\\OneDrive\\Escritorio\\jorge2\\puntoventa\\IMG_5558.jpg")
         c.feed(5)
         c.cortar()
         c.abrirCajon()
@@ -355,6 +338,26 @@ class FormularioTickets(BonotonesMenu):
         
         FormularioInventario(self.frame15)
 
+
+    def agregar_producto(self):
+        
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * float(self.eprecio_unit.get())
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = (str(self.enombre_product.get()), str(self.eprecio_unit.get()), subtotal))
+            self.ecantidad.delete(0, END)
+            self.enombre_product.delete(0, END)
+            self.eprecio_unit.delete(0, END)
+
+
+    def questdelete(self):
+
+        question = messagebox.askquestion('Cobrar Ticket', 'Quieres realizar un cobro?')
+        if question == 'yes':
+            self.celiminar.config(state = 'normal')
+        else:    
+            self.celiminar.config(state = 'disable')
 
     def __init__(self, window):
 
@@ -707,6 +710,8 @@ class FormularioTickets(BonotonesMenu):
         self.dfrangelico = Button(frame14, text = 'Frangelico', height = 5, width = 12, command = self.frangelico)
         self.dcour = Button(frame14, text = 'Courvusier VS', height = 5, width = 12, command = self.courvusier)
         self.dazteca = Button(frame14, text = 'Azteca', height = 5, width = 12, command = self.azteca)
+        self.dchichon = Button(frame14, text = 'Chichon', height = 5, width = 12, command = self.chichon)
+        self.dsouth = Button(frame14, text = 'Souther Comfort', height = 5, width = 12, command = self.south)
 
         #Posiciones de botones del menu
         self.brodizio.place(x = 0, y = 0)
@@ -853,6 +858,8 @@ class FormularioTickets(BonotonesMenu):
         self.dfrangelico.place(x = 700, y = 0)
         self.dcour.place(x = 800, y = 0)
         self.dazteca.place(x = 0, y = 90)
+        self.dchichon.place(x = 100, y = 90)
+        self.dsouth.place(x = 200, y = 90)
 
         mprincipal = Menu(window)
         minicio = Menu(mprincipal, tearoff = 0)
@@ -866,14 +873,28 @@ class FormularioTickets(BonotonesMenu):
         mprincipal.add_cascade(label = 'Corte', menu = corte)
         window.config(menu = mprincipal)
 
+        self.lname_product = Label(self.frame15, text = 'Nombre del Producto', font = ('Arial', 12, 'bold'), bg = 'orange')
+        self.lprice_unit = Label(self.frame15, text = 'Precio Unitario', font = ('Arial', 12, 'bold'), bg = 'orange')
+        self.enombre_product = Entry(self.frame15, width = 15)
+        self.eprecio_unit = Entry(self.frame15, width = 15)
+
+        self.lname_product.place(x = 0, y = 40)
+        self.lprice_unit.place(x = 0, y = 80)
+        self.enombre_product.place(x = 200, y = 40)
+        self.eprecio_unit.place(x = 200, y = 80)
+
         #Creacion de boton acciones
         self.bguardar = ttk.Button(fcobro, text = 'Total', width = 35, command = self.sumartotales)
         self.bguardar.place(x = 0, y = 265)
         self.bguardar.config(state = 'disable')
         self.blimpiar = ttk.Button(frametabla, text = 'Limpiar Ticket', command = self.Limpiarticket)
         self.blimpiar.place(x = 180, y = 400)
-        self.cproducto = ttk.Button(frametabla, text = 'Cancelar Producto', command = self.eliminarfila)
+        self.cproducto = Button(frametabla, text = 'Cancelar Producto', width = 49, command = self.questdelete)
+        self.cproducto.config(bg = 'yellow', font = ('Arial', 8, 'bold'), fg = 'blue')
         self.cproducto.place(x = 0, y = 425)
+        self.celiminar = Button(frametabla, text = 'Eliminar', width = 10, command = self.eliminarfila)
+        self.celiminar.config(state = 'disable', bg = 'Red', font = ('Arial', 8, 'bold'), fg = 'blue')
+        self.celiminar.place(x = 355, y = 425)
         self.cerrart = ttk.Button(frametabla, text = 'Guardar Ticket', command = self.generart)
         self.cerrart.place(x = 265, y = 400)
         self.quest = ttk.Button(frametabla, text = 'Cobrar Ticket', command = self.preguntar)
@@ -890,3 +911,5 @@ class FormularioTickets(BonotonesMenu):
         self.alta_producto.place(x = 460, y = 360)
         self.binventario = ttk.Button(window, text = 'Inventario Producto', width = 43, command = self.inventarioproducto)
         self.binventario.place(x = 725, y = 360)
+        self.aproducto = ttk.Button(self.frame15, text = 'Agregar', width = 15, command = self.agregar_producto)
+        self.aproducto.place(x = 0, y = 200)
