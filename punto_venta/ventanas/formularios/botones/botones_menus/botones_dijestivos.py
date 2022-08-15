@@ -103,6 +103,25 @@ class BotonesDojestivos:
             subtotal = float(self.ecantidad.get()) * 100
             self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Azteca de Oro', '100', subtotal))
             self.ecantidad.delete(0, END)
+            
+    def chichon1(self):
+
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 90
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Chichon de Anis', '90', subtotal))
+            self.ecantidad.delete(0, END)
+
+    
+    def south1(self):
+
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 100
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Southerm Comfort', '100', subtotal))
+            self.ecantidad.delete(0, END)
 
 
     def __init__(self, v):
