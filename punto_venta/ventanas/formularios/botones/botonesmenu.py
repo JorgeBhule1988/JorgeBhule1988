@@ -13,7 +13,7 @@ from formularios_punto_de_venta.botones.botones_menus.botones_vodka import Boton
 from formularios_punto_de_venta.botones.botones_menus.botones_whisky import BotonesWhisky
 from formularios_punto_de_venta.botones.botones_menus.botones_mezcal import BotonesMezcal
 from formularios_punto_de_venta.botones.botones_menus.botones_dijestivos import BotonesDojestivos
-#from formularios_punto_de_venta.botones.botones_menus.botones_mesas import BotonesMesas
+from formularios_punto_de_venta.botones.botones_menus.botones_tequilas import BotonesTequila
 import mysql.connector
 
 class BonotonesMenu(RepositorioConexionSQLite):
@@ -495,6 +495,14 @@ class BonotonesMenu(RepositorioConexionSQLite):
         
         BotonesVinoTinto.cigliano1(self)
 
+    
+    def cipressi(self):
+        BotonesVinoTinto.cipressi1(self)
+
+    
+    def tutto_bene(self):
+        BotonesVinoTinto.tutto1(self)
+
 
     def copablanco(self):
         
@@ -714,9 +722,9 @@ class BonotonesMenu(RepositorioConexionSQLite):
 
 
     def azteca(self):
-        BotonesDojestivos.azteca1(self)    
-    
-    
+        BotonesDojestivos.azteca1(self)
+
+
     def chichon(self):
         BotonesDojestivos.chichon1(self)
 
@@ -786,7 +794,59 @@ class BonotonesMenu(RepositorioConexionSQLite):
 
 
     def don_julio_1942(self):
-        BotonesTequila.donjulio_1942_1(self)
+        BotonesTequila.donjulio_1942_1(self)   
+
+
+    def codigo_reposado(self):
+        BotonesTequila.codigorep1(self)
+
+    
+    def vireyes(self):
+        BotonesTequila.virreyes1(self)
+
+
+    def tres_generaciones(self):
+        BotonesTequila.tresgeneariones1(self)
+
+
+    def tequila_casa(self):
+        BotonesTequila.tequilacasa1(self)
+
+
+    def rey_sol(self):
+        BotonesTequila.reysol1(self)
+
+    
+    def casa_dragones(self):
+        BotonesTequila.casadragones1(self)
+
+
+    def casa_dragones_blanco(self):
+        BotonesTequila.casadragonesblanco1(self)
+    
+
+    def seleccion_suprema(self):
+        BotonesTequila.selectsuprema1(self)
+
+
+    def loco_blanco(self):
+        BotonesTequila.loco1(self)
+
+
+    def maestro_dobel(self):
+        BotonesTequila.maestrodobel1(self)
+
+    
+    def milenio_1800(self):
+        BotonesTequila.milenio_1800_1(self)
+
+    
+    def cristalino_1800(self):
+        BotonesTequila.cristalino_1800_1(self)
+
+    
+    def clase_azul(self):
+        BotonesTequila.claseazul1(self)
 
     def limpiar(self):
         for i in self.captura.get_children():
