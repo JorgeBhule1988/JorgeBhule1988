@@ -237,7 +237,7 @@ class BotonesVinoTinto:
             messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
         else:
             subtotal = float(self.ecantidad.get()) * 700
-            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Colezione MOLTEPULCIANO', '700', subtotal))
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Collezione MOLTEPULCIANO', '700', subtotal))
             self.ecantidad.delete(0, END)
     
 
@@ -311,7 +311,24 @@ class BotonesVinoTinto:
             subtotal = float(self.ecantidad.get()) * 1200
             self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Cigliano CHIANTI CLASICO', '1200', subtotal))
             self.ecantidad.delete(0, END)
+    
+    def tutto1(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 1100
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('TUTTO BENE', '1100', subtotal))
+            self.ecantidad.delete(0, END)
 
+    
+    def cipressi1(self):
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 900
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Borgo Cipressi MERLOT', '900', subtotal))
+            self.ecantidad.delete(0, END)
+            
 
     def __init__(self, v):
 
