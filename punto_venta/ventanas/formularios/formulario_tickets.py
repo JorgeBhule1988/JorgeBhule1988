@@ -64,6 +64,10 @@ class FormularioTickets(BonotonesMenu):
             else :
                 messagebox.showinfo(message=f"Guardado con exito {afectados} registro", title="Salvar") 
         
+        self.bguardar.config(state = 'disable')
+        self.cerrarmesa.config(state = 'normal')
+        self.cobrart.config(state = 'disable')
+        
 
     def generart(self):
 
@@ -134,7 +138,11 @@ class FormularioTickets(BonotonesMenu):
             self.bmesacv3.config(state = 'normal', bg = 'green')
         elif self.emesa.get() == 'Cava4':
             self.bmesacv4.config(state = 'normal', bg = 'green')
-        
+        elif self.emesa.get() == 'CasaB1':
+            self.bmesacb1.config(state = 'normal', bg = 'green')
+        elif self.emesa.get() == 'CasaB2':
+            self.bmesacb2.config(state = 'normal', bg = 'green')
+
         self.nuevo_ticket()
 
 
@@ -176,6 +184,10 @@ class FormularioTickets(BonotonesMenu):
             self.bmesacv3.config(state = 'disable', bg = 'red')
         elif self.emesa.get() == 'Cava4':
             self.bmesacv4.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == 'CasaB1':
+            self.bmesacb1.config(state = 'disable', bg = 'red')
+        elif self.emesa.get() == 'CasaB2':
+            self.bmesacb2.config(state = 'disable', bg = 'red')
 
         self.nuevo_ticket()
         
@@ -189,6 +201,7 @@ class FormularioTickets(BonotonesMenu):
         self.cerrarmesa.config(state = 'disable')
         self.esubtotal.config(state = 'disable')
         self.eiva.config(state = 'disable')
+        self.eimprimir.config(state = 'disable')
     
 
     def eliminarfila(self):
@@ -231,6 +244,7 @@ class FormularioTickets(BonotonesMenu):
         self.cerrarmesa.config(state = 'disable')
         self.esubtotal.config(state = 'disable')
         self.eiva.config(state = 'disable')
+        self.eimprimir.config(state = 'disable')
 
 
     def Limpiarticket(self):
@@ -257,50 +271,8 @@ class FormularioTickets(BonotonesMenu):
         self.esubtotal.insert(END, subtotal)
         self.eiva.delete(0, END)
         self.eiva.insert(END, iva)
-        
-        c = Conector()
-        c.imagenLocal("C:\\Users\\cicat\\OneDrive\\Escritorio\\jorge2\\puntoventa\\RodizioLogo.png")
-        c.textoConAcentos("Rodizio Grill\n")
-        c.establecerEnfatizado(1)
-        c.textoConAcentos("Domicilio: Calle Niños Heroes S/N Col. Centro\n")
-        c.establecerEnfatizado(1)
-        c.textoConAcentos(f"Mesero: {self.emesero.get()} \n")
-        c.establecerEnfatizado(1)
-        c.textoConAcentos(f'Mesa: {self.emesa.get()} \n')
-        c.establecerEnfatizado(1)
-        c.textoConAcentos(f'Fecha: {self.formato_fecha} \n')
-        c.establecerEnfatizado(1)
-        c.textoConAcentos(f'Mesa: {self.hora_formato} \n')
-        c.establecerEnfatizado(1)
-        c.textoConAcentos(f'Cant  Producto  Precio  Total\n')
-        c.establecerEnfatizado(1)
-        for i in self.captura.get_children():
-            item = self.captura.item(i)
-            cant = item['text']
-            prod = item['values'][0]
-            prec = item['values'][1]
-            subt = item['values'][2]
-            c.textoConAcentos(f'{cant} {prod} {prec} {subt} \n')
-            c.establecerEnfatizado(1)
-        c.textoConAcentos(f"SubTotal: {self.esubtotal.get()} \n")
-        c.establecerEnfatizado(1)
-        c.textoConAcentos(f"IVA: {self.eiva.get()} \n")
-        c.establecerEnfatizado(1)
-        c.establecerTamanioFuente(2, 2)
-        c.textoConAcentos(f'Total Pesos: {self.etotalpesos.get()} \n')
-        c.establecerTamanioFuente(1, 1)
-        c.textoConAcentos(f'Total DLL: {self.etotaldolares.get()} \n')
-        #c.imagenLocal("C:\\Users\\cicat\\OneDrive\\Escritorio\\jorge2\\puntoventa\\IMG_5558.jpg")
-        c.feed(5)
-        c.cortar()
-        c.abrirCajon()
-        print("Imprimiendo...")
-        # Recuerda cambiar por el nombre de tu impresora
-        respuesta = c.imprimirEn("TM-T88IV")
-        if respuesta == True:
-            print("Impresión correcta")
-        else:
-            print(f"Error. El mensaje es: {respuesta}")
+
+        self.eimprimir.config(state = 'normal')
  
        
     def preguntar(self):
@@ -308,12 +280,7 @@ class FormularioTickets(BonotonesMenu):
         if questions == 'yes':
             self.etotalpesos.config(state = 'normal')
             self.etotaldolares.config(state = 'normal')
-            self.epago.config(state = 'normal')
-            self.etipo_pago.config(state = 'normal')
-            self.ecambio.config(state = 'normal')
             self.bguardar.config(state = 'normal')
-            self.cobrart.config(state = 'normal')
-            self.cerrarmesa.config(state = 'normal')
             self.esubtotal.config(state = 'normal')
             self.eiva.config(state = 'normal')
         else:
@@ -351,13 +318,87 @@ class FormularioTickets(BonotonesMenu):
             self.eprecio_unit.delete(0, END)
 
 
+    def cancel_pregunta(self):
+
+        if self.clave.get() == 'Jorge1988':
+            self.celiminar.config(state = 'normal')
+        else:
+            messagebox.showinfo(message = 'Clave incorrecta')
+
+
     def questdelete(self):
 
-        question = messagebox.askquestion('Cobrar Ticket', 'Quieres realizar un cobro?')
+        question = messagebox.askquestion('Cancelar', 'Vas a eliminar un producto?')
         if question == 'yes':
-            self.celiminar.config(state = 'normal')
+            v = Tk()
+            v.geometry('150x150')
+            Label(v, text = 'Clave de Cancelacion', font = ('Arial', 10, 'bold')).place(x = 0, y = 0)
+            self.clave = Entry(v, width = 20)
+            self.clave.place(x = 0, y = 30)
+            ttk.Button(v, text = 'Aceptar', width = 20, command = self.cancel_pregunta).place(x = 0, y = 60)
+            v.mainloop()
+            
+            
         else:    
             self.celiminar.config(state = 'disable')
+
+
+    def imprimirticket(self):
+
+        #questions = messagebox.askquestion('Imprimir', 'Imprimir Ticket?')
+        '''if questions == 'yes':
+            c = Conector()
+            #c.imagenLocal("C:\\Users\\cicat\\OneDrive\\Escritorio\\jorge2\\puntoventa\\ventanas\\imagenes\\LOGO.png")
+            c.textoConAcentos("Rodizio Grill\n")
+            c.establecerEnfatizado(1)
+            c.textoConAcentos("Domicilio: Calle Niños Heroes S/N Col. Centro\n")
+            c.establecerEnfatizado(1)
+            c.textoConAcentos(f"Mesero: {self.emesero.get()} \n")
+            c.establecerEnfatizado(1)
+            c.textoConAcentos(f'Mesa: {self.emesa.get()} \n')
+            c.establecerEnfatizado(1)
+            c.textoConAcentos(f'Fecha: {self.formato_fecha} \n')
+            c.establecerEnfatizado(1)
+            c.textoConAcentos(f'Mesa: {self.hora_formato} \n')
+            c.establecerEnfatizado(1)
+            c.textoConAcentos(f'Cant  Producto  Precio  Total\n')
+            c.establecerEnfatizado(1)
+            for i in self.captura.get_children():
+                item = self.captura.item(i)
+                cant = item['text']
+                prod = item['values'][0]
+                prec = item['values'][1]
+                subt = item['values'][2]
+                c.textoConAcentos(f'{cant} {prod} {prec} {subt} \n')
+                c.establecerEnfatizado(1)
+            c.textoConAcentos(f"SubTotal: {self.esubtotal.get()} \n")
+            c.establecerEnfatizado(1)
+            c.textoConAcentos(f"IVA: {self.eiva.get()} \n")
+            c.establecerEnfatizado(1)
+            c.establecerTamanioFuente(2, 2)
+            c.textoConAcentos(f'Total Pesos: {self.etotalpesos.get()} \n')
+            c.establecerTamanioFuente(1, 1)
+            c.textoConAcentos(f'Total DLL: {self.etotaldolares.get()} \n')
+            #c.imagenLocal("C:\\Users\\cicat\\OneDrive\\Escritorio\\jorge2\\puntoventa\\IMG_5558.jpg")
+            c.feed(5)
+            c.cortar()
+            c.abrirCajon()
+            print("Imprimiendo...")
+            # Recuerda cambiar por el nombre de tu impresora
+            respuesta = c.imprimirEn("TM-T88IV")
+            if respuesta == True:
+                print("Impresión correcta")
+            else:
+                print(f"Error. El mensaje es: {respuesta}")'''
+        self.epago.config(state = 'normal')
+        self.etipo_pago.config(state = 'normal')
+        self.ecambio.config(state = 'normal')
+        self.cobrart.config(state = 'normal')
+        self.cerrarmesa.config(state = 'normal')
+        self.bguardar.config(state = 'disable')
+        self.cerrarmesa.config(state = 'disable')
+        self.eimprimir.config(state = 'disable')
+    
 
     def __init__(self, window):
 
@@ -367,6 +408,9 @@ class FormularioTickets(BonotonesMenu):
         frametabla = Frame(window)
         frametabla.pack(side = LEFT, fill = BOTH)
         frametabla.config(height = 550, width = 1000)
+
+        self.imagenprincipal = PhotoImage(file = 'C:\\Users\\bhule\\OneDrive\\Escritorio\\Diplomado Python\\PuntodeVenta\\ventanas\\imagenes\\BACK_FRAME.png')
+        Label(frametabla, image = self.imagenprincipal).place(x = 0, y = 0)
 
         #creacion de la vista de los productos
         self.captura = ttk.Treeview(frametabla, height=11, columns=('#0', '#1', '#2'))
@@ -381,7 +425,7 @@ class FormularioTickets(BonotonesMenu):
 
         #Scrollbar Treeview
         deslizarv = ttk.Scrollbar(frametabla, orient = 'vertical', command = self.captura.yview)
-        deslizarv.place(x = 433, y = 450, relheight = 0.5)
+        deslizarv.place(x = 433, y = 450, relheight = 0.34)
         deslizarv.config(command = self.captura.yview)
         self.captura.configure(yscrollcommand = deslizarv.set)
         
@@ -390,17 +434,17 @@ class FormularioTickets(BonotonesMenu):
         self.formato_fecha = datetime.datetime.strftime(fecha_actual, '%b/%d/%Y')
         self.hora_formato = datetime.datetime.strftime(fecha_actual, '%H:%M:%S')
         
-        fcobro = Frame(window, height = 355, width = 240)
-        fcobro.place(x = 1020, y = 360)
-        
-        fmenu = Frame(window, height = 200, width = 240) #Frame de los botones de mesas
-        fmenu.place(x = 1020, y = 40)
+        fcobro = Frame(window, height = 360, width = 280, bg = 'blue')
+        fcobro.place(x = 1000, y = 360)
+        Label(fcobro, image = self.imagenprincipal).place(x = 0, y = 0)
 
-        self.fproducto = Frame(window, height = 310, width = 550, bg = 'blue')
-        self.fproducto.place(x = 460, y = 390)
+        fmenu = Frame(window, height = 360, width = 280, bg = 'red') #Frame de los botones de mesas
+        fmenu.place(x = 1000, y = 0)
+        Label(fmenu, image = self.imagenprincipal).place(x = 0, y = 0)
 
-        self.fproducto2 = Frame(window, height = 310, width = 550, bg = 'red')
+        self.fproducto2 = Frame(window, height = 310, width = 540, bg = 'red')
         self.fproducto2.place(x = 460, y = 390)
+        Label(self.fproducto2, image = self.imagenprincipal).place(x = 0, y = 0)
 
         #botones de seleccion de mesas de seleccion
         self.bmesa1 = Button(fmenu, text = '1', height = 2, width = 5, command = self.mesa1)
@@ -448,6 +492,12 @@ class FormularioTickets(BonotonesMenu):
         self.bmesacv4 = Button(fmenu, text = 'CV4', height = 2, width = 5, command = self.mesac4)
         self.bmesacv4.place(x = 200, y = 130)
         self.bmesacv4.config(state='disable', bg = 'red')
+        self.bmesacb1 = Button(fmenu, text = 'Casa Bonita 1', height = 2, width = 15, command = self.mesacasab1)
+        self.bmesacb1.place(x = 0, y = 175)
+        self.bmesacb1.config(state='disable', bg = 'red')
+        self.bmesacb2 = Button(fmenu, text = 'Casa Bonita 2', height = 2, width = 15, command = self.mesacasab2)
+        self.bmesacb2.place(x = 120, y = 175)
+        self.bmesacb2.config(state='disable', bg = 'red')
 
 
         # Creacion de etiquetas
@@ -476,13 +526,15 @@ class FormularioTickets(BonotonesMenu):
         self.ltotaldolares.place(x = 0, y = 120)
         
         tipo_p = ['EFECTIVO', 'DOLARES', 'TARJETA']
-        lista_meseros = ['ERICK MARTINEZ', 'DIEGO HERNANDEZ', 'MIGUEL CORONA', 'MANUEL FLORES']
-        lista_mesas = ['1', '3', '5', '6', '7', '8', '9', '10', '11', '12', '13', 'Cava1', 'Cava2', 'Cava3', 'Cava4']
+        lista_meseros = ['DIEGO HERNANDEZ', 'MIGUEL CORONA', 'MANUEL FLORES']
+        lista_mesas = ['1', '3', '5', '6', '7', '8', '9', '10', '11', '12', '13', 'Cava1', 'Cava2',
+                       'Cava3', 'Cava4', '1 - 3', '6 - 7', '11 - 12', '12 - 13', '11 - 13',
+                       'Cava1 - Cava2', 'CasaB1', 'CasaB2']
 
         #Creacion de cajas de texto
         self.ecantidad = ttk.Combobox(frametabla, values = cantidad, width = 3)
         self.emesero = ttk.Combobox(frametabla, values = lista_meseros, width = 30)
-        self.emesa = ttk.Combobox(frametabla, value = lista_mesas, width = 10)
+        self.emesa = ttk.Combobox(frametabla, value = lista_mesas, width = 15)
         self.etotalpesos = Entry(fcobro, width = 15)
         self.etotaldolares = Entry(fcobro, width = 15)
         self.epago = Entry(fcobro, width = 15)
@@ -516,21 +568,21 @@ class FormularioTickets(BonotonesMenu):
         #Notebook
         pmenu = Notebook(frametabla, height = 300, width = 1000)
         pmenu.place(x = 0, y = 35)
-        frame1 = Frame(pmenu, height = 138, width = 900, bg = 'yellow')
+        frame1 = Frame(pmenu, height = 138, width = 900)
         frame2 = Frame(pmenu, height = 138, width = 900)
         frame3 = Frame(pmenu, height = 138, width = 900)
         frame4 = Frame(pmenu, height = 138, width = 900)
         frame5 = Frame(pmenu, height = 138, width = 900)
         frame6 = Frame(pmenu, height = 138, width = 900)
         frame7 = Frame(pmenu, height = 138, width = 900)
-        frame8 = Frame(pmenu, height = 138, width = 900, bg = 'pink')
+        frame8 = Frame(pmenu, height = 138, width = 900)
         frame9 = Frame(pmenu, height = 138, width = 900)
         frame10 = Frame(pmenu, height = 138, width = 900)
         frame11 = Frame(pmenu, height = 138, width = 900)
         frame12 = Frame(pmenu, height = 138, width = 900)
         frame13 = Frame(pmenu, height = 138, width = 900)
         frame14 = Frame(pmenu, height = 138, width = 900)
-        self.frame15 = Frame(pmenu, height = 138, width = 900, bg = 'orange')
+        self.frame15 = Frame(pmenu, height = 138, width = 900)
         frame1.place(x = 0, y = 35)
         frame2.place(x = 0, y = 35)
         frame3.place(x = 0, y = 35)
@@ -561,6 +613,23 @@ class FormularioTickets(BonotonesMenu):
         pmenu.add(frame13, text='MEZCAL')
         pmenu.add(frame14, text='DIJESTIVOS')
         pmenu.add(self.frame15, text = 'OTROS')
+
+        Label(frame1, image = self.imagenprincipal).place(x = 0, y = 0)
+        Label(frame2, image = self.imagenprincipal).place(x = 0, y = 0)
+        Label(frame3, image = self.imagenprincipal).place(x = 0, y = 0)
+        Label(frame4, image = self.imagenprincipal).place(x = 0, y = 0)
+        Label(frame5, image = self.imagenprincipal).place(x = 0, y = 0)
+        Label(frame6, image = self.imagenprincipal).place(x = 0, y = 0)
+        Label(frame7, image = self.imagenprincipal).place(x = 0, y = 0)
+        Label(frame8, image = self.imagenprincipal).place(x = 0, y = 0)
+        Label(frame9, image = self.imagenprincipal).place(x = 0, y = 0)
+        Label(frame10, image = self.imagenprincipal).place(x = 0, y = 0)
+        Label(frame11, image = self.imagenprincipal).place(x = 0, y = 0)
+        Label(frame12, image = self.imagenprincipal).place(x = 0, y = 0)
+        Label(frame13, image = self.imagenprincipal).place(x = 0, y = 0)
+        Label(frame14, image = self.imagenprincipal).place(x = 0, y = 0)
+        Label(self.frame15, image = self.imagenprincipal).place(x = 0, y = 0)
+
 
         #creacion de botones
         self.brodizio = Button(frame1, text = 'Rodizio', height = 5, width = 12, command = self.botonrodizio)
@@ -969,9 +1038,12 @@ class FormularioTickets(BonotonesMenu):
         self.cerrarmesa.config(state = 'disable')
         self.nuevot = ttk.Button(frametabla, text = 'Nuevo Ticket', command = self.nuevo_ticket)
         self.nuevot.place(x = 100, y = 400)
-        self.alta_producto = ttk.Button(window, text = 'Alta Producto', width = 45, command = self.altaproducto)
+        self.alta_producto = ttk.Button(window, text = 'Alta Producto', width = 45)
         self.alta_producto.place(x = 460, y = 360)
-        self.binventario = ttk.Button(window, text = 'Inventario Producto', width = 43, command = self.inventarioproducto)
+        self.binventario = ttk.Button(window, text = 'Inventario Producto', width = 43)
         self.binventario.place(x = 725, y = 360)
         self.aproducto = ttk.Button(self.frame15, text = 'Agregar', width = 15, command = self.agregar_producto)
         self.aproducto.place(x = 0, y = 200)
+        self.eimprimir = Button(fcobro, text = 'Imprimir', width = 30, command = self.imprimirticket)
+        self.eimprimir.config(state = 'disable', bg = 'blue', font = ('Arial', 8, 'bold'), fg = 'orange')
+        self.eimprimir.place(x = 0, y = 315)
