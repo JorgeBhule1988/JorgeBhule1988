@@ -1180,6 +1180,50 @@ class BonotonesMenu(RepositorioConexionSQLite):
             print(f"Fallo la insercion {error}")
         finally:
             self.cerrar_conexion()
+            
+    
+    def mesacasab1(self):
+        self.limpiar()
+        self.emesa.delete(0, END)
+        self.emesa.insert(END, 'CasaB1')
+        self.emesero.delete(0, END)
+        try:
+            super().conetarse()
+            cursor = self.connection.cursor()
+
+            sql_select_query = "select cantidad, mesero, producto, precio_unitario, total from tabla_cobro WHERE mesa = 'CasaB1'"
+            cursor = self.connection.cursor()
+            cursor.execute(sql_select_query)            
+            records = cursor.fetchall()
+            for row in records:
+               self.captura.insert('', END, text = row[0], values = (row[2], row[3], row[4]))
+            self.emesero.insert(END, row[1])
+        except mysql.connector.Error as error:
+            print(f"Fallo la insercion {error}")
+        finally:
+            self.cerrar_conexion()
+
+    
+    def mesacasab2(self):
+        self.limpiar()
+        self.emesa.delete(0, END)
+        self.emesa.insert(END, 'CasaB2')
+        self.emesero.delete(0, END)
+        try:
+            super().conetarse()
+            cursor = self.connection.cursor()
+
+            sql_select_query = "select cantidad, mesero, producto, precio_unitario, total from tabla_cobro WHERE mesa = 'CasaB2'"
+            cursor = self.connection.cursor()
+            cursor.execute(sql_select_query)            
+            records = cursor.fetchall()
+            for row in records:
+               self.captura.insert('', END, text = row[0], values = (row[2], row[3], row[4]))
+            self.emesero.insert(END, row[1])
+        except mysql.connector.Error as error:
+            print(f"Fallo la insercion {error}")
+        finally:
+            self.cerrar_conexion()
 
 
     def __init__(self, v):
