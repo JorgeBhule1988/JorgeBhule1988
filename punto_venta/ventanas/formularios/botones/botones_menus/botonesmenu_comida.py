@@ -132,6 +132,16 @@ class BonotonesMenuComida:
             subtotal = float(self.ecantidad.get()) * 0
             self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Rodizio Cortesia', '0', subtotal))
             self.ecantidad.delete(0, END)
+    
+    
+    def postre_cumple(self):
+        
+        if(len(self.emesero.get()) == 0) or (len(self.emesa.get()) == 0) or (len(self.ecantidad.get()) == 0):
+            messagebox.showwarning(message = 'Falta seleccionar el mesero o el numero de mesa o la cantidad', title = 'Warning')
+        else:
+            subtotal = float(self.ecantidad.get()) * 95
+            self.captura.insert('', END, text = str(self.ecantidad.get()), values = ('Postre Especial', '95', subtotal))
+            self.ecantidad.delete(0, END)
 
 
     def __init__(self, v):
