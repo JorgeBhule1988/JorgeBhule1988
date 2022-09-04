@@ -80,6 +80,11 @@ class BonotonesMenu(RepositorioConexionSQLite):
     def botonburguertg(self):
 
         BonotonesMenuComida.burguerpicatogo(self)
+    
+    
+    def botonpostre(self):
+
+        BonotonesMenuComida.postre_cumple(self)
 
 
     def botagua(self):
