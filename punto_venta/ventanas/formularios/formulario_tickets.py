@@ -59,11 +59,12 @@ class FormularioTickets(BonotonesMenu):
             self.ecambio.delete(0, END)
             self.ecambio.insert(END, cobro)
 
-            afectados =controlador.insertar_tickets(t)
-            if(afectados == 0):
-                messagebox.showerror(message=f"Error al guardar verifique la clave que no este repetida", title="Error")    
-            else :
-                messagebox.showinfo(message=f"Guardado con exito {afectados} registro", title="Salvar") 
+            afectados = controlador.insertar_tickets(t)
+            
+            #if(afectados == 0):
+            #    messagebox.showerror(message=f"Error al guardar verifique la clave que no este repetida", title="Error")    
+            #else :
+            #    messagebox.showinfo(message=f"Guardado con exito {afectados} registro", title="Salvar") 
         
             self.bguardar.config(state = 'disable')
             self.cerrarmesa.config(state = 'normal')
@@ -85,10 +86,10 @@ class FormularioTickets(BonotonesMenu):
 
             afectados1 = controlador.insertar_tickets2(t2)
         
-        if(afectados1 == 0):
-            messagebox.showerror(message=f"Error al guardar verifique la clave que no este repetida", title="Error")    
-        else :
-            messagebox.showinfo(message=f"Guardado con exito {afectados1} registro", title="Salvar")
+        #if(afectados1 == 0):
+        #    messagebox.showerror(message=f"Error al guardar verifique la clave que no este repetida", title="Error")    
+        #else :
+        #    messagebox.showinfo(message=f"Guardado con exito {afectados1} registro", title="Salvar")
 
         
         t3 = Tickets2()
@@ -104,10 +105,10 @@ class FormularioTickets(BonotonesMenu):
 
             afectados2 =controlador.insertar_tickets3(t3)
         
-        if(afectados2 == 0):
-            messagebox.showerror(message=f"Error al guardar verifique la clave que no este repetida", title="Error")    
-        else :
-            messagebox.showinfo(message=f"Guardado con exito {afectados1} registro", title="Salvar")
+        #if(afectados2 == 0):
+        #    messagebox.showerror(message=f"Error al guardar verifique la clave que no este repetida", title="Error")    
+        #else :
+        #    messagebox.showinfo(message=f"Guardado con exito {afectados1} registro", title="Salvar")
         
         if self.emesa.get() == '1':
             self.bmesa1.config(state = 'normal', image = self.imagenverde1)
@@ -150,10 +151,10 @@ class FormularioTickets(BonotonesMenu):
     def liberarmesa(self):
     
         afectados = controlador.eliminar_tickets(self.emesa.get())
-        if(afectados == 0):
-            messagebox.showerror(message=f"Error al eliminar verifique la clave que no este repetida", title="Error")    
-        else :
-            messagebox.showinfo(message=f"Elimino con exito {afectados} registro", title="Eliminar")
+        #if(afectados == 0):
+        #    messagebox.showerror(message=f"Error al eliminar verifique la clave que no este repetida", title="Error")    
+        #else :
+        #    messagebox.showinfo(message=f"Elimino con exito {afectados} registro", title="Eliminar")
 
         if self.emesa.get() == '1':
             self.bmesa1.config(state = 'disable', image = self.imagenrojo1)
@@ -211,11 +212,11 @@ class FormularioTickets(BonotonesMenu):
         fila = self.captura.item(curItem)
         afectados = controlador.eliminar_fila_cobro(fila["values"][0])
         afectados1 = controlador.eliminar_fila_cobro2(fila["values"][0])
-        if(afectados == 0 and afectados1 == 0):
-            messagebox.showinfo(message = f'Elimino con exito {afectados}{afectados1} registros', title = 'Eliminar')
-        else:
-            messagebox.showerror(message = 'Error al eliminar verifique la clave no este repetida', title = 'Error')
-        self.celiminar.config(state = 'disable')
+        #if(afectados == 0 and afectados1 == 0):
+        #    messagebox.showinfo(message = f'Elimino con exito {afectados}{afectados1} registros', title = 'Eliminar')
+        #else:
+        #    messagebox.showerror(message = 'Error al eliminar verifique la clave no este repetida', title = 'Error')
+        #self.celiminar.config(state = 'disable')
 
 
     def nuevo_ticket(self):
@@ -231,6 +232,8 @@ class FormularioTickets(BonotonesMenu):
         self.eiva.delete(0, END)
         self.enombre_product.delete(0, END)
         self.eprecio_unit.delete(0, END)
+        self.eserv_sugerido.delete(0, END)
+        self.etotal_sugerido.delete(0, END)
         regitro = self.captura.get_children()
         for i in regitro:
             self.captura.delete(i)
@@ -348,7 +351,7 @@ class FormularioTickets(BonotonesMenu):
     def imprimirticket(self):
 
         questions = messagebox.askquestion('Imprimir', 'Imprimir Ticket?')
-        '''if questions == 'yes':
+        if questions == 'yes':
             c = Conector()
             c.establecerJustificacion(AlineacionCentro)
             c.imagenLocal("C:\\Users\\cicat\\OneDrive\\Escritorio\\jorge2\\puntoventa\\ventanas_punto_de_venta\\imagenes\\LOGO.png")
@@ -362,8 +365,8 @@ class FormularioTickets(BonotonesMenu):
             c.textoConAcentos(f'Mesa: {self.emesa.get()} \n')
             c.establecerEnfatizado(1)
             c.textoConAcentos(f'Fecha: {self.formato_fecha} \n')
-            #c.establecerEnfatizado(1)
-            #c.textoConAcentos(f'Mesa: {self.hora_formato} \n')
+            c.establecerEnfatizado(1)
+            c.textoConAcentos(f'Mesa: {self.lhora} \n')
             c.establecerEnfatizado(1)
             c.textoConAcentos(f'Cant  Producto  Precio  Total\n')
             c.establecerEnfatizado(1)
@@ -383,6 +386,10 @@ class FormularioTickets(BonotonesMenu):
             c.textoConAcentos(f'Total Pesos: {self.etotalpesos.get()} \n')
             c.establecerTamanioFuente(1, 1)
             c.textoConAcentos(f'Total DLL: {self.etotaldolares.get()} \n')
+            c.establecerTamanioFuente(1, 1)
+            c.textoConAcentos(f'Servicio Sugerido: {self.eserv_sugerido.get()} \n')
+            c.establecerTamanioFuente(1, 1)
+            c.textoConAcentos(f'Total Sugerido: {self.etotal_sugerido.get()} \n')
             c.feed(5)
             c.cortar()
             c.abrirCajon()
@@ -392,7 +399,7 @@ class FormularioTickets(BonotonesMenu):
             if respuesta == True:
                 print("Impresión correcta")
             else:
-                print(f"Error. El mensaje es: {respuesta}")'''
+                print(f"Error. El mensaje es: {respuesta}")
                 
         self.epago.config(state = 'normal')
         self.etipo_pago.config(state = 'normal')
@@ -423,44 +430,32 @@ class FormularioTickets(BonotonesMenu):
             resultado = float(self.etotalpesos.get()) * .1
             suma = float(self.etotalpesos.get()) + resultado
             sumadolares = round(float(suma / 19), 2)
-            self.etotalpesos.delete(0, END)
-            self.etotalpesos.insert(END, suma)
             self.etotaldolares.delete(0, END)
             self.etotaldolares.insert(END, sumadolares)
-            subtotal = round(float(suma / 1.19), 2)
-            iva = round(float(subtotal * .16), 2)
-            self.esubtotal.delete(0, END)
-            self.esubtotal.insert(END, subtotal)
-            self.eiva.delete(0, END)
-            self.eiva.insert(END, iva)
+            self.eserv_sugerido.delete(0, END)
+            self.eserv_sugerido.insert(END, resultado)
+            self.etotal_sugerido.delete(0, END)
+            self.etotal_sugerido.insert(END, suma)
         elif self.servicio.get() == '15':
-            resultado = float(self.etotalpesos.get()) * .1
+            resultado = float(self.etotalpesos.get()) * .15
             suma = float(self.etotalpesos.get()) + resultado
             sumadolares = round(float(suma / 19), 2)
-            self.etotalpesos.delete(0, END)
-            self.etotalpesos.insert(END, suma)
             self.etotaldolares.delete(0, END)
             self.etotaldolares.insert(END, sumadolares)
-            subtotal = round(float(suma / 1.19), 2)
-            iva = round(float(subtotal * .16), 2)
-            self.esubtotal.delete(0, END)
-            self.esubtotal.insert(END, subtotal)
-            self.eiva.delete(0, END)
-            self.eiva.insert(END, iva)
+            self.eserv_sugerido.delete(0, END)
+            self.eserv_sugerido.insert(END, resultado)
+            self.etotal_sugerido.delete(0, END)
+            self.etotal_sugerido.insert(END, suma)
         elif self.servicio.get() == '20':
-            resultado = float(self.etotalpesos.get()) * .1
+            resultado = float(self.etotalpesos.get()) * .20
             suma = float(self.etotalpesos.get()) + resultado
             sumadolares = round(float(suma / 19), 2)
-            self.etotalpesos.delete(0, END)
-            self.etotalpesos.insert(END, suma)
             self.etotaldolares.delete(0, END)
             self.etotaldolares.insert(END, sumadolares)
-            subtotal = round(float(suma / 1.19), 2)
-            iva = round(float(subtotal * .16), 2)
-            self.esubtotal.delete(0, END)
-            self.esubtotal.insert(END, subtotal)
-            self.eiva.delete(0, END)
-            self.eiva.insert(END, iva)
+            self.eserv_sugerido.delete(0, END)
+            self.eserv_sugerido.insert(END, resultado)
+            self.etotal_sugerido.delete(0, END)
+            self.etotal_sugerido.insert(END, suma)
         self.ventana_secundaria.destroy()
 
 
@@ -634,12 +629,14 @@ class FormularioTickets(BonotonesMenu):
         self.lcantidad = Label(frametabla, text = 'Cant', font = ('Arial', 12, 'bold'), bg = '#FBB03B')
         self.ldia = Label(frametabla, text = self.dia, font = ('Arial', 12, 'bold'), bg = '#FBB03B')
         self.ltotalpesos = Label(fcobro, text = 'Total Pesos', font = ('Arial', 12, 'bold'), bg = '#FBB03B')
-        self.ltotaldolares = Label(fcobro, text = 'Total Dolares', font = ('Arial', 12, 'bold'), bg = '#FBB03B')
+        self.ltotaldolares = Label(fcobro, text = 'Total DLS', font = ('Arial', 12, 'bold'), bg = '#FBB03B')
         self.lfecha_actual = Label(window, text = self.formato_fecha, font = ('Arial', 12, 'bold'), bg = '#FBB03B')
         self.lhora = Label(frametabla, font = ('Arial', 12, 'bold'), bg = '#FBB03B')
         self.lpago = Label(fcobro, text = 'Cobrar', font = ('Arial', 12, 'bold'), bg = '#FBB03B')
-        self.ltipo_pago = Label(fcobro, text = 'Tipo de Pago', font = ('Arial', 12, 'bold'), bg = '#FBB03B')
+        self.ltipo_pago = Label(fcobro, text = 'Tipo Pago', font = ('Arial', 12, 'bold'), bg = '#FBB03B')
         self.lcambio = Label(fcobro, text = 'Cambio', font = ('Arial', 12, 'bold'), bg = '#FBB03B')
+        self.lservicio_sugerido = Label(fcobro, text = 'Serv. Sug.', font = ('Arial', 12, 'bold'), bg = '#FBB03B')
+        self.ltotal_sugerido = Label(fcobro, text = 'Total. Sug.', font = ('Arial', 12, 'bold'), bg = '#FBB03B')
         self.lsubtocal = Label(fcobro, text = 'Subtotal', font = ('Arial', 12, 'bold'), bg = '#FBB03B')
         self.liva = Label(fcobro, text = 'IVA', font = ('Arial', 12, 'bold'), bg = '#FBB03B')
         
@@ -652,9 +649,9 @@ class FormularioTickets(BonotonesMenu):
         self.lfecha_actual.place(x = 660, y = 10)
         self.lhora.place(x = 790, y = 10)
         self.lsubtocal.place(x = 3, y = 3)
-        self.liva.place(x = 3, y = 40)
-        self.ltotalpesos.place(x = 3, y = 80)
-        self.ltotaldolares.place(x = 3, y = 120)
+        self.liva.place(x = 3, y = 35)
+        self.ltotalpesos.place(x = 3, y = 70)
+        self.ltotaldolares.place(x = 3, y = 110)
         
         tipo_p = ['EFECTIVO', 'DOLARES', 'TARJETA']
         lista_meseros = ['DIEGO HERNANDEZ', 'MIGUEL CORONA', 'MANUEL FLORES']
@@ -672,6 +669,8 @@ class FormularioTickets(BonotonesMenu):
         self.ecambio = Entry(fcobro, width = 10)
         self.esubtotal = Entry(fcobro, width = 10)
         self.eiva = Entry(fcobro, width = 10)
+        self.eserv_sugerido = Entry(fcobro, width = 10)
+        self.etotal_sugerido = Entry(fcobro, width = 10)
 
         #Posiciones de las cajas de texto
         self.ecantidad.place(x = 525, y = 10)
@@ -679,21 +678,25 @@ class FormularioTickets(BonotonesMenu):
         self.emesa.place(x = 350, y = 10)
         self.esubtotal.place(x = 120, y = 3)
         self.esubtotal.config(state = 'disable')
-        self.eiva.place(x = 120, y = 37)
+        self.eiva.place(x = 120, y = 32)
         self.eiva.config(state = 'disable')
-        self.etotalpesos.place(x = 120, y = 77)
+        self.etotalpesos.place(x = 120, y = 67)
         self.etotalpesos.config(state = 'disable')
-        self.etotaldolares.place(x = 120, y = 117)
+        self.etotaldolares.place(x = 120, y = 107)
         self.etotaldolares.config(state = 'disable')
-        self.lpago.place(x = 3, y = 160)
-        self.ltipo_pago.place(x = 3, y = 200)
-        self.lcambio.place(x = 3, y = 240)
-        self.epago.place(x = 120, y = 157)
+        self.lpago.place(x = 3, y = 150)
+        self.ltipo_pago.place(x = 3, y = 190)
+        self.lcambio.place(x = 3, y = 230)
+        self.lservicio_sugerido.place(x = 3, y = 265)
+        self.ltotal_sugerido.place(x = 3, y = 300)
+        self.epago.place(x = 120, y = 147)
         self.epago.config(state = 'disable')
-        self.etipo_pago.place(x = 120, y = 197)
+        self.etipo_pago.place(x = 120, y = 187)
         self.etipo_pago.config(state = 'disable')
-        self.ecambio.place(x = 120, y = 237)
+        self.ecambio.place(x = 120, y = 227)
         self.ecambio.config(state = 'disable')
+        self.eserv_sugerido.place(x = 120, y = 262)
+        self.etotal_sugerido.place(x = 120, y = 297)
         
         #Notebook
         pmenu = Notebook(frametabla, height = 300, width = 1000)
@@ -1176,12 +1179,12 @@ class FormularioTickets(BonotonesMenu):
         self.quest = Button(fcobro, image = self.imagencaja_registradora, height = 60, width = 70, command = self.preguntar)
         self.quest.place(x = 200, y = 3)
         self.imagenpagar = PhotoImage( file = 'C:\\Users\\bhule\\OneDrive\\Escritorio\\Diplomado Python\PuntodeVenta\\ventanas\\imagenes\\PAGAR_CUENTA.gif')
-        self.cobrart = Button(fcobro, image = self.imagenpagar, height = 60, width = 130, command = self.cobrarticket)
-        self.cobrart.place(x = 5, y = 262)
+        self.cobrart = Button(fcobro, image = self.imagenpagar, height = 60, width = 70, command = self.cobrarticket)
+        self.cobrart.place(x = 200, y = 262)
         self.cobrart.config(state = 'disable', bg = 'white')
         self.imagenLiberar_mesa = PhotoImage( file = 'C:\\Users\\bhule\\OneDrive\\Escritorio\\Diplomado Python\PuntodeVenta\\ventanas\\imagenes\\LIBERAR_MESA.gif')
-        self.cerrarmesa = Button(fcobro, image = self.imagenLiberar_mesa, height = 60, width = 130, command = self.liberarmesa)
-        self.cerrarmesa.place(x = 142, y = 262)
+        self.cerrarmesa = Button(fmenu, image = self.imagenLiberar_mesa, height = 37, width = 80, command = self.liberarmesa)
+        self.cerrarmesa.place(x = 190, y = 280)
         self.cerrarmesa.config(state = 'disable', bg = 'white')
         self.imagenNuevo_Ticket = PhotoImage( file = 'C:\\Users\\bhule\\OneDrive\\Escritorio\\Diplomado Python\PuntodeVenta\\ventanas\\imagenes\\NUEVO_TICKET.png')
         self.nuevot = Button(frametabla, image = self.imagenNuevo_Ticket, height = 85, width = 85, bg = 'white', command = self.nuevo_ticket)
@@ -1197,4 +1200,3 @@ class FormularioTickets(BonotonesMenu):
         self.eimprimir.config(state = 'disable')
         self.eimprimir.place(x = 200, y = 177)
         self.obtener_hora()
-
