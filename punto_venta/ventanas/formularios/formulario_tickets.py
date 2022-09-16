@@ -1,14 +1,15 @@
 from tkinter import *
 from tkinter import ttk, messagebox
-from formularios.formulario_estadistica import ventana2
 from formularios.botones.botonesmenu import BonotonesMenu
 import datetime
+from time import strftime
 from tkinter.ttk import Notebook
 import dominio.controlador.controlador_flujo as controlador
 from dominio.tickets import Tickets, Tickets2
 from formularios.formulario_consulta import ventana
 from formularios.formulario_agregar_producto import FormularioAgregarProducto
 from formularios.formulario_inventario import FormularioInventario
+from formularios.conector_plugin import Conector, AlineacionIzquierda, AlineacionCentro
 
 
 class FormularioTickets(BonotonesMenu):
