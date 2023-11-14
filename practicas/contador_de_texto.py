@@ -14,9 +14,9 @@ def cambiar_hora(tiempo):
     return tiempo_12
 
 if __name__ == '__main__':
-    print('Escribe la hora en este formato')
+    print('Escribe la hora en este FORMATO')
     print('Ejemplo: 07:05:23 PM/AM')
-    tiempo = input('Dame la hora en el formato requerido: ')
+    tiempo = input('Dame la hora en el FORMATO requerido: ')
     resultado = cambiar_hora(tiempo)
     print(resultado)
 
